@@ -5,12 +5,12 @@ import (
 )
 
 type DoubleList struct {
-	inicio   *NodeSt
-	longitud int
+	Inicio   *NodeSt
+	Longitud int
 }
 
 func (l *DoubleList) isEmpty() bool {
-	if l.longitud == 0 {
+	if l.Longitud == 0 {
 		return true
 	} else {
 		return false
@@ -21,36 +21,48 @@ func (l *DoubleList) newNodo(studentt *Student) *NodeSt {
 	return &NodeSt{studentt, nil, nil}
 }
 
-func (l *DoubleList) InsertarAlFinal(firstName string, lastName string, carnet int, password string) {
+func (l *DoubleList) InsertarAlFinal(firstName string, lastName string, carnet string, password string) {
 	newStudent := &Student{firstName, lastName, carnet, password}
 	if l.isEmpty() {
-		l.inicio = l.newNodo(newStudent)
-		l.longitud++
+		l.Inicio = l.newNodo(newStudent)
+		l.Longitud++
 	} else {
-		aux := l.inicio
+		aux := l.Inicio
 		for aux.siguiente != nil {
 			aux = aux.siguiente
 		}
 		//  null <- 1 -> <- 2 -> nil
 		aux.siguiente = l.newNodo(newStudent)
 		aux.siguiente.anterior = aux
-		l.longitud++
+		l.Longitud++
 	}
 }
 
 func (l *DoubleList) MostrarConsola() {
-	aux := l.inicio
+	aux := l.Inicio
 	fmt.Println(" _ _ _ _ _ _ _ _ L I S T A _ E S T U D I A N T E S _ _ _ _ _ _ _ _")
 	for aux != nil {
-		fmt.Println("Nombre: ", aux.studentt.firstName, " ", aux.studentt.lastName, " Carnet: ", aux.studentt.carnet)
+		fmt.Println("Nombre: ", aux.studentt.FirstName, " ", aux.studentt.LastName, " Carnet: ", aux.studentt.Carnet)
 		fmt.Println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ")
 		aux = aux.siguiente
 	}
 }
 
+func (l *DoubleList) validarStudent(carnet string, password string) *Student {
+	aux := l.Inicio
+	for aux != nil {
+		if aux.studentt.Carnet == carnet && aux.studentt.Password == password {
+			return aux.studentt
+		}
+		aux = aux.siguiente
+	}
+	return nil
+
+}
+
 func NewLista() *DoubleList {
 	lista := new(DoubleList)
-	lista.inicio = nil
-	lista.longitud = 0
+	lista.Inicio = nil
+	lista.Longitud = 0
 	return lista
 }

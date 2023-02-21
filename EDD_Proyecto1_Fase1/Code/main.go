@@ -6,6 +6,9 @@ import (
 	"Code/Structs"
 )
 
+var ColaGlobal *Structs.Cola = &Structs.Cola{Primero: nil, Longitud: 0}
+var ListaDobleGlobal *Structs.DoubleList = &Structs.DoubleList{Inicio: nil, Longitud: 0}
+
 func main() {
 	option := 0
 	out := false
@@ -21,12 +24,7 @@ func main() {
 		fmt.Scanln(&option)
 		switch option {
 		case 1:
-			listaDoble := Structs.NewLista()
-			listaDoble.InsertarAlFinal("Eduardo", "González", 201900647, "123xd")
-			listaDoble.InsertarAlFinal("Piter", "Valiente", 201911666, "123xd")
-			listaDoble.InsertarAlFinal("Kevin", "Palacios", 201988994, "123xd")
-			listaDoble.InsertarAlFinal("Patricia", "Reyes", 201900369, "123xd")
-			listaDoble.MostrarConsola()
+			menuAdmin()
 		case 2:
 			fmt.Println("$:----    Cerrando sesión    ----:$")
 			out = true
@@ -37,8 +35,21 @@ func main() {
 }
 
 func Login() {
+	pass := ""
+	user := ""
 	fmt.Println("$:---------- L O G I N  ---------:$")
 	fmt.Println("$: Ingrese su usario :$")
+	fmt.Scanln(&user)
+	fmt.Println("$: Ingrese su contraseña :$")
+	fmt.Scanln(&pass)
+	//studenActual := ListaDobleGlobal.validarStudent(user, pass)
+	if user == "admin" && pass == "admin" {
+		menuAdmin()
+	} //else if studenActual != nil {
+	//	fmt.Println("Bienvenido ", studenActual.FirstName, " ", studenActual.LastName)
+	//} else {
+	//	fmt.Println("Usuario o contraseña incorrecta")
+	//}
 
 }
 
@@ -61,10 +72,12 @@ func menuAdmin() {
 		switch op {
 		case 1:
 			fmt.Println("Case 1")
+			ColaGlobal.MostrarPrimero()
 		case 2:
 			fmt.Println("Case 2")
 		case 3:
 			fmt.Println("Case 3")
+			agregarEstudiante()
 		case 4:
 			fmt.Println("Case 4")
 		case 5:
@@ -82,4 +95,24 @@ func menuStudent() {
 		fmt.Println("$:_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _:$")
 		fmt.Println("$: Se inició sesión correctamente :$")
 	}
+}
+
+func agregarEstudiante() {
+	fmt.Println("$:----  Agregar Estudiante  ----:$")
+	fmt.Println("$: Ingrese su usario :$")
+	firstName := ""
+	lastName := ""
+	carnet := ""
+	password := ""
+	fmt.Println("Ingrese nombre")
+	fmt.Scanln(&firstName)
+	fmt.Println("Ingrese apellido")
+	fmt.Scanln(&lastName)
+	fmt.Println("Ingrese carnet")
+	fmt.Scanln(&carnet)
+	fmt.Println("Ingrese contraseña")
+	fmt.Scanln(&password)
+	nuevoStudent := &Structs.Student{FirstName: firstName, LastName: lastName, Carnet: carnet, Password: password}
+	ColaGlobal.Encolar(nuevoStudent)
+
 }

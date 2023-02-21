@@ -1,8 +1,8 @@
 package Structs
 
 type Student struct {
-	firstName string
-	lastName  string
-	carnet    int
-	password  string
+	FirstName string
+	LastName  string
+	Carnet    string
+	Password  string
 }
