@@ -1,0 +1,132 @@
+digraph cola{
+rankdir=LR;
+bgcolor="darkturquoise";
+node[shape=folder,fontsize="20pt",penwidth=4,fontname="Courier New",fixedsize=true,width=5,height=1,style="filled",fillcolor="lavenderblush1"];
+nodonull[label="null"];
+nodo0[label="Nombre:Leonardo Martinez
+Carnet:201780044"];
+nodo1[label="Nombre:Ebany Larios
+Carnet:201403877"];
+nodo2[label="Nombre:Lourdes Reyes
+Carnet:201902259"];
+nodo3[label="Nombre:Alejandro Caballeros
+Carnet:201903549"];
+nodo4[label="Nombre:Jonatan Gonzalez
+Carnet:201900570"];
+nodo5[label="Nombre:Kevyn Giron
+Carnet:201700653"];
+nodo6[label="Nombre:Eduardo Cuevas
+Carnet:202004703"];
+nodo7[label="Nombre:Roberto Gomez
+Carnet:202000544"];
+nodo8[label="Nombre:Sebastian Godoy
+Carnet:202002940"];
+nodo9[label="Nombre:Juan Augusto
+Carnet:201801683"];
+nodo10[label="Nombre:Bryan Montepeque
+Carnet:201700375"];
+nodo11[label="Nombre:Karen Gatica
+Carnet:201900603"];
+nodo12[label="Nombre:Kevin Garcia
+Carnet:202113553"];
+nodo13[label="Nombre:Diego Huite
+Carnet:202003585"];
+nodo14[label="Nombre:Josue Porres
+Carnet:202112026"];
+nodo15[label="Nombre:Sergio Ralda
+Carnet:202103216"];
+nodo16[label="Nombre:Juan Valle
+Carnet:202101648"];
+nodo17[label="Nombre:Jose Melendez
+Carnet:201325511"];
+nodo18[label="Nombre:Ethel Herrarte
+Carnet:200819325"];
+nodo19[label="Nombre:Sergio Guix
+Carnet:201906468"];
+nodo20[label="Nombre:Jose Donis
+Carnet:201801444"];
+nodo21[label="Nombre:Marvin Castellanos
+Carnet:201700490"];
+nodo22[label="Nombre:Ludwing Lopez
+Carnet:201907608"];
+nodo23[label="Nombre:Sergio Bucaro
+Carnet:201800673"];
+nodo24[label="Nombre:Christian Esquite
+Carnet:200819074"];
+nodo25[label="Nombre:Luis Yaquian
+Carnet:202001471"];
+nodo26[label="Nombre:Luis Lizama
+Carnet:202010023"];
+nodo27[label="Nombre:Olivert Vargas
+Carnet:201503617"];
+nodo28[label="Nombre:Jose Ibarra
+Carnet:202001800"];
+nodo29[label="Nombre:Mauricio Castro
+Carnet:202100299"];
+nodo30[label="Nombre:Velveth Perez
+Carnet:202010810"];
+nodo31[label="Nombre:Miguel Sac
+Carnet:201222535"];
+nodo32[label="Nombre:Jose Panaza
+Carnet:202111478"];
+nodo33[label="Nombre:Pablo Fernandez
+Carnet:201807411"];
+nodo34[label="Nombre:Henderson Hernandez
+Carnet:201019694"];
+nodo35[label="Nombre:Aida Mansilla
+Carnet:202100239"];
+nodo36[label="Nombre:Jeser Rodas
+Carnet:202105561"];
+nodo37[label="Nombre:Anthony Zea
+Carnet:202104782"];
+nodo38[label="Nombre:Julio Fernandez
+Carnet:201902416"];
+nodo39[label="Nombre:Hugo Giron
+Carnet:202004807"];
+nodo40[label="Nombre:Mario Lopez
+Carnet:202109554"];
+nodo0->nodo1[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo1->nodo2[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo2->nodo3[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo3->nodo4[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo4->nodo5[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo5->nodo6[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo6->nodo7[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo7->nodo8[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo8->nodo9[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo9->nodo10[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo10->nodo11[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo11->nodo12[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo12->nodo13[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo13->nodo14[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo14->nodo15[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo15->nodo16[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo16->nodo17[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo17->nodo18[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo18->nodo19[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo19->nodo20[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo20->nodo21[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo21->nodo22[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo22->nodo23[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo23->nodo24[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo24->nodo25[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo25->nodo26[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo26->nodo27[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo27->nodo28[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo28->nodo29[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo29->nodo30[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo30->nodo31[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo31->nodo32[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo32->nodo33[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo33->nodo34[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo34->nodo35[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo35->nodo36[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo36->nodo37[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo37->nodo38[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo38->nodo39[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo39->nodo40[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo40->nodonull[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+}size=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo41->nodo42[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo42->nodonull[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+}

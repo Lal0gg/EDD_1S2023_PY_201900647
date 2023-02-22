@@ -34,6 +34,8 @@ func main() {
 		case 1:
 			Login()
 		case 2:
+			menuReportes()
+		case 3:
 			fmt.Println("$:----    Cerrando sesión    ----:$")
 			out = true
 		}
@@ -80,10 +82,10 @@ func menuAdmin() {
 		switch op {
 		case 1:
 			fmt.Println("Case 1")
-			ColaGlobal.MostrarPrimero()
+			miniMenuPendientes()
 		case 2:
 			fmt.Println("Case 2")
-			//ColaGlobal.MostrarCola()
+			ColaGlobal.Descolar()
 		case 3:
 			fmt.Println("Case 3")
 			agregarEstudiante()
@@ -162,7 +164,59 @@ func isMn(r rune) bool {
 
 func menuReportes() {
 	out := false
+	op := 0
 	for !out {
-		fmt.Println("$:---------- R E P O R T E S  ---------:$")
+		fmt.Println("$:° ° ° ° °  R E P O R T E S  ° ° ° ° °:$")
+		fmt.Println("$: 1. Reporte de estudiantes aceptados :$")
+		fmt.Println("$: 2. Reporte de estudiantes en cola   :$")
+		fmt.Println("$: 3. Reporte de Bitacora de admin     :$")
+		fmt.Println("$: 4. Reporte de JSON                  :$")
+		fmt.Println("$: 5. Regresar al menú principal       :$")
+		fmt.Println("$: ° ° ° ° ° ° ° ° ° ° ° ° ° ° ° ° ° ° :$")
+		fmt.Print("Ingrese su opcion: ")
+		fmt.Scanln(&op)
+		switch op {
+		case 1:
+			fmt.Println("$: Realizando reporte de estudiantes aceptados... :$")
+		case 2:
+			ColaGlobal.Graficar()
+			fmt.Println("$: Realizando reporte de estudiantes en cola... :$")
+		case 3:
+			fmt.Println("$: Realizando reporte de bitácora de admin... :$")
+		case 4:
+			fmt.Println("$: Realizando reporte de JSON... :$")
+		case 5:
+			fmt.Println("$: Regresando al menú principal... :$")
+			out = true
+		}
 	}
+}
+
+func miniMenuPendientes() {
+	out := false
+	op := 0
+	for !out {
+		fmt.Println("$:° ° ° ° °  Pendientes : ", ColaGlobal.Longitud, "° ° ° ° °:$")
+		fmt.Print("$: Estudiante actual: ")
+		ColaGlobal.MostrarPrimero()
+		fmt.Println("$:° ° °   1. Aceptar Estudiante    ° ° °:$")
+		fmt.Println("$:° ° °   2. Rechazar Estudiante   ° ° °:$")
+		fmt.Println("$:° ° °   3. Volver al Menu        ° ° °:$")
+		fmt.Println("$:° ° ° ° ° ° ° °  ° ° ° ° ° ° ° ° ° ° °:$")
+		fmt.Println("$: Ingrese su opcion: ")
+		fmt.Scanln(&op)
+		switch op {
+		case 1:
+			fmt.Println("$: Aceptando Estudiante... :$")
+			ColaGlobal.Descolar()
+		case 2:
+			fmt.Println("$: Rechazando Estudiante... :$")
+			ColaGlobal.Descolar()
+		case 3:
+			fmt.Println("$: Regresando al menú principal... :$")
+			out = true
+		}
+
+	}
+
 }
