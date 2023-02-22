@@ -2,7 +2,6 @@ package Structs
 
 import (
 	"fmt"
-
 )
 
 type Cola struct {
@@ -49,4 +48,17 @@ func (c *Cola) MostrarPrimero() {
 	} else {
 		fmt.Println("| Nombre: ", c.Primero.studennt.FirstName, " ", c.Primero.studennt.LastName, "|\n|Carnet: ", c.Primero.studennt.Carnet, "|\n Ha sido agregado a la cola: ")
 	}
+}
+
+func (c *Cola) MostrarCola() {
+	if c.estaVacia() {
+		fmt.Println("La cola no contiene elementos")
+	} else {
+		aux := c.Primero
+		for aux != nil {
+			fmt.Println("| Nombre: ", aux.studennt.FirstName, " Apellido: ", aux.studennt.LastName, "|\n|Carnet: ", aux.studennt.Carnet, "|\n Contraseña: ", aux.studennt.Password, "|")
+			aux = aux.siguiente
+		}
+	}
+
 }

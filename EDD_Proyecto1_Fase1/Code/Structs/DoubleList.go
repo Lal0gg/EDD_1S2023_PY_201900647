@@ -48,7 +48,7 @@ func (l *DoubleList) MostrarConsola() {
 	}
 }
 
-func (l *DoubleList) validarStudent(carnet string, password string) *Student {
+func (l *DoubleList) EstudianteVal(carnet string, password string) *Student {
 	aux := l.Inicio
 	for aux != nil {
 		if aux.studentt.Carnet == carnet && aux.studentt.Password == password {
