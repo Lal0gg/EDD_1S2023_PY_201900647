@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"strconv"
+
 )
 
 type Cola struct {
@@ -50,7 +51,7 @@ func (c *Cola) MostrarPrimero() {
 	if c.estaVacia() {
 		fmt.Println("La cola no contiene elementos")
 	} else {
-		fmt.Println("| Estudiante Actual : ", c.Primero.studennt.FirstName, " ", c.Primero.studennt.LastName)
+		fmt.Println("| Estudiante Actual : ", c.Primero.studennt.FirstName, " ", c.Primero.studennt.LastName+"   :$")
 	}
 }
 
