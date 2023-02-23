@@ -4,17 +4,22 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
+	"time"
 	"unicode"
 
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
 
 	"Code/Structs"
+
 )
 
 var ColaGlobal *Structs.Cola = &Structs.Cola{Primero: nil, Longitud: 0}
 var ListaDobleGlobal *Structs.DoubleList = &Structs.DoubleList{Inicio: nil, Longitud: 0}
+var PilaStudenGlobal *Structs.PilaStudent = &Structs.PilaStudent{Primero: nil, Longitud: 0}
+var PilaAdminGlobal *Structs.PilaAdmin = &Structs.PilaAdmin{Primero: nil, Longitud: 0}
 
 func main() {
 	option := 0
@@ -56,11 +61,11 @@ func Login() {
 	if user == "admin" && pass == "admin" {
 		menuAdmin()
 	} else if studenActual != nil {
+		menuStudent()
 		fmt.Println("Bienvenido ", studenActual.FirstName, " ", studenActual.LastName)
 	} else {
 		fmt.Println("Usuario o contraseña incorrecta")
 	}
-
 }
 
 func menuAdmin() {
@@ -106,6 +111,7 @@ func menuStudent() {
 		fmt.Println("$:-------  Student - EDD GoDrive --------:$")
 		fmt.Println("$:_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _:$")
 		fmt.Println("$: Se inició sesión correctamente :$")
+		PilaStudenGlobal.Push(fecha())
 	}
 }
 
@@ -126,7 +132,6 @@ func agregarEstudiante() {
 	fmt.Scanln(&password)
 	nuevoStudent := &Structs.Student{FirstName: firstName, LastName: lastName, Carnet: carnet, Password: password}
 	ColaGlobal.Encolar(nuevoStudent)
-
 }
 
 func cargarMasivo() {
@@ -208,9 +213,11 @@ func miniMenuPendientes() {
 		switch op {
 		case 1:
 			fmt.Println("$: Aceptando Estudiante... :$")
+			PilaAdminGlobal.Puush("Se Aceptó al\n" + "Estudiante\n" + fecha())
 			ColaGlobal.Descolar()
 		case 2:
 			fmt.Println("$: Rechazando Estudiante... :$")
+			PilaAdminGlobal.Puush("Se Rechazó al\n" + "Estudiante\n" + fecha())
 			ColaGlobal.Descolar()
 		case 3:
 			fmt.Println("$: Regresando al menú principal... :$")
@@ -219,4 +226,41 @@ func miniMenuPendientes() {
 
 	}
 
+}
+
+func fecha() string {
+	tiempo := time.Now()
+	fecha := ""
+	hora := ""
+	if tiempo.Hour() < 10 {
+		hora = hora + "0" + strconv.Itoa(tiempo.Hour()) + ":"
+	} else {
+		hora = hora + strconv.Itoa(tiempo.Hour()) + ":"
+	}
+	if tiempo.Minute() < 10 {
+		hora = hora + "0" + strconv.Itoa(tiempo.Minute()) + ":"
+	} else {
+		hora = hora + strconv.Itoa(tiempo.Minute()) + ":"
+	}
+	if tiempo.Second() < 10 {
+		hora = hora + "0" + strconv.Itoa(tiempo.Second())
+	} else {
+		hora = hora + strconv.Itoa(tiempo.Second())
+	}
+	if tiempo.Day() < 10 {
+		fecha = fecha + "0" + strconv.Itoa(tiempo.Day()) + "/"
+	} else {
+		fecha = fecha + strconv.Itoa(tiempo.Day()) + "/"
+	}
+	if tiempo.Month() < 10 {
+		fecha = fecha + "0" + strconv.Itoa(int(tiempo.Month())) + "/"
+	} else {
+		fecha = fecha + strconv.Itoa(int(tiempo.Month())) + "/"
+	}
+	if tiempo.Year() < 10 {
+		fecha = fecha + "0" + strconv.Itoa(tiempo.Year()) + " "
+	} else {
+		fecha = fecha + strconv.Itoa(tiempo.Year()) + " "
+	}
+	return "Fecha:" + fecha + "\nHora:" + hora
 }

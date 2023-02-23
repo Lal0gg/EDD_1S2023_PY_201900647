@@ -4,4 +4,5 @@ type NodeSt struct {
 	studentt  *Student
 	siguiente *NodeSt
 	anterior  *NodeSt
+	abajo     *NodeSt
 }

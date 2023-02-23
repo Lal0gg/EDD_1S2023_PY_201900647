@@ -2,12 +2,12 @@ package Structs
 
 import "fmt"
 
-type PilaAdmin struct {
-	Primero  *NodePilaAdmin
+type PilaStudent struct {
+	Primero  *NodePilaStudent
 	Longitud int
 }
 
-func (p *PilaAdmin) estaVacia() bool {
+func (p *PilaStudent) estaVacia() bool {
 	if p.Longitud == 0 {
 		return true
 	} else {
@@ -15,19 +15,19 @@ func (p *PilaAdmin) estaVacia() bool {
 	}
 }
 
-func (p *PilaAdmin) Puush(hora string) {
+func (p *PilaStudent) Push(hora string) {
 	if p.estaVacia() {
-		nuevoNodo := &NodePilaAdmin{hora, nil}
+		nuevoNodo := &NodePilaStudent{hora, nil}
 		p.Primero = nuevoNodo
 		p.Longitud++
 	} else {
-		nuevoNodo := &NodePilaAdmin{hora, p.Primero}
+		nuevoNodo := &NodePilaStudent{hora, p.Primero}
 		p.Primero = nuevoNodo
 		p.Longitud++
 	}
 }
 
-func (p *PilaStudent) Poop() {
+func (p *PilaStudent) Pop() {
 	if p.estaVacia() {
 		fmt.Println("La pila no contiene elementos")
 	} else {

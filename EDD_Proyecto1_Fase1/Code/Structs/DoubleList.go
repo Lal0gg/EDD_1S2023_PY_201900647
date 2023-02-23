@@ -18,7 +18,7 @@ func (l *DoubleList) isEmpty() bool {
 }
 
 func (l *DoubleList) newNodo(studentt *Student) *NodeSt {
-	return &NodeSt{studentt, nil, nil}
+	return &NodeSt{studentt, nil, nil, nil}
 }
 
 func (l *DoubleList) InsertarAlFinal(firstName string, lastName string, carnet string, password string) {

@@ -6,11 +6,11 @@ import (
 	"os"
 	"os/exec"
 	"strconv"
-
 )
 
 type Cola struct {
 	Primero  *NodeCola
+	Ultimo   *NodeCola
 	Longitud int
 }
 
@@ -51,8 +51,20 @@ func (c *Cola) MostrarPrimero() {
 	if c.estaVacia() {
 		fmt.Println("La cola no contiene elementos")
 	} else {
-		fmt.Println("| Estudiante Actual : ", c.Primero.studennt.FirstName, " ", c.Primero.studennt.LastName+"   :$")
+		fmt.Println("|Estudiante Actual : ", c.Primero.studennt.FirstName, " ", c.Primero.studennt.LastName+"   :$")
 	}
+}
+
+func (c *Cola) DesencolarNodo() *NodeCola {
+	if c.Primero == nil {
+		return nil
+	}
+	node := c.Primero
+	c.Primero = c.Primero.siguiente
+	if c.Primero == nil {
+		c.Ultimo = nil
+	}
+	return node
 }
 
 func (c *Cola) MostrarCola() {
