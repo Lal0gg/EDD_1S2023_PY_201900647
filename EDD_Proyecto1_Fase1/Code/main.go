@@ -13,6 +13,7 @@ import (
 	"golang.org/x/text/unicode/norm"
 
 	"Code/Structs"
+
 )
 
 var ColaGlobal *Structs.Cola = &Structs.Cola{Primero: nil, Longitud: 0}
@@ -190,6 +191,7 @@ func menuReportes() {
 			fmt.Println("$: Realizando reporte de estudiantes en cola... :$")
 		case 3:
 			fmt.Println("$: Realizando reporte de bitácora de admin... :$")
+			PilaAdminGlobal.GraficarPilaAdmin()
 		case 4:
 			fmt.Println("$: Realizando reporte de JSON... :$")
 		case 5:
@@ -215,12 +217,12 @@ func miniMenuPendientes() {
 		switch op {
 		case 1:
 			fmt.Println("$: Aceptando Estudiante... :$")
-			PilaAdminGlobal.Puush("Se Aceptó al\n" + "Estudiante\n" + fecha())
+			PilaAdminGlobal.Puush("Se Aceptó al \n \\nEstudiante  \n \\n" + fecha())
 			ListaDobleGlobal.InsertarAlFinal(ColaGlobal.MostrarPrimero())
 			ColaGlobal.Descolar()
 		case 2:
 			fmt.Println("$: Rechazando Estudiante... :$")
-			PilaAdminGlobal.Puush("Se Rechazó al\n" + "Estudiante\n" + fecha())
+			PilaAdminGlobal.Puush("Se Rechazó al \\n Estudiante \\n" + fecha())
 			ColaGlobal.Descolar()
 		case 3:
 			fmt.Println("$: Regresando al menú principal... :$")

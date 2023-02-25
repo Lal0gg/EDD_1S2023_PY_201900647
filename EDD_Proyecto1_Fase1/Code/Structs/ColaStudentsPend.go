@@ -148,7 +148,7 @@ func (c *Cola) Graficar() {
 		texto += "nodo" + strconv.Itoa(i) + "->nodo" + strconv.Itoa(c) + "[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color=\"black\",fillcolor=darkorchid2,label=\"             \"]" + ";\n"
 		contador = c
 	}
-	texto += "nodo" + strconv.Itoa(contador) + "->nodonull[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color=\"black\",fillcolor=darkorchid2,label=\"             \"];\n"
+	texto += "nodo" + strconv.Itoa(contador) + "->nodonull[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color=\"black\",fillcolor=darkorchid2,label=\"             \"]" + ";\n"
 	texto += "}"
 	CrearArchivoCola(nombre_archivo)
 	EscribirArchivoCola(texto, nombre_archivo)

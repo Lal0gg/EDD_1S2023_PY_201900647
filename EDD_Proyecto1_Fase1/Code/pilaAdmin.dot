@@ -1,0 +1,34 @@
+digraph pila{
+rankdir=TB;
+fontname="Courier New";
+label = "Pila de Administradores";
+bgcolor="turquoise4";
+node[shape=record ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="darkseagreen1" ];
+node0[label="{Se Rechazó al \n Estudiante \nFecha:25/02/2023 
+Hora:14:02:35|Se Rechazó al \n Estudiante \nFecha:25/02/2023 
+Hora:14:02:34|Se Aceptó al 
+ \nEstudiante  
+ \nFecha:25/02/2023 
+Hora:14:02:32|Se Aceptó al 
+ \nEstudiante  
+ \nFecha:25/02/2023 
+Hora:14:02:32|Se Aceptó al 
+ \nEstudiante  
+ \nFecha:25/02/2023 
+Hora:14:02:31|Se Aceptó al 
+ \nEstudiante  
+ \nFecha:25/02/2023 
+Hora:14:02:29|}"]; 
+}}te \nFecha:25/02/2023 
+Hora:13:50:33|Se Rechazó al \n Estudiante \nFecha:25/02/2023 
+Hora:13:50:32|Se Aceptó al \nEstudiante \nFecha:25/02/2023 
+Hora:13:50:30}"]; 
+}tó al 
+ Estudiante 
+Fecha:25/02/2023 
+Hora:13:39:59}"]; 
+}iante 
+"
+"Fecha:25/02/2023 
+Hora:13:32:18}"]; 
+}
