@@ -13,7 +13,6 @@ import (
 	"golang.org/x/text/unicode/norm"
 
 	"Code/Structs"
-
 )
 
 var ColaGlobal *Structs.Cola = &Structs.Cola{Primero: nil, Longitud: 0}
@@ -87,13 +86,18 @@ func menuAdmin() {
 		switch op {
 		case 1:
 			fmt.Println("Case 1")
+			//fmt.Println(ColaGlobal.MostrarPrimero())
 			miniMenuPendientes()
 		case 2:
 			fmt.Println("Case 2")
-			ColaGlobal.Descolar()
+			ListaDobleGlobal.MostrarConsola()
+			//ColaGlobal.Descolar()
 		case 3:
 			fmt.Println("Case 3")
-			agregarEstudiante()
+			PilaStudenGlobal.MostrarPilaStudent()
+			//PilaAdminGlobal.MostrarPila()
+			//PilaAdminGlobal.Peek()
+			//agregarEstudiante()
 		case 4:
 			fmt.Println("Case 4")
 			cargarMasivo()
@@ -105,14 +109,12 @@ func menuAdmin() {
 }
 
 func menuStudent() {
-	out := false
-	for !out {
-		fmt.Println("$:_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _:$")
-		fmt.Println("$:-------  Student - EDD GoDrive --------:$")
-		fmt.Println("$:_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _:$")
-		fmt.Println("$: Se inició sesión correctamente :$")
-		PilaStudenGlobal.Push(fecha())
-	}
+	fmt.Println("$:_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _:$")
+	fmt.Println("$:-------  Student - EDD GoDrive --------:$")
+	fmt.Println("$:_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _:$")
+	fmt.Println("$: Se inició sesión correctamente :$")
+	PilaStudenGlobal.Push(fecha())
+
 }
 
 func agregarEstudiante() {
@@ -203,7 +205,7 @@ func miniMenuPendientes() {
 	for !out {
 		fmt.Println("$:° ° ° ° °  Pendientes : ", ColaGlobal.Longitud, "° ° ° ° °:$")
 		fmt.Print("$: Estudiante actual: ")
-		ColaGlobal.MostrarPrimero()
+		ColaGlobal.MostrarPrimero2()
 		fmt.Println("$:° ° °   1. Aceptar Estudiante    ° ° °:$")
 		fmt.Println("$:° ° °   2. Rechazar Estudiante   ° ° °:$")
 		fmt.Println("$:° ° °   3. Volver al Menu        ° ° °:$")
@@ -214,6 +216,7 @@ func miniMenuPendientes() {
 		case 1:
 			fmt.Println("$: Aceptando Estudiante... :$")
 			PilaAdminGlobal.Puush("Se Aceptó al\n" + "Estudiante\n" + fecha())
+			ListaDobleGlobal.InsertarAlFinal(ColaGlobal.MostrarPrimero())
 			ColaGlobal.Descolar()
 		case 2:
 			fmt.Println("$: Rechazando Estudiante... :$")

@@ -47,7 +47,18 @@ func (c *Cola) Descolar() {
 	}
 }
 
-func (c *Cola) MostrarPrimero() {
+func (c *Cola) MostrarPrimero() *Student {
+	newStudent := &Student{FirstName: "", LastName: "", Carnet: "", Password: ""}
+	if c.estaVacia() {
+		fmt.Println("La cola no contiene elementos")
+	} else {
+		newStudent = &Student{FirstName: c.Primero.studennt.FirstName, LastName: c.Primero.studennt.LastName, Carnet: c.Primero.studennt.Carnet, Password: c.Primero.studennt.Password}
+		//fmt.Println("|Estudiante Actual : ", newStudent.FirstName, " ", newStudent.LastName+"   :$")
+	}
+	return newStudent
+}
+
+func (c *Cola) MostrarPrimero2() {
 	if c.estaVacia() {
 		fmt.Println("La cola no contiene elementos")
 	} else {

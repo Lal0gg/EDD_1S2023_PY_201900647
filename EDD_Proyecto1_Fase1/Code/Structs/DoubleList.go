@@ -2,6 +2,7 @@ package Structs
 
 import (
 	"fmt"
+
 )
 
 type DoubleList struct {
@@ -21,8 +22,7 @@ func (l *DoubleList) newNodo(studentt *Student) *NodeSt {
 	return &NodeSt{studentt, nil, nil, nil}
 }
 
-func (l *DoubleList) InsertarAlFinal(firstName string, lastName string, carnet string, password string) {
-	newStudent := &Student{firstName, lastName, carnet, password}
+func (l *DoubleList) InsertarAlFinal(newStudent *Student) {
 	if l.isEmpty() {
 		l.Inicio = l.newNodo(newStudent)
 		l.Longitud++

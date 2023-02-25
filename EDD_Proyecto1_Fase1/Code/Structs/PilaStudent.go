@@ -35,3 +35,15 @@ func (p *PilaStudent) Pop() {
 		p.Longitud--
 	}
 }
+
+func (p *PilaStudent) MostrarPilaStudent() {
+	if p.estaVacia() {
+		fmt.Println("La pila no tiene elementos")
+	} else {
+		aux := p.Primero
+		for aux != nil {
+			fmt.Println(aux.hora + "\n")
+			aux = aux.siguiente
+		}
+	}
+}

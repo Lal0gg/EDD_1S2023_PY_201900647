@@ -27,6 +27,26 @@ func (p *PilaAdmin) Puush(hora string) {
 	}
 }
 
+func (p *PilaAdmin) Peek() {
+	if p.estaVacia() {
+		fmt.Println("La pila no tiene elementos")
+	} else {
+		fmt.Println(p.Primero.hora)
+	}
+}
+
+func (p *PilaAdmin) MostrarPila() {
+	if p.estaVacia() {
+		fmt.Println("La pila no tiene elementos")
+	} else {
+		aux := p.Primero
+		for aux != nil {
+			fmt.Println(aux.hora + "\n")
+			aux = aux.siguiente
+		}
+	}
+}
+
 func (p *PilaStudent) Poop() {
 	if p.estaVacia() {
 		fmt.Println("La pila no contiene elementos")
