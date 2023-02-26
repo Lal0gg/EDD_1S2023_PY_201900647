@@ -2,7 +2,6 @@ package Structs
 
 import (
 	"fmt"
-
 )
 
 type DoubleList struct {
@@ -19,7 +18,7 @@ func (l *DoubleList) isEmpty() bool {
 }
 
 func (l *DoubleList) newNodo(studentt *Student) *NodeSt {
-	return &NodeSt{studentt, nil, nil, nil}
+	return &NodeSt{studentt: studentt, siguiente: nil, anterior: nil, pila: &PilaStudent{Primero: nil, Longitud: 0}}
 }
 
 func (l *DoubleList) InsertarAlFinal(newStudent *Student) {
@@ -31,10 +30,38 @@ func (l *DoubleList) InsertarAlFinal(newStudent *Student) {
 		for aux.siguiente != nil {
 			aux = aux.siguiente
 		}
-		//  null <- 1 -> <- 2 -> nil
 		aux.siguiente = l.newNodo(newStudent)
 		aux.siguiente.anterior = aux
 		l.Longitud++
+	}
+}
+
+func (l *DoubleList) InsertarOrdenado(newstudent *Student) {
+	if l.isEmpty() {
+		l.Inicio = l.newNodo(newstudent)
+		l.Longitud++
+	} else {
+		aux := l.Inicio
+		for aux.siguiente != nil && aux.studentt.Carnet < newstudent.Carnet {
+			aux = aux.siguiente
+		}
+		if aux.studentt.Carnet < newstudent.Carnet {
+			aux.siguiente = l.newNodo(newstudent)
+			aux.siguiente.anterior = aux
+			l.Longitud++
+		} else {
+			if aux.anterior == nil {
+				l.Inicio = l.newNodo(newstudent)
+				l.Inicio.siguiente = aux
+				aux.anterior = l.Inicio
+				l.Longitud++
+			} else {
+				aux.anterior.siguiente = l.newNodo(newstudent)
+				aux.anterior.siguiente.siguiente = aux
+				aux.anterior = aux.anterior.siguiente
+				l.Longitud++
+			}
+		}
 	}
 }
 
@@ -42,10 +69,25 @@ func (l *DoubleList) MostrarConsola() {
 	aux := l.Inicio
 	fmt.Println(" _ _ _ _ _ _ _ _ L I S T A _ E S T U D I A N T E S _ _ _ _ _ _ _ _")
 	for aux != nil {
-		fmt.Println("Nombre: ", aux.studentt.FirstName, " ", aux.studentt.LastName, " Carnet: ", aux.studentt.Carnet)
+		fmt.Println("Nombre: ", aux.studentt.FirstName, " ", aux.studentt.LastName, " Carnet: ", aux.studentt.Carnet, "Pila: ", ContenidoPila(aux.pila))
 		fmt.Println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ")
 		aux = aux.siguiente
 	}
+}
+
+func ContenidoPila(pila *PilaStudent) string {
+	content := ""
+	aux := pila.Primero
+	if aux != nil {
+		for aux != nil {
+			content += " | " + aux.hora
+			aux = aux.siguiente
+		}
+	} else {
+		content = "|       |"
+	}
+	return content
+
 }
 
 func (l *DoubleList) EstudianteVal(carnet string, password string) *Student {
@@ -66,3 +108,69 @@ func NewLista() *DoubleList {
 	lista.Longitud = 0
 	return lista
 }
+
+func StructJson(lista *DoubleList) string {
+	content := "{\n"
+	content += "\t\"alumnos\": [\n"
+	aux := lista.Inicio
+	for aux.siguiente != nil {
+		content += "\t\t{\n"
+		content += "\t\t\t\"nombre\": " + "\"" + aux.studentt.FirstName + " " + aux.studentt.LastName + "\", \n"
+		content += "\t\t\t\"carnet\": " + "\"" + aux.studentt.Carnet + "\", \n"
+		content += "\t\t\t\"password\": " + "\"" + aux.studentt.Password + "\", \n"
+		content += "\t\t\t\"Carpeta_Raiz\": \"/\" \n"
+		content += "\t\t},\n"
+		aux = aux.siguiente
+	}
+	//esto es para el ultimo elemento
+	content += "\t\t{\n"
+	content += "\t\t\t\"nombre\": " + "\"" + aux.studentt.FirstName + " " + aux.studentt.LastName + "\", \n"
+	content += "\t\t\t\"carnet\": " + "\"" + aux.studentt.Carnet + "\", \n"
+	content += "\t\t\t\"password\": " + "\"" + aux.studentt.Password + "\", \n"
+	content += "\t\t\t\"Carpeta_Raiz\": \"/\" \n"
+	content += "\t\t}\n"
+	content += "\t]\n"
+	content += "}"
+	return content
+
+}
+
+func (l *DoubleList) AgregarAPila(carnet string, hora string) {
+	if l.Longitud == 0 {
+		fmt.Println("No hay elementos")
+	} else {
+		aux := l.Inicio
+		for i := 0; i < l.Longitud; i++ {
+			if aux.studentt.Carnet == carnet {
+				aux.pila.Push(hora)
+				return
+			}
+			aux = aux.siguiente
+		}
+		fmt.Println("No se encontro el carnet :( ")
+	}
+
+}
+
+func GenerarJson(lista *DoubleList) {
+	contenido := StructJson(lista)
+	CrearArchivoJson()
+	EscribirArchivoJson(contenido)
+}
+
+// func BubbleSort(lista *DoubleList) {
+// 	if lista.Inicio != nil{
+// 		pivote := lista.Inicio
+// 		contador :=0
+// 		for contador !=lista.Longitud{
+// 			actual :=pivote.siguiente
+// 			for actual != nil{
+// 				if pivote.studentt.Carnet > actual.studentt.Carnet{
+// 					tempCarnet:= pivote.studentt.Carnet
+
+// 				}
+// 				actual = actual.siguiente
+// 			}
+// 		}
+// 	}
+// }

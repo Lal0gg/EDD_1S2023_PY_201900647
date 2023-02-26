@@ -2,10 +2,6 @@ package Structs
 
 import (
 	"fmt"
-	"io/ioutil"
-	"os"
-	"os/exec"
-
 )
 
 type PilaAdmin struct {
@@ -62,44 +58,6 @@ func (p *PilaStudent) Poop() {
 	}
 }
 
-func CrearArchivoPilaAdmin(name string) {
-	var _, err = os.Stat(name)
-	if os.IsNotExist(err) {
-		var file, err = os.Create(name)
-		if err != nil {
-			return
-		}
-		defer file.Close()
-	}
-	fmt.Println("Archivo creado con éxito: ", name)
-
-}
-
-func EscribirArchivoPilaAdmin(contenido string, name string) {
-	var file, err = os.OpenFile(name, os.O_RDWR, 0644)
-	if err != nil {
-		return
-	}
-	defer file.Close()
-	_, err = file.WriteString(contenido)
-	if err != nil {
-		return
-	}
-	err = file.Sync()
-	if err != nil {
-		return
-	}
-	fmt.Println("Archivo actualizado con éxito:")
-
-}
-
-func execcutee(name_img string, file_dot string) {
-	path, _ := exec.LookPath("dot")
-	cmd, _ := exec.Command(path, "-Tpng", file_dot, name_img).Output()
-	mode := 0777
-	_ = ioutil.WriteFile(name_img, cmd, os.FileMode(mode))
-}
-
 func (p *PilaAdmin) GraficarPilaAdmin() {
 	nombre_archivo := "./pilaAdmin.dot"
 	nombre_imagen := "pilaAdmin.jpg"
@@ -116,7 +74,7 @@ func (p *PilaAdmin) GraficarPilaAdmin() {
 		aux = aux.siguiente
 	}
 	texto += "}\"]; \n}"
-	CrearArchivoCola(nombre_archivo)
-	EscribirArchivoCola(texto, nombre_archivo)
-	execcutee(nombre_imagen, nombre_archivo)
+	CrearArchivo(nombre_archivo)
+	EscribirArchivo(texto, nombre_archivo)
+	execcute(nombre_imagen, nombre_archivo)
 }

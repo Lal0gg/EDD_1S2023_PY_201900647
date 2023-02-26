@@ -13,7 +13,6 @@ import (
 	"golang.org/x/text/unicode/norm"
 
 	"Code/Structs"
-
 )
 
 var ColaGlobal *Structs.Cola = &Structs.Cola{Primero: nil, Longitud: 0}
@@ -61,8 +60,9 @@ func Login() {
 	if user == "admin" && pass == "admin" {
 		menuAdmin()
 	} else if studenActual != nil {
-		menuStudent()
 		fmt.Println("Bienvenido ", studenActual.FirstName, " ", studenActual.LastName)
+		menuStudent(studenActual.Carnet, studenActual.FirstName, studenActual.LastName)
+
 	} else {
 		fmt.Println("Usuario o contraseña incorrecta")
 	}
@@ -87,18 +87,13 @@ func menuAdmin() {
 		switch op {
 		case 1:
 			fmt.Println("Case 1")
-			//fmt.Println(ColaGlobal.MostrarPrimero())
 			miniMenuPendientes()
 		case 2:
 			fmt.Println("Case 2")
 			ListaDobleGlobal.MostrarConsola()
-			//ColaGlobal.Descolar()
 		case 3:
 			fmt.Println("Case 3")
-			PilaStudenGlobal.MostrarPilaStudent()
-			//PilaAdminGlobal.MostrarPila()
-			//PilaAdminGlobal.Peek()
-			//agregarEstudiante()
+			agregarEstudiante()
 		case 4:
 			fmt.Println("Case 4")
 			cargarMasivo()
@@ -109,12 +104,13 @@ func menuAdmin() {
 	}
 }
 
-func menuStudent() {
+func menuStudent(carnet string, first string, last string) {
 	fmt.Println("$:_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _:$")
 	fmt.Println("$:-------  Student - EDD GoDrive --------:$")
 	fmt.Println("$:_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _:$")
 	fmt.Println("$: Se inició sesión correctamente :$")
-	PilaStudenGlobal.Push(fecha())
+	temporal := "El Estudiante:  \\n" + first + " " + last + "  \\n ha iniciado sesión \\n"
+	ListaDobleGlobal.AgregarAPila(carnet, temporal+fecha())
 
 }
 
@@ -190,9 +186,10 @@ func menuReportes() {
 			ColaGlobal.Graficar()
 			fmt.Println("$: Realizando reporte de estudiantes en cola... :$")
 		case 3:
-			fmt.Println("$: Realizando reporte de bitácora de admin... :$")
 			PilaAdminGlobal.GraficarPilaAdmin()
+			fmt.Println("$: Realizando reporte de bitácora de admin... :$")
 		case 4:
+			Structs.GenerarJson(ListaDobleGlobal)
 			fmt.Println("$: Realizando reporte de JSON... :$")
 		case 5:
 			fmt.Println("$: Regresando al menú principal... :$")
@@ -217,12 +214,12 @@ func miniMenuPendientes() {
 		switch op {
 		case 1:
 			fmt.Println("$: Aceptando Estudiante... :$")
-			PilaAdminGlobal.Puush("Se Aceptó al \n \\nEstudiante  \n \\n" + fecha())
-			ListaDobleGlobal.InsertarAlFinal(ColaGlobal.MostrarPrimero())
+			PilaAdminGlobal.Puush("Se Aceptó al \n \\nEstudiante: " + ColaGlobal.MostrarPrimero().FirstName + " " + ColaGlobal.MostrarPrimero().LastName + "\\n" + fecha())
+			ListaDobleGlobal.InsertarOrdenado(ColaGlobal.MostrarPrimero())
 			ColaGlobal.Descolar()
 		case 2:
 			fmt.Println("$: Rechazando Estudiante... :$")
-			PilaAdminGlobal.Puush("Se Rechazó al \\n Estudiante \\n" + fecha())
+			PilaAdminGlobal.Puush("Se Rechazó al \n \\nEstudiante: " + ColaGlobal.MostrarPrimero().FirstName + " " + ColaGlobal.MostrarPrimero().LastName + "\\n" + fecha())
 			ColaGlobal.Descolar()
 		case 3:
 			fmt.Println("$: Regresando al menú principal... :$")

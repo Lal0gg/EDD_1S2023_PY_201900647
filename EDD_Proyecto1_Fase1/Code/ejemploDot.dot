@@ -1,0 +1,17 @@
+digraph lista {
+    {rank=same;
+    nodo0[label="201700916",shape=box];
+    nodo1[label="201700917",shape=box];
+    nodo2[label="201700918",shape=box];
+    nodo3[label="201700919",shape=box];
+    }
+    {rank=same
+    rankdir=LR;
+    nodoP0[shape=record label="{|log1|log2}"];
+    nodoP2[shape=record label="{|log4|log6|log8|log10}"];
+    }
+    
+    nodo0 -> nodo1 -> nodo2 -> nodo3;
+    nodo0 -> nodoP0;
+    nodo2 -> nodoP2;
+}
