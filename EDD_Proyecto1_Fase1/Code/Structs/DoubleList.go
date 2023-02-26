@@ -2,6 +2,7 @@ package Structs
 
 import (
 	"fmt"
+
 )
 
 type DoubleList struct {
@@ -158,19 +159,8 @@ func GenerarJson(lista *DoubleList) {
 	EscribirArchivoJson(contenido)
 }
 
-// func BubbleSort(lista *DoubleList) {
-// 	if lista.Inicio != nil{
-// 		pivote := lista.Inicio
-// 		contador :=0
-// 		for contador !=lista.Longitud{
-// 			actual :=pivote.siguiente
-// 			for actual != nil{
-// 				if pivote.studentt.Carnet > actual.studentt.Carnet{
-// 					tempCarnet:= pivote.studentt.Carnet
+func (l *DoubleList )GraficarListaDoble(){
+	
 
-// 				}
-// 				actual = actual.siguiente
-// 			}
-// 		}
-// 	}
-// }
+
+}
