@@ -4,28 +4,17 @@ fontname="Courier New";
 label = "Pila de Administradores";
 bgcolor="turquoise4";
 node[shape=record ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="darkseagreen1" ];
-node0[label="{|Se Rechazó al 
- \nEstudiante: Jonatan Gonzalez\nFecha:25/02/2023 
-Hora:20:49:17|Se Aceptó al 
- \nEstudiante: Alejandro Caballeros\nFecha:25/02/2023 
-Hora:20:49:14|Se Aceptó al 
- \nEstudiante: Lourdes Reyes\nFecha:25/02/2023 
-Hora:20:49:14|Se Aceptó al 
- \nEstudiante: Ebany Larios\nFecha:25/02/2023 
-Hora:20:49:13|Se Aceptó al 
- \nEstudiante: Leonardo Martinez\nFecha:25/02/2023 
-Hora:20:49:12|Se Aceptó al 
- \nEstudiante: Cristian Suy\nFecha:25/02/2023 
-Hora:20:49:12}"]; 
-}}
-Hora:13:50:32|Se Aceptó al \nEstudiante \nFecha:25/02/2023 
-Hora:13:50:30}"]; 
-}tó al 
- Estudiante 
-Fecha:25/02/2023 
-Hora:13:39:59}"]; 
-}iante 
-"
-"Fecha:25/02/2023 
-Hora:13:32:18}"]; 
+node0[label="{|Se Aceptó al 
+ \nEstudiante: Jonatan Gonzalez\nFecha:28/02/2023 
+Hora:04:08:24|Se Aceptó al 
+ \nEstudiante: Alejandro Caballeros\nFecha:28/02/2023 
+Hora:04:08:24|Se Aceptó al 
+ \nEstudiante: Lourdes Reyes\nFecha:28/02/2023 
+Hora:04:08:23|Se Aceptó al 
+ \nEstudiante: Ebany Larios\nFecha:28/02/2023 
+Hora:04:08:23|Se Aceptó al 
+ \nEstudiante: Leonardo Martinez\nFecha:28/02/2023 
+Hora:04:08:22|Se Aceptó al 
+ \nEstudiante: Cristian Suy\nFecha:28/02/2023 
+Hora:04:08:22}"]; 
 }

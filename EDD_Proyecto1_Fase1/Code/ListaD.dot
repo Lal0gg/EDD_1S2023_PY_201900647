@@ -1,0 +1,21 @@
+digraph lista{
+fontname="Courier New";
+fontsize="20pt";
+label = "Reporte Estudiantes en el Sistema";
+bgcolor="paleturquoise";
+{rank=same;
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo0 [label="Cristian Suy \n 201700918"];
+nodeP0[label="{|El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:05:46:01|El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:05:46:01}"]; 
+nodo1 [label="Leonardo Martinez \n 201780044"];
+nodeP1[label="{|El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:05:45:54|El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:05:45:54}"]; 
+nodo0->nodo1;
+nodo1->nodo0;
+{rank=same;
+rankdir=LR;
+node[shape=record ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+}}}

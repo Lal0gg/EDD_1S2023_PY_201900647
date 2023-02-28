@@ -2,11 +2,12 @@ package Structs
 
 import (
 	"fmt"
-
+	"strconv"
 )
 
 type DoubleList struct {
 	Inicio   *NodeSt
+	Final    *NodeSt
 	Longitud int
 }
 
@@ -22,20 +23,20 @@ func (l *DoubleList) newNodo(studentt *Student) *NodeSt {
 	return &NodeSt{studentt: studentt, siguiente: nil, anterior: nil, pila: &PilaStudent{Primero: nil, Longitud: 0}}
 }
 
-func (l *DoubleList) InsertarAlFinal(newStudent *Student) {
-	if l.isEmpty() {
-		l.Inicio = l.newNodo(newStudent)
-		l.Longitud++
-	} else {
-		aux := l.Inicio
-		for aux.siguiente != nil {
-			aux = aux.siguiente
-		}
-		aux.siguiente = l.newNodo(newStudent)
-		aux.siguiente.anterior = aux
-		l.Longitud++
-	}
-}
+// func (l *DoubleList) InsertarAlFinal(newStudent *Student) {
+// 	if l.isEmpty() {
+// 		l.Inicio = l.newNodo(newStudent)
+// 		l.Longitud++
+// 	} else {
+// 		aux := l.Inicio
+// 		for aux.siguiente != nil {
+// 			aux = aux.siguiente
+// 		}
+// 		aux.siguiente = l.newNodo(newStudent)
+// 		aux.siguiente.anterior = aux
+// 		l.Longitud++
+// 	}
+// }
 
 func (l *DoubleList) InsertarOrdenado(newstudent *Student) {
 	if l.isEmpty() {
@@ -66,11 +67,49 @@ func (l *DoubleList) InsertarOrdenado(newstudent *Student) {
 	}
 }
 
+func (l *DoubleList) InsertionOrdenado(newStudent *Student) {
+	Nodito := l.newNodo(newStudent)
+	if l.Inicio == nil {
+		l.Inicio = Nodito
+		l.Final = Nodito
+		l.Longitud++
+		return
+	}
+	if newStudent.Carnet < l.Inicio.studentt.Carnet {
+		Nodito.siguiente = l.Inicio
+		l.Inicio.anterior = Nodito
+		l.Inicio = Nodito
+		l.Longitud++
+		return
+	}
+	noditoActual := l.Inicio
+
+	for noditoActual.siguiente != nil && noditoActual.siguiente.studentt.Carnet < newStudent.Carnet {
+		noditoActual = noditoActual.siguiente
+	}
+
+	if noditoActual.siguiente == nil {
+		noditoActual.siguiente = Nodito
+		Nodito.anterior = noditoActual
+		l.Final = Nodito
+		l.Longitud++
+	} else {
+		noditoSiguiente := noditoActual.siguiente
+		noditoActual.siguiente = Nodito
+		Nodito.anterior = noditoActual
+		Nodito.siguiente = noditoSiguiente
+		noditoSiguiente.anterior = Nodito
+		l.Longitud++
+	}
+
+}
+
 func (l *DoubleList) MostrarConsola() {
 	aux := l.Inicio
 	fmt.Println(" _ _ _ _ _ _ _ _ L I S T A _ E S T U D I A N T E S _ _ _ _ _ _ _ _")
 	for aux != nil {
 		fmt.Println("Nombre: ", aux.studentt.FirstName, " ", aux.studentt.LastName, " Carnet: ", aux.studentt.Carnet, "Pila: ", ContenidoPila(aux.pila))
+		//fmt.Println(aux.studentt)
 		fmt.Println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ")
 		aux = aux.siguiente
 	}
@@ -123,7 +162,7 @@ func StructJson(lista *DoubleList) string {
 		content += "\t\t},\n"
 		aux = aux.siguiente
 	}
-	//esto es para el ultimo elemento
+
 	content += "\t\t{\n"
 	content += "\t\t\t\"nombre\": " + "\"" + aux.studentt.FirstName + " " + aux.studentt.LastName + "\", \n"
 	content += "\t\t\t\"carnet\": " + "\"" + aux.studentt.Carnet + "\", \n"
@@ -159,8 +198,56 @@ func GenerarJson(lista *DoubleList) {
 	EscribirArchivoJson(contenido)
 }
 
-func (l *DoubleList )GraficarListaDoble(){
-	
+func (l *DoubleList) GraficarListaDoble() string {
 
+	texto := "digraph lista{\n"
+	texto += "fontname=\"Courier New\";\n"
+	texto += "fontsize=\"20pt\";\n"
+	texto += "label = \"Reporte Estudiantes en el Sistema\";\n"
+	texto += "bgcolor=\"paleturquoise\";\n"
+	texto += "{rank=same;\n"
+	texto += "node[shape=folder ,fontsize=\"20pt\",penwidth=4,fontname=\"Courier New\",style=\"filled\",fillcolor=\"lavenderblush1\" ]; \n"
 
+	aux := l.Inicio
+	aux2 := l.Inicio.pila.Primero
+	for i := 0; i < l.Longitud; i++ {
+		texto = texto + "nodo" + strconv.Itoa(i) + " [label=\"" + aux.studentt.FirstName + " " + aux.studentt.LastName + " \\n " + aux.studentt.Carnet + "\"];\n"
+		aux = aux.siguiente
+	}
+
+	for j := 0; j < l.Longitud-1; j++ {
+		texto += "nodo" + strconv.Itoa(j) + "->nodo" + strconv.Itoa(j+1) + ";\n"
+	}
+
+	for k := 0; k < l.Longitud-1; k++ {
+		texto += "nodo" + strconv.Itoa(k+1) + "->nodo" + strconv.Itoa(k) + ";\n"
+	}
+
+	texto += "{rank=same;\n"
+	texto += "rankdir=LR;\n"
+	texto += "node[shape=record ,fontsize=\"20pt\",penwidth=4,fontname=\"Courier New\",style=\"filled\",fillcolor=\"lavenderblush1\" ]; \n"
+
+	for m := 0; m < l.Longitud; m++ {
+		texto += "nodeP" + strconv.Itoa(m) + "[label=\"" + "{"
+		for n := 0; n < l.Inicio.pila.Longitud; n++ {
+			texto = texto + "|" + aux2.hora
+
+		}
+		texto += "}\"]; \n"
+		aux2 = aux2.siguiente
+	}
+
+	texto += "}"
+	texto += "}"
+	texto += "}"
+	return texto
+}
+
+func GraficarLD(texto string) {
+
+	nombre_archivo := "./ListaD.dot"
+	nombre_imagen := "ListaD.jpg"
+	CrearArchivo(nombre_archivo)
+	EscribirArchivo(texto, nombre_archivo)
+	execcute(nombre_imagen, nombre_archivo)
 }

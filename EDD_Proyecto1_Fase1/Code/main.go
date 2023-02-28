@@ -181,6 +181,8 @@ func menuReportes() {
 		fmt.Scanln(&op)
 		switch op {
 		case 1:
+
+			Structs.GraficarLD(ListaDobleGlobal.GraficarListaDoble())
 			fmt.Println("$: Realizando reporte de estudiantes aceptados... :$")
 		case 2:
 			ColaGlobal.Graficar()
@@ -215,7 +217,8 @@ func miniMenuPendientes() {
 		case 1:
 			fmt.Println("$: Aceptando Estudiante... :$")
 			PilaAdminGlobal.Puush("Se Aceptó al \n \\nEstudiante: " + ColaGlobal.MostrarPrimero().FirstName + " " + ColaGlobal.MostrarPrimero().LastName + "\\n" + fecha())
-			ListaDobleGlobal.InsertarOrdenado(ColaGlobal.MostrarPrimero())
+			//ListaDobleGlobal.InsertarOrdenado(ColaGlobal.MostrarPrimero())
+			ListaDobleGlobal.InsertionOrdenado(ColaGlobal.MostrarPrimero())
 			ColaGlobal.Descolar()
 		case 2:
 			fmt.Println("$: Rechazando Estudiante... :$")
