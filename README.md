@@ -773,7 +773,7 @@ type Student struct {
 ```
 
 <div align="center">
-<img src="https://tenor.com/view/gopher-powerful-golang-star-wars-go-gif-22202865" align="center" style="width: 100%; height:100% " />
+<img src="https://tenor.com/es/view/gopher-powerful-golang-star-wars-go-gif-22202865" align="center" style="width: 100%; height:100% " />
 </div> 
 
 
