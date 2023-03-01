@@ -13,6 +13,7 @@ import (
 	"golang.org/x/text/unicode/norm"
 
 	"Code/Structs"
+
 )
 
 var ColaGlobal *Structs.Cola = &Structs.Cola{Primero: nil, Longitud: 0}
@@ -58,6 +59,7 @@ func Login() {
 	fmt.Scanln(&pass)
 	studenActual := ListaDobleGlobal.EstudianteVal(user, pass)
 	if user == "admin" && pass == "admin" {
+		fmt.Println("Bienvenido Admin :D ")
 		menuAdmin()
 	} else if studenActual != nil {
 		menuStudent(studenActual.Carnet, studenActual.FirstName, studenActual.LastName)
