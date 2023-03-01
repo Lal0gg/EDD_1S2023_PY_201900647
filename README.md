@@ -772,10 +772,10 @@ type Student struct {
 }
 ```
 
-1[kokun]()
+![kokun]()
 
 <div align="center">
-<img src="https://res.cloudinary.com/superfolio/image/upload/v1620689979/68747470733a2f2f692e70696e696d672e636f6d2f6f726967696e616c732f63362f33332f63322f63363333633230656465383266306530636564376435373064626533613166332e676966_yjuh2s.gif](https://github.com/Lal0gg/EDD_1S2023_PY_201900647/blob/main/EDD_Proyecto1_Fase1/gopher-powerful.gif" align="center" style="width: 100%; height:100% " />
+<img src="https://github.com/Lal0gg/EDD_1S2023_PY_201900647/blob/main/EDD_Proyecto1_Fase1/gopher-powerful.gif" align="center" style="width: 100%; height:100% " />
 </div> 
 
 
