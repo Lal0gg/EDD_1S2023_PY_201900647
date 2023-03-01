@@ -773,6 +773,6 @@ type Student struct {
 ```
 
 
-[!foto ] (https://tenor.com/es/view/gopher-powerful-golang-star-wars-go-gif-22202865)
+![foto](https://tenor.com/es/view/gopher-powerful-golang-star-wars-go-gif-22202865)
 
 
