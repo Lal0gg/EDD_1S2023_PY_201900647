@@ -15,8 +15,8 @@
 
 ## Introducción 📝
 
->La aplicación WebIDE-Editor es un programa que sirve para analizar archivos de tipo gwp y txt  el cual fue desarrollada con Python para ser específico la versión 3.10.5, mas adelante se explicara como funcionan los diferentes métodos que la componen de una manera lógica.
->
+>La aplicación EDDGoDrive es un programa que sirve para leer archivos de entrada de tipo *csv* y hacer uso de  Tipos de dato abstracto (TDA) como lo son Listas doblemente enlazadas, colas, pilas. Con el fin de poder analizar la información y llevar un registro de usuarios y reportes de los mismos, se utilizó el lenguaje de programación llamado Golang específicamente en su version 1.20 y además de la herramienta para hacer reportes llamada Grapvhiz, mas adelante se explicara como funcionan los diferentes métodos que la componen de una manera lógica.
+
 
 ## Objetivos 📝
 
