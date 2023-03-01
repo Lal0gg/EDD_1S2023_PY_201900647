@@ -48,16 +48,16 @@
 
 > - main.go
 > - Estructuras
-  > - ColaStudentsPend.go
-  > - DoubleList.go
-  > - nodeCola.go
-  > - nodePilaAdmin.go
-  > - nodePilaStudent.go
-  > - nodestudent.go
-  > - PilaAdmin.go
-  > - PilaStudent.go
-  > - ReporteMain.go
-  > - student.go
+  >> - ColaStudentsPend.go
+  >> - DoubleList.go
+  >> - nodeCola.go
+  >> - nodePilaAdmin.go
+  >> - nodePilaStudent.go
+  >> - nodestudent.go
+  >> - PilaAdmin.go
+  >> - PilaStudent.go
+  >> - ReporteMain.go
+  >> - student.go
 
 ##### main.go 📁
 
