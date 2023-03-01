@@ -19,6 +19,8 @@
 
 
 ## Objetivos 📝
+> - Dar a conocer las funciones a nivel interno del programa para que a otros desarrolladores se les haga fácil el entender el funcionamiento.
+> - Así mismo dar a una herramienta más para el análisis de información de un archivo csv  y el poder manejar de la mejor manera la información analizada.
 
 ## Dirigido 📍
 
