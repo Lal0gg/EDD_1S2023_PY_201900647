@@ -772,7 +772,7 @@ type Student struct {
 }
 ```
 
-![kokun]()
+
 
 <div align="center">
 <img src="https://github.com/Lal0gg/EDD_1S2023_PY_201900647/blob/main/EDD_Proyecto1_Fase1/gopher-powerful.gif" align="center" style="width: 100%; height:100% " />
