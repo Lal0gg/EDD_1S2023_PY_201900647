@@ -3,78 +3,82 @@ rankdir=LR;
 bgcolor="darkturquoise";
 node[shape=folder,fontsize="20pt",penwidth=4,fontname="Courier New",fixedsize=true,width=5,height=1,style="filled",fillcolor="lavenderblush1"];
 nodonull[label="null"];
-nodo0[label="Nombre:Kevyn Giron
+nodo0[label="Nombre:Jonatan Gonzalez
+Carnet:201900570"];
+nodo1[label="Nombre:Kevyn Giron
 Carnet:201700653"];
-nodo1[label="Nombre:Eduardo Cuevas
+nodo2[label="Nombre:Eduardo Cuevas
 Carnet:202004703"];
-nodo2[label="Nombre:Roberto Gomez
+nodo3[label="Nombre:Roberto Gomez
 Carnet:202000544"];
-nodo3[label="Nombre:Sebastian Godoy
+nodo4[label="Nombre:Sebastian Godoy
 Carnet:202002940"];
-nodo4[label="Nombre:Juan Augusto
+nodo5[label="Nombre:Juan Augusto
 Carnet:201801683"];
-nodo5[label="Nombre:Bryan Montepeque
+nodo6[label="Nombre:Bryan Montepeque
 Carnet:201700375"];
-nodo6[label="Nombre:Karen Gatica
+nodo7[label="Nombre:Karen Gatica
 Carnet:201900603"];
-nodo7[label="Nombre:Kevin Garcia
+nodo8[label="Nombre:Kevin Garcia
 Carnet:202113553"];
-nodo8[label="Nombre:Diego Huite
+nodo9[label="Nombre:Diego Huite
 Carnet:202003585"];
-nodo9[label="Nombre:Josue Porres
+nodo10[label="Nombre:Josue Porres
 Carnet:202112026"];
-nodo10[label="Nombre:Sergio Ralda
+nodo11[label="Nombre:Sergio Ralda
 Carnet:202103216"];
-nodo11[label="Nombre:Juan Valle
+nodo12[label="Nombre:Juan Valle
 Carnet:202101648"];
-nodo12[label="Nombre:Jose Melendez
+nodo13[label="Nombre:Jose Melendez
 Carnet:201325511"];
-nodo13[label="Nombre:Ethel Herrarte
+nodo14[label="Nombre:Ethel Herrarte
 Carnet:200819325"];
-nodo14[label="Nombre:Sergio Guix
+nodo15[label="Nombre:Sergio Guix
 Carnet:201906468"];
-nodo15[label="Nombre:Jose Donis
+nodo16[label="Nombre:Jose Donis
 Carnet:201801444"];
-nodo16[label="Nombre:Marvin Castellanos
+nodo17[label="Nombre:Marvin Castellanos
 Carnet:201700490"];
-nodo17[label="Nombre:Ludwing Lopez
+nodo18[label="Nombre:Ludwing Lopez
 Carnet:201907608"];
-nodo18[label="Nombre:Sergio Bucaro
+nodo19[label="Nombre:Sergio Bucaro
 Carnet:201800673"];
-nodo19[label="Nombre:Christian Esquite
+nodo20[label="Nombre:Christian Esquite
 Carnet:200819074"];
-nodo20[label="Nombre:Luis Yaquian
+nodo21[label="Nombre:Luis Yaquian
 Carnet:202001471"];
-nodo21[label="Nombre:Luis Lizama
+nodo22[label="Nombre:Luis Lizama
 Carnet:202010023"];
-nodo22[label="Nombre:Olivert Vargas
+nodo23[label="Nombre:Olivert Vargas
 Carnet:201503617"];
-nodo23[label="Nombre:Jose Ibarra
+nodo24[label="Nombre:Jose Ibarra
 Carnet:202001800"];
-nodo24[label="Nombre:Mauricio Castro
+nodo25[label="Nombre:Mauricio Castro
 Carnet:202100299"];
-nodo25[label="Nombre:Velveth Perez
+nodo26[label="Nombre:Velveth Perez
 Carnet:202010810"];
-nodo26[label="Nombre:Miguel Sac
+nodo27[label="Nombre:Miguel Sac
 Carnet:201222535"];
-nodo27[label="Nombre:Jose Panaza
+nodo28[label="Nombre:Jose Panaza
 Carnet:202111478"];
-nodo28[label="Nombre:Pablo Fernandez
+nodo29[label="Nombre:Pablo Fernandez
 Carnet:201807411"];
-nodo29[label="Nombre:Henderson Hernandez
+nodo30[label="Nombre:Henderson Hernandez
 Carnet:201019694"];
-nodo30[label="Nombre:Aida Mansilla
+nodo31[label="Nombre:Aida Mansilla
 Carnet:202100239"];
-nodo31[label="Nombre:Jeser Rodas
+nodo32[label="Nombre:Jeser Rodas
 Carnet:202105561"];
-nodo32[label="Nombre:Anthony Zea
+nodo33[label="Nombre:Anthony Zea
 Carnet:202104782"];
-nodo33[label="Nombre:Julio Fernandez
+nodo34[label="Nombre:Julio Fernandez
 Carnet:201902416"];
-nodo34[label="Nombre:Hugo Giron
+nodo35[label="Nombre:Hugo Giron
 Carnet:202004807"];
-nodo35[label="Nombre:Mario Lopez
+nodo36[label="Nombre:Mario Lopez
 Carnet:202109554"];
+nodo37[label="Nombre:Jimena Gonzalez
+Carnet:202200099"];
 nodo0->nodo1[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
 nodo1->nodo2[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
 nodo2->nodo3[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
@@ -110,5 +114,7 @@ nodo31->nodo32[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="bla
 nodo32->nodo33[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
 nodo33->nodo34[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
 nodo34->nodo35[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
-nodo35->nodonull[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo35->nodo36[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo36->nodo37[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
+nodo37->nodonull[arrowsize=2.5,dir=both,arrowtail=dot,arrowhead= normal,color="black",fillcolor=darkorchid2,label="             "];
 }

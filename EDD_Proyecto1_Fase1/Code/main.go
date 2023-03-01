@@ -60,11 +60,11 @@ func Login() {
 	if user == "admin" && pass == "admin" {
 		menuAdmin()
 	} else if studenActual != nil {
-		fmt.Println("Bienvenido ", studenActual.FirstName, " ", studenActual.LastName)
 		menuStudent(studenActual.Carnet, studenActual.FirstName, studenActual.LastName)
+		fmt.Println("Bienvenido ", studenActual.FirstName, " ", studenActual.LastName)
 
 	} else {
-		fmt.Println("Usuario o contraseña incorrecta")
+		fmt.Println("Usuario o contraseña incorrecta :( ")
 	}
 }
 
@@ -181,8 +181,7 @@ func menuReportes() {
 		fmt.Scanln(&op)
 		switch op {
 		case 1:
-
-			Structs.GraficarLD(ListaDobleGlobal.GraficarListaDoble())
+			Structs.GraficarLD(ListaDobleGlobal.GraficarListaDobleConPila())
 			fmt.Println("$: Realizando reporte de estudiantes aceptados... :$")
 		case 2:
 			ColaGlobal.Graficar()
@@ -205,7 +204,7 @@ func miniMenuPendientes() {
 	op := 0
 	for !out {
 		fmt.Println("$:° ° ° ° °  Pendientes : ", ColaGlobal.Longitud, "° ° ° ° °:$")
-		fmt.Print("$: Estudiante actual: ")
+		fmt.Print("$: ")
 		ColaGlobal.MostrarPrimero2()
 		fmt.Println("$:° ° °   1. Aceptar Estudiante    ° ° °:$")
 		fmt.Println("$:° ° °   2. Rechazar Estudiante   ° ° °:$")
@@ -215,14 +214,14 @@ func miniMenuPendientes() {
 		fmt.Scanln(&op)
 		switch op {
 		case 1:
-			fmt.Println("$: Aceptando Estudiante... :$")
 			PilaAdminGlobal.Puush("Se Aceptó al \n \\nEstudiante: " + ColaGlobal.MostrarPrimero().FirstName + " " + ColaGlobal.MostrarPrimero().LastName + "\\n" + fecha())
 			//ListaDobleGlobal.InsertarOrdenado(ColaGlobal.MostrarPrimero())
+			fmt.Println("$: Aceptando al Estudiante:  " + ColaGlobal.MostrarPrimero().FirstName + " " + ColaGlobal.MostrarPrimero().LastName + " :$")
 			ListaDobleGlobal.InsertionOrdenado(ColaGlobal.MostrarPrimero())
 			ColaGlobal.Descolar()
 		case 2:
-			fmt.Println("$: Rechazando Estudiante... :$")
 			PilaAdminGlobal.Puush("Se Rechazó al \n \\nEstudiante: " + ColaGlobal.MostrarPrimero().FirstName + " " + ColaGlobal.MostrarPrimero().LastName + "\\n" + fecha())
+			fmt.Println("$: Rechazando al  Estudiante: " + ColaGlobal.MostrarPrimero().FirstName + " " + ColaGlobal.MostrarPrimero().LastName + " :$")
 			ColaGlobal.Descolar()
 		case 3:
 			fmt.Println("$: Regresando al menú principal... :$")

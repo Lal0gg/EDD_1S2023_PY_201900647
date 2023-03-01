@@ -124,7 +124,6 @@ func ContenidoPila(pila *PilaStudent) string {
 			aux = aux.siguiente
 		}
 	} else {
-		content = "|       |"
 	}
 	return content
 
@@ -198,22 +197,23 @@ func GenerarJson(lista *DoubleList) {
 	EscribirArchivoJson(contenido)
 }
 
-func (l *DoubleList) GraficarListaDoble() string {
-
+func (l *DoubleList) GraficarListaDobleConPila() string {
 	texto := "digraph lista{\n"
 	texto += "fontname=\"Courier New\";\n"
 	texto += "fontsize=\"20pt\";\n"
-	texto += "label = \"Reporte Estudiantes en el Sistema\";\n"
 	texto += "bgcolor=\"paleturquoise\";\n"
-	texto += "{rank=same;\n"
 	texto += "node[shape=folder ,fontsize=\"20pt\",penwidth=4,fontname=\"Courier New\",style=\"filled\",fillcolor=\"lavenderblush1\" ]; \n"
 
 	aux := l.Inicio
-	aux2 := l.Inicio.pila.Primero
+
+	textogg := "{rank = same "
 	for i := 0; i < l.Longitud; i++ {
 		texto = texto + "nodo" + strconv.Itoa(i) + " [label=\"" + aux.studentt.FirstName + " " + aux.studentt.LastName + " \\n " + aux.studentt.Carnet + "\"];\n"
 		aux = aux.siguiente
+		textogg = textogg + "nodo" + strconv.Itoa(i) + ";"
+
 	}
+	texto += textogg + "};\n"
 
 	for j := 0; j < l.Longitud-1; j++ {
 		texto += "nodo" + strconv.Itoa(j) + "->nodo" + strconv.Itoa(j+1) + ";\n"
@@ -223,24 +223,25 @@ func (l *DoubleList) GraficarListaDoble() string {
 		texto += "nodo" + strconv.Itoa(k+1) + "->nodo" + strconv.Itoa(k) + ";\n"
 	}
 
-	texto += "{rank=same;\n"
-	texto += "rankdir=LR;\n"
-	texto += "node[shape=record ,fontsize=\"20pt\",penwidth=4,fontname=\"Courier New\",style=\"filled\",fillcolor=\"lavenderblush1\" ]; \n"
+	aux = l.Inicio
 
 	for m := 0; m < l.Longitud; m++ {
-		texto += "nodeP" + strconv.Itoa(m) + "[label=\"" + "{"
-		for n := 0; n < l.Inicio.pila.Longitud; n++ {
-			texto = texto + "|" + aux2.hora
-
-		}
-		texto += "}\"]; \n"
-		aux2 = aux2.siguiente
+		texto += "subgraph cluster" + strconv.Itoa(m) + "{\n"
+		texto += "pencolor=transparent;\n"
+		texto += "node[shape=folder ,fontsize=\"20pt\",penwidth=4,fontname=\"Courier New\",style=\"filled\",fillcolor=\"lavenderblush1\" ]; \n"
+		texto += "nodo" + strconv.Itoa(m) + ";\n"
+		//texto += "label = \"" + aux.studentt.FirstName + " " + aux.studentt.LastName + "\";\n"
+		texto += "color=blue;\n"
+		texto += "nodo" + strconv.Itoa(m) + "->nodo" + strconv.Itoa(m) + "pila;\n"
+		texto += "nodo" + strconv.Itoa(m) + "pila [label=\" " + ContenidoPilaG(aux.pila) + "\"];\n"
+		texto += "}\n"
+		aux = aux.siguiente
 	}
 
 	texto += "}"
 	texto += "}"
-	texto += "}"
 	return texto
+
 }
 
 func GraficarLD(texto string) {
@@ -250,4 +251,20 @@ func GraficarLD(texto string) {
 	CrearArchivo(nombre_archivo)
 	EscribirArchivo(texto, nombre_archivo)
 	execcute(nombre_imagen, nombre_archivo)
+}
+
+func ContenidoPilaG(pila *PilaStudent) string {
+	content := ""
+	aux := pila.Primero
+	if aux != nil {
+		for aux != nil {
+			content += " | " + aux.hora + " | \\n"
+			content += "_________________" + "\\n "
+			aux = aux.siguiente
+		}
+
+	} else {
+	}
+	return content
+
 }

@@ -1,21 +1,98 @@
 digraph lista{
 fontname="Courier New";
 fontsize="20pt";
-label = "Reporte Estudiantes en el Sistema";
 bgcolor="paleturquoise";
-{rank=same;
 node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
-nodo0 [label="Cristian Suy \n 201700918"];
-nodeP0[label="{|El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
-Hora:05:46:01|El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
-Hora:05:46:01}"]; 
-nodo1 [label="Leonardo Martinez \n 201780044"];
-nodeP1[label="{|El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
-Hora:05:45:54|El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
-Hora:05:45:54}"]; 
+nodo0 [label="Ebany Larios \n 201403877"];
+nodo1 [label="Cristian Suy \n 201700918"];
+nodo2 [label="Lourdes Reyes \n 201902259"];
+{rank = same nodo0;nodo1;nodo2;};
 nodo0->nodo1;
+nodo1->nodo2;
 nodo1->nodo0;
-{rank=same;
-rankdir=LR;
-node[shape=record ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
-}}}
+nodo2->nodo1;
+subgraph cluster0{
+pencolor=transparent;
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo0;
+color=blue;
+nodo0->nodo0pila;
+nodo0pila [label=" "];
+}
+subgraph cluster1{
+pencolor=transparent;
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo1;
+color=blue;
+nodo1->nodo1pila;
+nodo1pila [label="  | El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:56:39 | \n_________________\n "];
+}
+subgraph cluster2{
+pencolor=transparent;
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo2;
+color=blue;
+nodo2->nodo2pila;
+nodo2pila [label="  | El Estudiante:  \nLourdes Reyes  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:57:31 | \n_________________\n  | El Estudiante:  \nLourdes Reyes  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:57:19 | \n_________________\n "];
+}
+}}2/2023 
+Hora:21:40:09 | \n_________________\n  | El Estudiante:  \nLeonardo Martinez  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:40:03 | \n_________________\n "];
+}
+subgraph cluster3{
+pencolor=transparent;
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo3;
+color=blue;
+nodo3->nodo3pila;
+nodo3pila [label="  | El Estudiante:  \nLourdes Reyes  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:41:33 | \n_________________\n "];
+}
+subgraph cluster4{
+pencolor=transparent;
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo4;
+color=blue;
+nodo4->nodo4pila;
+nodo4pila [label=" "];
+}
+}} sesión \nFecha:28/02/2023 
+Hora:21:37:01 | \n_________________\n "];
+}
+subgraph cluster4{
+pencolor=transparent;
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo4;
+color=blue;
+nodo4->nodo4pila;
+nodo4pila [label=" "];
+}
+subgraph cluster5{
+pencolor=transparent;
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo5;
+color=blue;
+nodo5->nodo5pila;
+nodo5pila [label="  | El Estudiante:  \nLourdes Reyes  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:37:47 | \n_________________\n "];
+}
+subgraph cluster6{
+pencolor=transparent;
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo6;
+color=blue;
+nodo6->nodo6pila;
+nodo6pila [label=" "];
+}
+subgraph cluster7{
+pencolor=transparent;
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo7;
+color=blue;
+nodo7->nodo7pila;
+nodo7pila [label=" "];
+}
+}}
