@@ -44,7 +44,7 @@
 
 ### Métodos y clases utilizadas para llevar a cabo el desarrollo de la aplicación 🔖
 
-#### CLASES
+#### CLASES 📁
 
 > - main.go
 > - ColaStudentsPend.go
@@ -57,4 +57,6 @@
 > - PilaStudent.go
 > - ReporteMain.go
 > - student.go
+
+#### main.go 📁
 
