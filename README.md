@@ -24,7 +24,21 @@
 
 ## Dirigido 📍
 
+> Este manual va dirigido para todos los desarrolladores que estén interesados en analizar y aprender como se desarrolló esta aplicación.
+
 ## Especificación Técnica 💾
+
+> **1. Requisitos de Hardaware**
+>   - Computadora de escritorio o portátil.
+>   - Mínimo 4gb de RAM.
+>   - Procesador i-3 de 4ta generación en adelante.
+>   - Mínimo 10 GB de almacenamiento en el Disco Duro. 
+
+> **2. Requisitos de Software**
+>   - Windows 7 o superior.
+>   - Golang 1.20
+>   - Graphviz
+>   - Visual Estudio Code
 
 ## Lógica del Programa 💽
 
