@@ -42,4 +42,19 @@
 
 ## Lógica del Programa 💽
 
-### Métodos y clases utilizadas para llevar a cabo el desarrollo de la aplicación.
+### Métodos y clases utilizadas para llevar a cabo el desarrollo de la aplicación 🔖
+
+#### CLASES
+
+- main.go
+- ColaStudentsPend.go
+- DoubleList.go
+- nodeCola.go
+- nodePilaAdmin.go
+- nodePilaStudent.go
+- nodestudent.go
+- PilaAdmin.go
+- PilaStudent.go
+- ReporteMain.go
+- student.go
+
