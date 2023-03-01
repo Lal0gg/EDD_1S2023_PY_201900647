@@ -46,15 +46,15 @@
 
 #### CLASES
 
-- main.go
-- ColaStudentsPend.go
-- DoubleList.go
-- nodeCola.go
-- nodePilaAdmin.go
-- nodePilaStudent.go
-- nodestudent.go
-- PilaAdmin.go
-- PilaStudent.go
-- ReporteMain.go
-- student.go
+> - main.go
+> - ColaStudentsPend.go
+> - DoubleList.go
+> - nodeCola.go
+> - nodePilaAdmin.go
+> - nodePilaStudent.go
+> - nodestudent.go
+> - PilaAdmin.go
+> - PilaStudent.go
+> - ReporteMain.go
+> - student.go
 
