@@ -771,7 +771,7 @@ type Student struct {
 	Password  string
 }
 ```
-![kokun]()
+![kokun](https://github.com/Lal0gg/EDD_1S2023_PY_201900647/blob/main/EDD_Proyecto1_Fase1/gopher-powerful.gif)
 
 
 
