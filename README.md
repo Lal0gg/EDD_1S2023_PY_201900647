@@ -1,5 +1,5 @@
 # MANUAL TÉCNICO 🖥️
 
-Nombre: Eduardo Jousué González Cifuentes
-Carnet: 201900647
+####  Nombre: Eduardo Jousué González Cifuentes
+#### Carnet: 201900647
 
