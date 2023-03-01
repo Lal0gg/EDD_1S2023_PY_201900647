@@ -62,4 +62,24 @@
 ##### main.go 📁
 
 > En esta clase se desarrollo la mayoría de métodos que se desarrollaron para el funcionamiento 
+##### importacion de librerias
+
+```golang
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+	"unicode"
+
+	"golang.org/x/text/transform"
+	"golang.org/x/text/unicode/norm"
+
+	"Code/Structs"
+
+)
+
+```
 
