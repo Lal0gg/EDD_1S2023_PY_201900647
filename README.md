@@ -11,3 +11,15 @@
 - Dirigido
 - Especificación Técnica
 - Lógica del Programa
+
+
+## Introducción 📝
+
+## Objetivos 📝
+
+## Dirigido 📍
+
+## Especificación Técnica 💾
+
+## Lógica del Programa 💽
+
