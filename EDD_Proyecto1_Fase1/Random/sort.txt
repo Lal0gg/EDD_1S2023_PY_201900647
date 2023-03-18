@@ -1,0 +1,33 @@
+func (dll *DoublyLinkedList) Insert(value int) {
+    node := &Node{value: value}
+
+    if dll.head == nil {
+        dll.head = node
+        dll.tail = node
+        return
+    }
+
+    if value < dll.head.value {
+        node.next = dll.head
+        dll.head.prev = node
+        dll.head = node
+        return
+    }
+
+    current := dll.head
+    for current.next != nil && current.next.value < value {
+        current = current.next
+    }
+
+    if current.next == nil {
+        current.next = node
+        node.prev = current
+        dll.tail = node
+    } else {
+        nextNode := current.next
+        current.next = node
+        node.prev = current
+        node.next = nextNode
+        nextNode.prev = node
+    }
+}

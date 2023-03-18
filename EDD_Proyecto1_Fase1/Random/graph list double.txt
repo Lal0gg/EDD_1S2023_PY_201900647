@@ -1,0 +1,42 @@
+digraph lista {
+    fontname="Courier new"
+    fontsize ="20pt"
+    label="Reporte Estudiantes en el Sistema"
+    bgcolor="paleturquoise";
+    {rank=same;
+    
+    node[shape=folder,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1"];
+    nodo0[label="Eduardo González\n 201900647"];
+    nodo1[label="Piter Valiente \n201700917"];
+    nodo2[label="Rodrigo Hernandez \n201700918"];
+    nodo3[label="Lourdes Reyes \n201700919"];
+    }
+    
+    
+    nodo0 -> nodo1[arrowsize=2.5,arrowhead= vee,color="black",fillcolor=orangered,label="             "]; 
+    nodo1 -> nodo2[arrowsize=2.5,arrowhead= vee,color="black",fillcolor=orangered,label="             "];
+    nodo2 -> nodo3[arrowsize=2.5,arrowhead= vee,color="black",fillcolor=orangered,label="             "];
+    
+    
+    
+    nodo1 -> nodo0[arrowsize=2.5,arrowhead= vee,color="black",fillcolor=orangered,label="             "];
+    nodo2 -> nodo1[arrowsize=2.5,arrowhead= vee,color="black",fillcolor=orangered,label="             "];
+    nodo3 -> nodo2[arrowsize=2.5,arrowhead= vee,color="black",fillcolor=orangered,label="             "];
+    
+    {rank=same
+    rankdir=LR;
+    node[shape=record ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ];
+    nodoP0[shape=record label="{|log1|log2}"];
+    nodoP2[shape=record label="{|log4|log6|log8|log10}"];
+    }
+}
+    
+   
+
+    
+    nodo0 -> nodoP0[arrowsize=2.5,arrowhead= vee,color="black",fillcolor=orangered,label="             "];
+    nodo2 -> nodoP2[arrowsize=2.5,arrowhead= vee,color="black",fillcolor=orangered,label="             "];
+    
+    
+   
+}

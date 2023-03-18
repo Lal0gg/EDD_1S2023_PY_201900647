@@ -4,18 +4,18 @@ fontname="Courier New";
 label = "Pila de Administradores";
 bgcolor="turquoise4";
 node[shape=record ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="darkseagreen1" ];
-node0[label="{|Se Rechazó al 
- \nEstudiante: Alejandro Caballeros\nFecha:28/02/2023 
-Hora:21:54:26|Se Aceptó al 
- \nEstudiante: Lourdes Reyes\nFecha:28/02/2023 
-Hora:21:54:24|Se Aceptó al 
- \nEstudiante: Ebany Larios\nFecha:28/02/2023 
-Hora:21:54:22|Se Rechazó al 
- \nEstudiante: Leonardo Martinez\nFecha:28/02/2023 
-Hora:21:54:18|Se Aceptó al 
- \nEstudiante: Cristian Suy\nFecha:28/02/2023 
-Hora:21:54:13}"]; 
-}ó al 
+node0[label="{|Se Aceptó al 
+ \nEstudiante: Ebany Larios\nFecha:01/03/2023 
+Hora:19:43:56|Se Rechazó al 
+ \nEstudiante: Leonardo Martinez\nFecha:01/03/2023 
+Hora:19:43:53|Se Rechazó al 
+ \nEstudiante: Cristian Suy\nFecha:01/03/2023 
+Hora:19:43:51|Se Aceptó al 
+ \nEstudiante: Estudiante Ingenieria\nFecha:01/03/2023 
+Hora:19:43:49|Se Aceptó al 
+ \nEstudiante: Estudiante Usac\nFecha:01/03/2023 
+Hora:19:43:42}"]; 
+}al 
  \nEstudiante: Ebany Larios\nFecha:28/02/2023 
 Hora:19:50:32|Se Aceptó al 
  \nEstudiante: Leonardo Martinez\nFecha:28/02/2023 

@@ -1,0 +1,92 @@
+package main
+
+import (
+    "os/exec"
+)
+
+type Node struct {
+    value int
+    next  *Node
+    prev  *Node
+}
+
+type DoubleLinkedList struct {
+    head *Node
+    tail *Node
+}
+
+func (list *DoubleLinkedList) Insert(value int) {
+    newNode := &Node{value: value}
+
+    if list.head == nil {
+        list.head = newNode
+        list.tail = newNode
+    } else {
+        current := list.head
+        for current != nil && current.value < value {
+            current = current.next
+        }
+
+        if current == nil {
+            newNode.prev = list.tail
+            list.tail.next = newNode
+            list.tail = newNode
+        } else if current == list.head {
+            newNode.next = list.head
+            list.head.prev = newNode
+            list.head = newNode
+        } else {
+            newNode.prev = current.prev
+            newNode.next = current
+            current.prev.next = newNode
+            current.prev = newNode
+        }
+    }
+}
+
+func (list *DoubleLinkedList) ToGraph() error {
+    dotFile, err := os.Create("list.dot")
+    if err != nil {
+        return err
+    }
+    defer dotFile.Close()
+
+    dotFile.WriteString("digraph {\n")
+    dotFile.WriteString("node [shape=record]\n")
+
+    current := list.head
+    for current != nil {
+        dotFile.WriteString("node" + current.value + " [label=\"{<prev>|{" + current.value + "}|<next>}\"]\n")
+        if current.next != nil {
+            dotFile.WriteString("node" + current.value + ":next -> node" + current.next.value + ":prev\n")
+        }
+        if current.prev != nil {
+            dotFile.WriteString("node" + current.value + ":prev -> node" + current.prev.value + ":next\n")
+        }
+        current = current.next
+    }
+
+    dotFile.WriteString("}\n")
+
+    cmd := exec.Command("dot", "-Tpng", "-o", "list.png", "list.dot")
+    err = cmd.Run()
+    if err != nil {
+        return err
+    }
+
+    return nil
+}
+
+func main() {
+    list := DoubleLinkedList{}
+    list.Insert(3)
+    list.Insert(1)
+    list.Insert(2)
+    list.Insert(5)
+    list.Insert(4)
+
+    err := list.ToGraph()
+    if err != nil {
+        panic(err)
+    }
+}

@@ -1,0 +1,25 @@
+func (l *DoubleList) GraficarListaDoble() string {
+	texto := "digraph lista{\n"
+	texto += "fontname=\"Courier New\";\n"
+	texto += "fontsize=\"20pt\";\n"
+	texto += "label = \"Reporte Estudiantes en el Sistema\";\n"
+	texto += "bgcolor=\"paleturquoise\";\n"
+	texto += "{rank=same;\n"
+	texto += "node[shape=folder ,fontsize=\"20pt\",penwidth=4,fontname=\"Courier New\",style=\"filled\",fillcolor=\"lavenderblush1\" ]; \n"
+
+	aux := l.Inicio
+	for i := 0; i < l.Longitud; i++ {
+		texto = texto + "nodo" + strconv.Itoa(i) + " [label=\"" + aux.studentt.FirstName + " " + aux.studentt.LastName + " \\n " + aux.studentt.Carnet + "\"];\n"
+		aux = aux.siguiente
+	}
+	for j := 0; j < l.Longitud-1; j++ {
+		texto += "nodo" + strconv.Itoa(j) + "->nodo" + strconv.Itoa(j+1) + ";\n"
+	}
+
+	for k := 0; k < l.Longitud-1; k++ {
+		texto += "nodo" + strconv.Itoa(k+1) + "->nodo" + strconv.Itoa(k) + ";\n"
+	}
+	texto += "}"
+	texto += "}"
+	return texto
+}

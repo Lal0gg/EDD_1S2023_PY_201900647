@@ -4,8 +4,8 @@ fontsize="20pt";
 bgcolor="paleturquoise";
 node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
 nodo0 [label="Ebany Larios \n 201403877"];
-nodo1 [label="Cristian Suy \n 201700918"];
-nodo2 [label="Lourdes Reyes \n 201902259"];
+nodo1 [label="Estudiante Usac \n 201900641"];
+nodo2 [label="Estudiante Ingenieria \n 201900649"];
 {rank = same nodo0;nodo1;nodo2;};
 nodo0->nodo1;
 nodo1->nodo2;
@@ -17,7 +17,8 @@ node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="fill
 nodo0;
 color=blue;
 nodo0->nodo0pila;
-nodo0pila [label=" "];
+nodo0pila [label="  | El Estudiante:  \nEbany Larios  \n ha iniciado sesión \nFecha:01/03/2023 
+Hora:19:47:26 | \n_________________\n "];
 }
 subgraph cluster1{
 pencolor=transparent;
@@ -25,8 +26,9 @@ node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="fill
 nodo1;
 color=blue;
 nodo1->nodo1pila;
-nodo1pila [label="  | El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
-Hora:21:56:39 | \n_________________\n "];
+nodo1pila [label="  | El Estudiante:  \nEstudiante Usac  \n ha iniciado sesión \nFecha:01/03/2023 
+Hora:19:46:25 | \n_________________\n  | El Estudiante:  \nEstudiante Usac  \n ha iniciado sesión \nFecha:01/03/2023 
+Hora:19:46:12 | \n_________________\n "];
 }
 subgraph cluster2{
 pencolor=transparent;
@@ -34,12 +36,9 @@ node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="fill
 nodo2;
 color=blue;
 nodo2->nodo2pila;
-nodo2pila [label="  | El Estudiante:  \nLourdes Reyes  \n ha iniciado sesión \nFecha:28/02/2023 
-Hora:21:57:31 | \n_________________\n  | El Estudiante:  \nLourdes Reyes  \n ha iniciado sesión \nFecha:28/02/2023 
-Hora:21:57:19 | \n_________________\n "];
+nodo2pila [label=" "];
 }
-}}2/2023 
-Hora:21:40:09 | \n_________________\n  | El Estudiante:  \nLeonardo Martinez  \n ha iniciado sesión \nFecha:28/02/2023 
+}}:40:09 | \n_________________\n  | El Estudiante:  \nLeonardo Martinez  \n ha iniciado sesión \nFecha:28/02/2023 
 Hora:21:40:03 | \n_________________\n "];
 }
 subgraph cluster3{

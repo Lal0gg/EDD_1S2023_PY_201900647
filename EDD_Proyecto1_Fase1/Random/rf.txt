@@ -1,0 +1,64 @@
+digraph lista{
+
+fontname="Courier New";
+fontsize="20pt";
+label = "Reporte Estudiantes en el Sistema";
+bgcolor="paleturquoise";
+{
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo0 [label="Ebany Larios \n 201403877"];
+nodo1 [label="Cristian Suy \n 201700918"];
+nodo2 [label="Leonardo Martinez \n 201780044"];
+nodo3 [label="Lourdes Reyes \n 201902259"];
+nodo0->nodo1;
+nodo1->nodo2;
+nodo2->nodo3;
+nodo1->nodo0;
+nodo2->nodo1;
+nodo3->nodo2;
+subgraph cluster0{
+
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo0;
+label = "Ebany Larios";
+color=blue;
+nodo0->nodo0pila;
+nodo0pila [label="  | El Estudiante:  \nEbany Larios  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:03:58 | \n_________________\n "];
+}
+subgraph cluster1{
+
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo1;
+label = "Cristian Suy";
+color=blue;
+nodo1->nodo1pila;
+nodo1pila [label="  | El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:04:19 | \n_________________\n  | El Estudiante:  \nCristian Suy  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:04:11 | \n_________________\n "];
+}
+subgraph cluster2{
+
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo2;
+label = "Leonardo Martinez";
+color=blue;
+nodo2->nodo2pila;
+nodo2pila [label="  | El Estudiante:  \nLeonardo Martinez  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:04:26 | \n_________________\n  | El Estudiante:  \nLeonardo Martinez  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:03:36 | \n_________________\n  | El Estudiante:  \nLeonardo Martinez  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:03:29 | \n_________________\n "];
+}
+subgraph cluster3{
+
+node[shape=folder ,fontsize="20pt",penwidth=4,fontname="Courier New",style="filled",fillcolor="lavenderblush1" ]; 
+nodo3;
+label = "Lourdes Reyes";
+color=blue;
+nodo3->nodo3pila;
+nodo3pila [label="  | El Estudiante:  \nLourdes Reyes  \n ha iniciado sesión \nFecha:28/02/2023 
+Hora:21:04:38 | \n_________________\n "];
+}
+}
+    
+}
