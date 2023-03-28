@@ -4102,32 +4102,35 @@ Created using IcoMoon - icomoon.io
 
 .sidebar[data-color="orange"]:after,
 .off-canvas-sidebar[data-color="orange"]:after {
-  background: #f96332;
+  /* background: #8532f9; */
+  background: linear-gradient(100deg, #F28773,#F28773 );
+  background: linear-gradient(80deg, #8673f2,#f273a2 );
 }
 
 .sidebar[data-color="orange"] .nav li.active>a:not([data-toggle="collapse"]),
 .off-canvas-sidebar[data-color="orange"] .nav li.active>a:not([data-toggle="collapse"]) {
-  color: #f96332;
+  color: #f632f9;
 }
 
 .sidebar[data-color="orange"] .nav li.active>a:not([data-toggle="collapse"]) i,
 .off-canvas-sidebar[data-color="orange"] .nav li.active>a:not([data-toggle="collapse"]) i {
-  color: #f96332;
+  color: #f632f9;
 }
 
 .sidebar[data-color="red"]:after,
 .off-canvas-sidebar[data-color="red"]:after {
-  background: #FF3636;
+  background: #f632f9;
 }
 
 .sidebar[data-color="red"] .nav li.active>a:not([data-toggle="collapse"]),
 .off-canvas-sidebar[data-color="red"] .nav li.active>a:not([data-toggle="collapse"]) {
-  color: #FF3636;
+  color: #f632f9;
 }
 
 .sidebar[data-color="red"] .nav li.active>a:not([data-toggle="collapse"]) i,
 .off-canvas-sidebar[data-color="red"] .nav li.active>a:not([data-toggle="collapse"]) i {
-  color: #FF3636;
+  color: #f632f9;
+
 }
 
 .sidebar[data-color="yellow"]:after,
@@ -4204,15 +4207,22 @@ Created using IcoMoon - icomoon.io
 
 .panel-header {
   height: 260px;
+  width: 100%;
   padding-top: 80px;
   padding-bottom: 45px;
-  background: #141E30;
+  /* background: #141E30; */
+  background-image: url(../img/890879.jpg);
   /* fallback for old browsers */
-  background: -webkit-gradient(linear, left top, right top, from(#0c2646), color-stop(60%, #204065), to(#2a5788));
-  background: linear-gradient(to right, #0c2646 0%, #204065 60%, #2a5788 100%);
+  /* background: -webkit-gradient(linear, left top, right top, from(#0c2646), color-stop(60%, #204065), to(#2a5788)); */
+  /* background: linear-gradient(to right, #0c2646 0%, #204065 60%, #2a5788 100%); */
+  background-size: cover;
   position: relative;
   overflow: hidden;
 }
+
+
+
+
 
 .panel-header .header .title {
   color: #FFFFFF;
