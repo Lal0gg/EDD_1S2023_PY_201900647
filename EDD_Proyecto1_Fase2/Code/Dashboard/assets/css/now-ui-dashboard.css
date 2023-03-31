@@ -77,6 +77,9 @@ Copyright (c) 2015 Daniel Eden
   }
 }
 
+
+
+
 @keyframes shake {
 
   from,
@@ -507,6 +510,8 @@ fieldset[disabled] .navbar .navbar-nav>a.btn.active {
   min-width: 1.875rem;
   width: 1.875rem;
 }
+
+
 
 .btn.btn-icon.btn-sm .fa,
 .btn.btn-icon.btn-sm .far,
@@ -1799,6 +1804,14 @@ textarea.form-control:active {
   font-size: 0.8571em;
 }
 
+.zzzooom{
+  transition: transform .2s;
+}
+
+.zzzooom:hover {
+  transform: scale(1.5);
+}
+
 .form-control-lg {
   padding: 0;
   font-size: inherit;
@@ -1956,7 +1969,7 @@ p.description {
 .text-primary,
 a.text-primary:focus,
 a.text-primary:hover {
-  color: #f96332 !important;
+  color: #7e32f9 !important;
 }
 
 .text-info,
@@ -5482,6 +5495,61 @@ Created using IcoMoon - icomoon.io
     margin-bottom: 30px;
   }
 }
+
+
+.uploadfile {
+  font-family: 'Roboto Mono', monospace;
+  background: white;
+  border-radius: 50px;
+  box-shadow: 5px 5px 10px rgb(177, 42, 255);
+  width: 400px;
+  outline: none;
+}
+
+::-webkit-file-upload-button{
+  color:white;
+  background:  rgb(177, 42, 255);
+  padding:20px;
+  border:none;
+  border-radius: 50px;
+  font-family: 'Roboto Mono', monospace;
+  outline: none;
+}
+::-webkit-file-upload-button:hover{
+  background: #cc00ff;
+}
+
+
+.boton4{
+            
+  text-decoration: none;
+  display:inline-table;
+  width:30%;
+  height: 50px;
+  padding:10px;
+  background: rgb(203, 155, 246);
+  text-align: center;
+  color:rgb(0, 0, 0);
+  font-size: 20px;
+  font-weight: bold;
+  transition: all 0.9s ease;
+  box-shadow: -5px 1px 3px 0px rgb(161, 0, 248);
+  border-radius: 10px 30px;
+  font-family: 'Roboto Mono', monospace;
+  
+}
+
+
+.boton4:hover{
+          
+  background: rgb(244, 141, 255);
+  color:rgb(244, 141, 255);
+  box-shadow:none;
+  border-radius: 10px;
+
+}
+
+
 
 @media screen and (max-width: 576px) {
   .navbar[class*='navbar-toggleable-'] .container {

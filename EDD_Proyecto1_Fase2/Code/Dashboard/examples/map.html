@@ -36,7 +36,7 @@
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
 
-<body class="">
+<body class="" onload="refrescarArbol()">
   <div class="wrapper ">
     <div class="sidebar" data-color="orange">
       <!--
@@ -55,7 +55,7 @@
           <li>
             <a href="./dashboard.html">
               <i class="now-ui-icons design_app"></i>
-              <p>Mostrar Alumnos</p>
+              <p>Carga Masiva</p>
             </a>
           </li>
           <li class="active ">
@@ -67,7 +67,8 @@
           <li>
             <a href="./tables.html">
               <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Carga Masiva</p>
+            
+              <p>Mostrar Alumnos</p>
             </a>
           </li>
         </ul>
@@ -126,10 +127,13 @@
           <div class="col-md-12">
             <div class="card ">
               <div class="card-header ">
-                Google Maps
+                <h4 class="card-title">Reporte del Arbol AVL</h4>
               </div>
               <div class="card-body ">
-                <div id="map" class="map"></div>
+                <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
+                <br>
+                  <center><img id="image" class="zzzooom"></center>
+                  
               </div>
             </div>
           </div>
@@ -156,6 +160,8 @@
       </footer>
     </div>
   </div>
+  <script>refrescarArbol()</script>
+  <script src="../../Login/js/mainproject.js"></script>
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
@@ -171,11 +177,11 @@
   <script src="../assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
   <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      demo.initGoogleMaps();
-    });
-  </script>
+  //   $(document).ready(function() {
+  //     // Javascript method's body can be found in assets/js/demos.js
+  //     demo.initGoogleMaps();
+  //   });
+  // </script>
 </body>
 
 </html>
