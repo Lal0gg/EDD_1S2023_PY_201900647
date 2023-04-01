@@ -1,11 +1,11 @@
 /*Función que verifica le entrada del admin y de los estudiantes */
 function Loginn() {
 
-    var user = document.getElementById("useeer").value;
-    var pass = document.getElementById("passsword").value;
+    const user = document.getElementById("useeer").value;
+    const pass = document.getElementById("passsword").value;
     if (user == "admin" && pass == "admin") {
         location.href = "../Dashboard/examples/dashboard.html";
-        alert("Bienvenido");
+        alert("Bienvenido Admin");
     } else {
         alert("Usuario o contraseña incorrectos");
     }
@@ -247,8 +247,10 @@ function refrescarArbol() {
 
 let table = document.getElementById("tablecarga");
 const inputElement = document.getElementById("inputt");
-
 inputElement.addEventListener("change", onChange, false);
+
+
+
 function onChange(event) {
     var reader = new FileReader();
     reader.onload = onReaderLoad;
