@@ -36,7 +36,7 @@
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
 
-<body class="" onload="retonarDatosStorage()">
+<body class="" >
   <div class="wrapper ">
     <div class="sidebar" data-color="orange">
       <!--
@@ -130,13 +130,14 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <!-- <button class="boton4" onclick=retonarDatosStorage()>Reporte</button> -->
-
+                  <button class="boton4" onclick=retonarDatosStorageInOrder()>InOrden</button>
+                  <button class="boton4" onclick=retonarDatosStoragePost()>PostOrden</button>
+                  <button class="boton4" onclick=retonarDatosStoragePre()>PreOrden</button>
                   <table class="table" id="tablecarga">
                     <thead class=" text-primary">
                       <th>
                         Nombre
-                      </th>
+                      </th> 
                       <th>
                         Carnet
                       </th>

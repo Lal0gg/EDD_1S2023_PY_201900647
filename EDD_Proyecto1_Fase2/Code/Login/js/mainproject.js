@@ -108,6 +108,31 @@ class ArbolAVL {
         return raiz
     }
 
+    PreOrdenAVL(raiz) {
+        if (raiz !== null) {
+            console.log(raiz.user_student)
+            this.PreOrdenAVL(raiz.izquierdo)
+            this.PreOrdenAVL(raiz.derecho)
+        }
+    }
+
+    PostOrdenAVL(raiz){
+        if(raiz !== null){
+            this.PostOrdenAVL(raiz.izquierdo)
+            this.PostOrdenAVL(raiz.derecho)
+            console.log(raiz.user_student)
+        }
+
+    }
+
+    InOrderAVL(raiz) {
+        if (raiz != null) {
+            this.InOrderAVL(raiz.izquierdo)
+            console.log(raiz.user_student)
+            this.InOrderAVL(raiz.derecho)
+        }
+    }
+
 
     insertaValor(user_student) {
         const nuevoNodo = new nodoArbol(user_student);
@@ -220,7 +245,7 @@ function refrescarArbol() {
 }
 
 
-const table = document.getElementById("tablecarga");
+let table = document.getElementById("tablecarga");
 const inputElement = document.getElementById("inputt");
 
 inputElement.addEventListener("change", onChange, false);
@@ -250,6 +275,36 @@ function onReaderLoad(event) {
 }
 
 
+function retonarDatosStoragePost() {
+    let ArbolitoStorage = JSON.parse(window.localStorage.getItem('TreeAVL'));
+    //console.log(typeof ArbolenStorage);
+    //console.log("Arbol Post: ", ArbolenStorage)
+    let PostOrden=arbolBinarioAVL.PostOrdenAVL(ArbolitoStorage);
+    console.log("post: ",PostOrden);
+    clinTable()
+    recorrerArbolPostOrder(ArbolitoStorage);
+}
+
+function retonarDatosStoragePre() {
+    let  ArbolitoStorage1 = JSON.parse(window.localStorage.getItem('TreeAVL'));
+    // console.log(typeof ArbolenStorage);
+    // console.log("Arbol Pre: ", ArbolenStorage)
+    let PreOrden = arbolBinarioAVL.PreOrdenAVL(ArbolitoStorage1)
+    console.log("Pre: ",PreOrden);
+    clinTable();
+    recorrerArbolPreOrder(ArbolitoStorage1);
+}
+
+
+function retonarDatosStorageInOrder() {
+    let ArbolitoStorage2 = JSON.parse(window.localStorage.getItem('TreeAVL'));
+    let inOrder = arbolBinarioAVL.InOrderAVL(ArbolitoStorage2)
+    // console.log(typeof ArbolenStorage);
+    // console.log("Arbol: ", ArbolenStorage)
+    console.log("InOrder: ",inOrder);
+    clinTable();
+    recorrerArbolInOrder(ArbolitoStorage2);
+}
 
 
 
@@ -257,21 +312,64 @@ function retonarDatosStorage() {
     let ArbolenStorage = JSON.parse(window.localStorage.getItem('TreeAVL'));
     console.log(typeof ArbolenStorage);
     console.log("Arbol: ", ArbolenStorage)
+    clinTable();
     recorrerArbol(ArbolenStorage);
-    
-    
 }
 
-retonarDatosStorage()
 
 
 
-
-function recorrerArbol(raiz) {
+function recorrerArbolInOrder(raiz) {
 
 	if (raiz !== null) {
+        // Recorrer el subárbol izquierdo
+		recorrerArbolInOrder(raiz.izquierdo);
 		// Crear una fila para el nodo actual
-		const fila = document.createElement('tr');
+		let fila = document.createElement('tr');
+		// Insertar las columnas con los valores del nodo
+		fila.innerHTML = `
+			<td>${raiz.user_student.nombre}</td>
+			<td>${raiz.user_student.carnet}</td>
+			<td>${raiz.user_student.password}</td>
+			<td>${raiz.user_student.carpeta_raiz}</td>
+		`;
+		// Insertar la fila en la tabla
+		table.appendChild(fila);
+		
+		// Recorrer el subárbol derecho
+		recorrerArbolInOrder(raiz.derecho);
+	}
+}
+
+function recorrerArbolPostOrder(raiz) {
+	if (raiz !== null) {
+        // Recorrer el subárbol izquierdo
+		recorrerArbolPostOrder(raiz.izquierdo);
+		// Recorrer el subárbol derecho
+		recorrerArbolPostOrder(raiz.derecho);
+		// Crear una fila para el nodo actual
+		let fila = document.createElement('tr');
+        
+		// Insertar las columnas con los valores del nodo
+		fila.innerHTML = `
+			<td>${raiz.user_student.nombre}</td>
+			<td>${raiz.user_student.carnet}</td>
+			<td>${raiz.user_student.password}</td>
+			<td>${raiz.user_student.carpeta_raiz}</td>
+		`;
+		// Insertar la fila en la tabla
+		table.appendChild(fila);
+		
+	}
+}
+function clinTable(){
+    table.innerHTML = "";
+}
+
+function recorrerArbolPreOrder(raiz) {
+	if (raiz !== null) {
+		// Crear una fila para el nodo actual
+		let fila = document.createElement('tr');
 		// Insertar las columnas con los valores del nodo
 		fila.innerHTML = `
 			<td>${raiz.user_student.nombre}</td>
@@ -282,9 +380,9 @@ function recorrerArbol(raiz) {
 		// Insertar la fila en la tabla
 		table.appendChild(fila);
 		// Recorrer el subárbol izquierdo
-		recorrerArbol(raiz.izquierdo);
+		recorrerArbolPreOrder(raiz.izquierdo);
 		// Recorrer el subárbol derecho
-		recorrerArbol(raiz.derecho);
+		recorrerArbolPreOrder(raiz.derecho);
 	}
 }
 
