@@ -314,6 +314,58 @@ Copyright (c) 2015 Daniel Eden
   position: absolute;
 }
 
+
+
+/*** ESTILOS BOTÓN GROW ELLIPSE ***/
+.ov-btn-slide-close {
+  background: #fff; /* color de fondo */
+  color: #000000; /* color de fuente */
+  border: 2px solid #ffacaa; /* tamaño y color de borde */
+  padding: 10px 15px;
+  border-radius: 3px; /* redondear bordes */
+  position: relative;
+  z-index: 1;
+  font-family: 'Roboto Mono', monospace;
+  overflow: hidden;
+  text-align: center; 
+  display: inline-block;
+}
+
+.ov-btn-slide-close:before, .ov-btn-slide-close:after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  left: -50%;
+  background-color: #ffacaa; /* color de fondo hover */
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.ov-btn-slide-close:after {
+  left: 100%;
+}
+.ov-btn-slide-close:hover {
+  color: #000000; /* color de fuente hover */
+}
+.ov-btn-slide-close:hover:before {
+  left: 0;
+}
+.ov-btn-slide-close:hover:after {
+  left: 50%;
+}
+
+
+.uwuxd{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+
 .ps__rail-x:hover>.ps__thumb-x,
 .ps__rail-x:focus>.ps__thumb-x,
 .ps__rail-x.ps--clicking .ps__thumb-x {
@@ -1310,7 +1362,7 @@ fieldset[disabled] .btn-link.active {
 }
 
 .form-control::-webkit-input-placeholder {
-  color: #888;
+  color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -1564,7 +1616,7 @@ fieldset[disabled] .btn-link.active {
 .input-group.no-border .form-control,
 .input-group.no-border .form-control+.input-group-prepend .input-group-text,
 .input-group.no-border .form-control+.input-group-append .input-group-text {
-  background-color: rgba(222, 222, 222, 0.3);
+  background-color: #ffd6d5;
   border: medium none;
 }
 
@@ -1587,21 +1639,21 @@ fieldset[disabled] .btn-link.active {
 .input-group.no-border .form-control+.input-group-append .input-group-text:active,
 .input-group.no-border .form-control+.input-group-append .input-group-text:active {
   border: medium none;
-  background-color: rgba(222, 222, 222, 0.5);
+  background-color: #ffd6d5;
 }
 
 .form-group.no-border .form-control:focus+.input-group-prepend .input-group-text,
 .form-group.no-border .form-control:focus+.input-group-append .input-group-text,
 .input-group.no-border .form-control:focus+.input-group-prepend .input-group-text,
 .input-group.no-border .form-control:focus+.input-group-append .input-group-text {
-  background-color: rgba(222, 222, 222, 0.5);
+  background-color: #ffd6d5;
 }
 
 .form-group.no-border .input-group-prepend .input-group-text,
 .form-group.no-border .input-group-append .input-group-text,
 .input-group.no-border .input-group-prepend .input-group-text,
 .input-group.no-border .input-group-append .input-group-text {
-  background-color: rgba(222, 222, 222, 0.3);
+  background-color: #ffd6d5;
   border: none;
 }
 
@@ -1729,7 +1781,7 @@ fieldset[disabled] .btn-link.active {
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
-  background-color: #E3E3E3;
+  background-color: #e3e3e3;
   color: #888;
   cursor: not-allowed;
 }
@@ -4104,32 +4156,32 @@ Created using IcoMoon - icomoon.io
 .off-canvas-sidebar[data-color="orange"]:after {
   /* background: #8532f9; */
   background: linear-gradient(100deg, #F28773,#F28773 );
-  background: linear-gradient(80deg, #8673f2,#f273a2 );
+  background: linear-gradient(80deg, #df73f2,#f28e73 );
 }
 
 .sidebar[data-color="orange"] .nav li.active>a:not([data-toggle="collapse"]),
 .off-canvas-sidebar[data-color="orange"] .nav li.active>a:not([data-toggle="collapse"]) {
-  color: #f632f9;
+  color: #F28773;
 }
 
 .sidebar[data-color="orange"] .nav li.active>a:not([data-toggle="collapse"]) i,
 .off-canvas-sidebar[data-color="orange"] .nav li.active>a:not([data-toggle="collapse"]) i {
-  color: #f632f9;
+  color: #F28773;
 }
 
 .sidebar[data-color="red"]:after,
 .off-canvas-sidebar[data-color="red"]:after {
-  background: #f632f9;
+  background: #F28773;
 }
 
 .sidebar[data-color="red"] .nav li.active>a:not([data-toggle="collapse"]),
 .off-canvas-sidebar[data-color="red"] .nav li.active>a:not([data-toggle="collapse"]) {
-  color: #f632f9;
+  color: #F28773;
 }
 
 .sidebar[data-color="red"] .nav li.active>a:not([data-toggle="collapse"]) i,
 .off-canvas-sidebar[data-color="red"] .nav li.active>a:not([data-toggle="collapse"]) i {
-  color: #f632f9;
+  color: #F28773;
 
 }
 
