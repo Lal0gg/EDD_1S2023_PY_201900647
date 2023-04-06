@@ -380,6 +380,7 @@ encabezado.innerHTML = `
     <th>Carpeta Raiz</th>
     `;
 const inputElement = document.getElementById("inputt");
+let h4444 = document.getElementById("welcomeeeee");
 inputElement.addEventListener("change", onChange, false);
 
 function onChange(event) {
@@ -518,6 +519,7 @@ function recorrerArbolPreOrder(raiz) {
 }
 
 
+
 /*Función que verifica le entrada del admin y de los estudiantes */
 function Loginn() {
     let user = document.getElementById("useeer").value;
@@ -534,22 +536,27 @@ function Loginn() {
         alert("Bienvenido Admin");
         
     }else if(resultado != false){
+        localStorage.setItem('usuarioActual', JSON.stringify(resultado));
         let rutaa = "/EDD_Proyecto1_Fase2/Code/User/examples/user.html";
         console.log(rutaa);
         window.location.href = rutaa;
         alert("Bienvenido Estudiante: " + resultado.nombre);
-        const mensaje = `Bienvenido, ${resultado.carnet}`;
-        console.log(mensaje)
-        document.getElementById("welcomeeeee").innerHTML = mensaje
-       
     }
     else {
         alert("Usuario o contraseña incorrecta")
     }
     }catch(error){
-        console.error(error)
+        alert(error)
     }
     
+}
+
+
+function BienvenidaUser_student(){
+    const usuarioActual = (localStorage.getItem('usuarioActual'));
+    const user = JSON.parse(usuarioActual);
+    const bienvenida = `¡Bienvenido ${user.carnet}!`;
+    h4444.textContent = bienvenida;
 }
 
 function seleccionarOpcion() {
