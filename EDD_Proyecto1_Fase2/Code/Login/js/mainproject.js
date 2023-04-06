@@ -529,7 +529,7 @@ function Loginn() {
     console.log("Resultado: ", resultado);
     if (user == "admin" && pass == "admin") {
         let ruta = "/EDD_Proyecto1_Fase2/Code/Dashboard/examples/dashboard.html";
-        location.href = ruta;
+        window.location.href = ruta;
         console.log(ruta);
         alert("Bienvenido Admin");
         
@@ -551,9 +551,6 @@ function Loginn() {
     }
     
 }
-
-
-
 
 function seleccionarOpcion() {
     const selectElement = document.getElementById("miSelect");
