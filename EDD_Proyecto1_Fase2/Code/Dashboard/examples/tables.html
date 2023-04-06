@@ -111,7 +111,7 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="../../Login/index.html">Cerrar Sesión</a>
+                  <a class="dropdown-item" href="../../../../index.html">Cerrar Sesión</a>
                 </div>
               </li>
             </ul>
@@ -130,23 +130,14 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <!-- <button class="boton4" onclick=retonarDatosStorageInOrder()>InOrden</button> -->
-                  <button class="boton4" onclick=retonarDatosStoragePost()>PostOrden</button>
-                  <button class="boton4" onclick=retonarDatosStoragePre()>PreOrden</button>
+                  <select id="miSelect" class="select" onchange="seleccionarOpcion()">
+                    <option value="opcion1"> InOrden</option>
+                    <option value="opcion2" >PostOrden</option>
+                    <option value="opcion3">PreOrden</option>
+                  </select>
+                  <br>
                   <table class="table" id="tablecarga">
-                    <thead class=" text-primary">
-                      <th>
-                        Nombre
-                      </th> 
-                      <th>
-                        Carnet
-                      </th>
-                      <th>
-                        Contraseña
-                      </th>
-                      <th>
-                        Carpeta Raiz
-                      </th>
+                    <thead class="text-primary">
                     </thead>
                     <tbody>
                     </tbody>
@@ -185,10 +176,6 @@
       </footer>
     </div>
   </div>
-
-  <script>
-    retonarDatosStorage();
-  </script>
 
   <script src="../../Login/js/mainproject.js"></script>
   <!--   Core JS Files   -->
