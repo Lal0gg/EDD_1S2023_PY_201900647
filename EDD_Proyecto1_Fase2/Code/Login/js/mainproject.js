@@ -5,6 +5,7 @@ class user_student {
         this.carnet = carnetgg;
         this.password = passwordgg;
         this.carpeta_raiz = carpetaRaizgg;
+        this.arbolNario = new ArbolNArio();
     }
 }
 
@@ -16,7 +17,6 @@ class nodoArbol {
         this.user_student = user_student;
         this.altura = 1;
         this.factor_equilibrio = 0;
-        this.arbolNario = new ArbolNArio();
     }
 }
 
@@ -340,21 +340,20 @@ class ArbolAVL {
 
 
 //Clase del Nodo del Arbol N-ario
-class NodoArbolNario {
+class nodoArbolN{
     constructor(valor, id){
         this.siguiente = null;
         this.valor = valor;
         this.primero = null;
         this.id = id;
-        this.matriz = new MatrizDispersa()
+        this.matriz = new MatrizDispersa();
     }
 }
-
 
 /*Clase del Arbol N-ario */
 class ArbolNArio{
     constructor(){
-        this.raiz = new NodoArbolNario("/", 0)
+        this.raiz = new nodoArbolN("/", 0)
         this.nodo_creados = 1;
     }
 
@@ -445,7 +444,7 @@ class ArbolNArio{
         /**
          * creamos el nuevo nodo y aumentamos la cantidad de nodos creados
          */
-        const nuevoNodo = new nodoArbol(carpeta_nueva, this.nodo_creados)
+        const nuevoNodo = new nodoArbolN(carpeta_nueva, this.nodo_creados)
         this.nodo_creados++
         //Corroboramos si la insercion es en la raiz y si la raiz no tiene ninguna carpeta
         if(lista_carpeta[1] === "" && this.raiz.primero === null){
@@ -518,26 +517,27 @@ class ArbolNArio{
         }
     }
 
-    grafica_arbol(){
+    grafica_arbol(raiz){
         var cadena = "";
-        if(!(this.raiz === null)){
+        if(!(raiz === null)){
             cadena = "digraph arbol{ ";
-            cadena = cadena + this.retornarValoresArbol(this.raiz);
+            cadena = cadena + this.retornarValoresArbol(raiz);
             cadena = cadena + "}";
         }else{
             cadena = "digraph G { arbol }";
         }
+        console.log(cadena)
         return cadena;
     }
 
     /** le mando el parametro primero y solo recorre los siguientes*/
     retornarValoresArbol(raiz){
-        var cadena = "node[shape=record] ";
+        var cadena = "node[shape=folder ,fontsize=\"10pt\",penwidth=2,fontname=\"Courier New\",style=\"filled\",fillcolor=\"lightslateblue\",fontcolor=\"whitesmoke\"] ";
         let nodo = 1;
         let nodo_padre = 0;
-        cadena += "nodo" + nodo_padre + "[label=\"" + this.raiz.valor  + "\"] "
-        cadena += this.valoresSiguietes(this.raiz.primero, nodo, nodo_padre)
-        cadena += this.conexionRamas(this.raiz.primero, 0)
+        cadena += "nodo" + nodo_padre + "[label=\"" + raiz.valor  + "\"] "
+        cadena += this.valoresSiguietes(raiz.primero, nodo, nodo_padre)
+        cadena += this.conexionRamas(raiz.primero, 0)
         return cadena;
     }
 
@@ -904,29 +904,42 @@ function asignarPermisos(){
 // creacion arbol n-ario
 const arbolnario = new ArbolNArio()
 function agregarVarios(){
-    let ruta = document.getElementById("ruta").value
-    let carpeta = document.getElementById("carpeta").value
+    const usuarioActuaaal = JSON.parse((localStorage.getItem('usuarioActual')));
+    console.log("Usuario Actual: ", usuarioActuaaal)
+    let ruta = document.getElementById("rutaCarpeta").value
+    let carpeta = document.getElementById("NombreCarpeta").value
+    console.log("Ruta: " + ruta)
+    console.log("Carpeta: " + carpeta)
     try{
         arbolnario.insertarValor(ruta,carpeta)
+        usuarioActuaaal.arbolNario = arbolnario
+        console.log("Arbol Nnnario:", arbolnario)
+        console.log("Se inserto el nodo correctamente")
+        localStorage.setItem('usuarioActual', JSON.stringify(usuarioActuaaal));
     }catch(error){
         alert("Hubo un error al insertar el nodo")
     }
-    document.getElementById("carpeta").value = "";
-    refrescarArbol();  
+    document.getElementById("NombreCarpeta").value = ""; 
 
 }
 
-function refrescarArbol(){
+function refrescarArbolNario(){
+    let usuarioActuaaal = JSON.parse((localStorage.getItem('usuarioActual')));
+    console.log("Usuario Actual: ", usuarioActuaaal)
+    let arbolNario = usuarioActuaaal.arbolNario.raiz
+    console.log( "Arbol Nario: ", arbolNario)
     let url = 'https://quickchart.io/graphviz?graph=';
-    let body = arbolnario.grafica_arbol();
-    $("#image").attr("src", url + body);
-    document.getElementById("carpeta").value = "";
+    let body = arbolnario.grafica_arbol(arbolNario);
+    $("#imageNario").attr("src", url + body);
+    document.getElementById("NombreCarpeta").value = "";
 }
 
 function mostraCarpetas(){
     let ruta = document.getElementById("ruta").value
     arbolnario.mostrarCarpetasActuales(ruta)
 }
+
+
 
 
 // creación de arbol AVL
@@ -942,7 +955,7 @@ function agregarVariosNumeros() {
     } catch (error) {
         console.log(error);
     }
-    refrescarArbol();
+    refrescarArbolAVL();
 }
 
 //funcion para limpiar el arbol
@@ -954,7 +967,7 @@ function limpiar() {
 }
 
 // función para refrescar el arbol
-function refrescarArbol() {
+function refrescarArbolAVL() {
     let ArbolenStorage = JSON.parse(window.localStorage.getItem("TreeAVL"));
     console.log(typeof ArbolenStorage);
     console.log("Arbol: ", ArbolenStorage);
