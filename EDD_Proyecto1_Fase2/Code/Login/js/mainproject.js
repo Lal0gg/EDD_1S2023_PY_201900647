@@ -738,6 +738,8 @@ class ArbolNArio {
         return cadena;
     }
 
+
+
     /** Modificacion 30/03/2023 */
     BuscarCarpetaV2(lista_carpeta) {
         //Directorio Actual seria la Raiz
@@ -785,6 +787,8 @@ class ArbolNArio {
         }
     }
 
+
+
     mostrarCarpetasActuales(ruta) {
         let lista_carpeta = ruta.split("/");
         let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta);
@@ -795,93 +799,42 @@ class ArbolNArio {
                     console.log(aux.valor);
                     aux = aux.siguiente;
                 }
-                // let aux1 = existe_carpeta.matriz;
-                // let nodo_Actul_matriz = aux1.principal;
-                // while (nodo_Actul_matriz) {
-                //     console.log(nodo_Actul_matriz.posicion);
-                //     nodo_Actul_matriz = nodo_Actul_matriz.siguiente;
-                // }
+                let aux1 = existe_carpeta.matriz;
+                let nodo_Actul_matriz = aux1.principal;
+                while (nodo_Actul_matriz) {
+                    console.log(nodo_Actul_matriz.posicion);
+                    nodo_Actul_matriz = nodo_Actul_matriz.siguiente;
+                }
             }
         } catch (error) {
             console.log("Hubo un error");
         }
     }
 
-    eliminarCarpeta(ruta) {
-        const lista_carpeta = ruta.split("/");
-        let padre = this.raiz;
-        let encontrado = false;
-        let posicion = 1;
-
-        // Buscamos el nodo padre de la carpeta que se desea eliminar
-        while (posicion < lista_carpeta.length && !encontrado) {
-            let aux = padre.primero;
-            while (aux && !encontrado) {
-                if (aux.valor === lista_carpeta[posicion]) {
-                    padre = aux;
-                    encontrado = true;
+    eliminarCarpeta(ruta, carpeta){
+        let lista_carpeta = ruta.split('/')
+        let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta)
+        if(existe_carpeta !== null){
+            let aux = existe_carpeta.primero
+            let aux_anterior = null
+            while(aux){
+                if(aux.valor === carpeta){
+                    if(aux_anterior !== null){
+                        aux_anterior.siguiente = aux.siguiente
+                    }else{
+                        existe_carpeta.primero = aux.siguiente
+                    }
+                    break;
+                }else{
+                    aux_anterior = aux
+                    aux = aux.siguiente
                 }
-                aux = aux.siguiente;
             }
-            posicion++;
+            
         }
-
-        if (encontrado) {
-            let nodoAEliminar = null;
-            let aux = padre.primero;
-            // Buscamos el nodo a eliminar en la lista de hijos del nodo padre
-            while (aux && !nodoAEliminar) {
-                if (aux.valor === lista_carpeta[posicion]) {
-                    nodoAEliminar = aux;
-                }
-                aux = aux.siguiente;
-            }
-
-            if (nodoAEliminar) {
-                // Eliminamos el nodo encontrado
-                if (nodoAEliminar.primero) {
-                    this.eliminarNodosHijos(nodoAEliminar.primero);
-                }
-                padre.primero = this.eliminarNodo(padre.primero, nodoAEliminar);
-                console.log(`Se ha eliminado la carpeta ${nodoAEliminar.valor} de la ruta ${ruta}`);
-                console.log("El padre ahora es:" + padre)
-            } else {
-                console.log(`No se encontró la carpeta ${lista_carpeta[posicion]} en la ruta ${ruta}`);
-            }
-        } else {
-            console.log(`No se encontró la carpeta ${lista_carpeta[posicion - 1]} en la ruta ${ruta}`);
-        }
+        console.log("Carpeta Eliminada")
     }
-
-    eliminarNodo(raiz, nodoAEliminar) {
-        let aux = raiz;
-        let prev = null;
-        while (aux && aux.id !== nodoAEliminar.id) {
-            prev = aux;
-            aux = aux.siguiente;
-        }
-
-        if (aux) {
-            if (prev) {
-                prev.siguiente = aux.siguiente;
-            } else {
-                raiz = aux.siguiente;
-            }
-        }
-
-        return raiz;
-    }
-
-    eliminarNodosHijos(nodo) {
-        let aux = nodo;
-        while (aux) {
-            if (aux.primero) {
-                this.eliminarNodosHijos(aux.primero);
-            }
-            aux = aux.siguiente;
-        }
-    }
-
+    
 
 }
 
@@ -1217,13 +1170,11 @@ function agregarVarios() {
 function BuscarCarpetaYEliminar() {
     let usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
     let ruta = document.getElementById("rutaCarpeta").value
-    arbolnario.eliminarCarpeta(ruta);
+    let carpeta = document.getElementById("NombreCarpeta").value;
+    arbolnario.eliminarCarpeta(ruta, carpeta);
     usuarioActual.arbolNario = arbolnario;
     localStorage.setItem('usuarioActual', JSON.stringify(usuarioActual));
 }
-
-
-
 
 // funcion para refrescar el arbol n-ario
 function refrescarArbolNario() {
@@ -1249,6 +1200,22 @@ function refrescarArbolNario() {
         usuariosArray[usuarioIndex].arbolNario = usuarioActuaaal.arbolNario;
         localStorage.setItem("usuarios", JSON.stringify(usuariosArray)); // Guardar el array de usuarios actualizado en el localStorage
     }
+}
+
+//funcion para agregar un archivo ala maatriz del nodo del arboll n-ario acutal
+function agregarArchivo() {
+    let usuarioActuaaal = JSON.parse(localStorage.getItem("usuarioActual"));
+    let ruta = document.getElementById("rutaCarpeta").value;
+
+    let permiso = document.getElementById("permisoArchivo").value;
+    let archivo = new Archivo(nombreArchivo, contenidoArchivo, permiso);
+    arbolnario.insertarArchivo(ruta, carpeta, archivo);
+    usuarioActuaaal.arbolNario = arbolnario;
+    localStorage.setItem("usuarioActual", JSON.stringify(usuarioActuaaal));
+    document.getElementById("nombreArchivo").value = "";
+    document.getElementById("contenidoArchivo").value = "";
+    document.getElementById("permisoArchivo").value = "";
+  
 }
 
 
@@ -1438,7 +1405,7 @@ function Loginn() {
             let ruta = "/EDD_Proyecto1_Fase2/Code/Dashboard/examples/dashboard.html";
             window.location.href = ruta;
             console.log(ruta);
-            alert("Bienvenido Admin");
+            window.alert("Bienvenido Admin");
         } else if (resultado != false) {
             console.log("ArbolStorage: ", ArbolenStorageLogin);
             console.log("Resultado: ", resultado);
@@ -1460,7 +1427,7 @@ function Loginn() {
             let rutaa = "/EDD_Proyecto1_Fase2/Code/User/examples/user.html";
             console.log(rutaa);
             window.location.href = rutaa;
-            alert("Bienvenido Estudiante: " + resultado.nombre);
+            window.alert("Bienvenido Estudiante: " + resultado.nombre);
         } else {
             alert("Usuario o contraseña incorrecta");
         }

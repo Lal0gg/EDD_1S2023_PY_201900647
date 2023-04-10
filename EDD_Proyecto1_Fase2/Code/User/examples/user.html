@@ -309,8 +309,9 @@
   </div>
   <script>
     const inputFiles = document.getElementById("inputFiles");
-inputFiles.addEventListener("change", onFilesChange, false);
-
+    inputFiles.addEventListener("change", onFilesChange, false);
+    let nombreArchivo = ""
+    let base64String = ""
 
 function onFilesChange(event) {
     var files = event.target.files;
@@ -319,13 +320,13 @@ function onFilesChange(event) {
         if (file.type.includes('image') || file.type.includes('pdf') || file.type.includes('text')) {
             var reader = new FileReader();
             reader.onload = onFileReaderLoad;
-            reader.readAsDataURL(file);
+            nombreArchivo = event.target.files[0].name
+            reader.readAsDataURL(event.target.files[0]);
         }
     }
 }
 
 function onFileReaderLoad(event) {
-    console.log(event.target.result);
     base64String = event.target.result
 }
 

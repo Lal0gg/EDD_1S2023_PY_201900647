@@ -241,3 +241,9 @@ function getUsuarioActualFromLocalStorage() {
     //         }
     //     }
     // }
+
+
+
+
+
+    // how to creat a function?
