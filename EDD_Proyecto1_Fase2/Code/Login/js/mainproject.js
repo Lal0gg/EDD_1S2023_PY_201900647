@@ -1,3 +1,18 @@
+// variables para la tabla de la carga masiva
+let table = document.getElementById("tablecarga");
+let encabezado = document.createElement("thead");
+encabezado.classList.add("text-primary");
+encabezado.innerHTML = `
+    <th>Nombre</th> 
+    <th>Carnet</th>
+    <th>Contraseña</th>
+    <th>Carpeta Raiz</th>
+    `;
+
+let h4444 = document.getElementById("welcomeeeee");
+
+
+
 /*Clase de usuario de tipo estudiante */
 class user_student {
     constructor(nombregg, carnetgg, passwordgg, carpetaRaizgg) {
@@ -469,6 +484,9 @@ class ArbolNArio {
         this.nodo_creados = 1;
     }
 
+
+
+
     BuscarCarpeta(carpeta_nueva, lista_carpeta) {
         //Si la nueva carpeta se creara en la raiz, se buscara si existe o no
         if (lista_carpeta[1] === "" && this.raiz.primero !== null) {
@@ -528,7 +546,9 @@ class ArbolNArio {
             }
         }
     }
-    //Funcion solo para ordenar la lista de hijos cuando el padre posee varios hijos
+
+
+
     insertarOrdenado(raiz, nuevoNodo) {
         let piv = raiz.primero;
         if (nuevoNodo.valor < raiz.primero.valor) {
@@ -556,7 +576,11 @@ class ArbolNArio {
             return raiz;
         }
     }
+
+
     // /usac/prueba -> prueba1 /usac/prueba(prueba1)
+
+
     insertarHijos(carpeta_nueva, lista_carpeta) {
         /**
          * creamos el nuevo nodo y aumentamos la cantidad de nodos creados
@@ -607,6 +631,8 @@ class ArbolNArio {
             }
         }
     }
+
+
     /**
      * 1 - Carpeta ya existe
      * 2 - la carpeta no existe
@@ -620,7 +646,7 @@ class ArbolNArio {
         let existe_carpeta = this.BuscarCarpeta(carpeta_nueva, lista_carpeta);
         switch (existe_carpeta) {
             case 1:
-                 //ese código verifica si la carpeta ya existe y si existe crea una copia con el numero que le corresponde
+                //ese código verifica si la carpeta ya existe y si existe crea una copia con el numero que le corresponde
                 let copia = carpeta_nueva + "(" + numero + ")";
                 while (this.BuscarCarpeta(copia, lista_carpeta) === 1) {
                     numero++;
@@ -645,6 +671,7 @@ class ArbolNArio {
                 break;
         }
     }
+
 
     grafica_arbol(raiz) {
         var cadena = "";
@@ -768,17 +795,94 @@ class ArbolNArio {
                     console.log(aux.valor);
                     aux = aux.siguiente;
                 }
-                let aux1 = existe_carpeta.matriz;
-                let nodo_Actul_matriz = aux1.principal;
-                while (nodo_Actul_matriz) {
-                    console.log(nodo_Actul_matriz.posicion);
-                    nodo_Actul_matriz = nodo_Actul_matriz.siguiente;
-                }
+                // let aux1 = existe_carpeta.matriz;
+                // let nodo_Actul_matriz = aux1.principal;
+                // while (nodo_Actul_matriz) {
+                //     console.log(nodo_Actul_matriz.posicion);
+                //     nodo_Actul_matriz = nodo_Actul_matriz.siguiente;
+                // }
             }
         } catch (error) {
             console.log("Hubo un error");
         }
     }
+
+    eliminarCarpeta(ruta) {
+        const lista_carpeta = ruta.split("/");
+        let padre = this.raiz;
+        let encontrado = false;
+        let posicion = 1;
+
+        // Buscamos el nodo padre de la carpeta que se desea eliminar
+        while (posicion < lista_carpeta.length && !encontrado) {
+            let aux = padre.primero;
+            while (aux && !encontrado) {
+                if (aux.valor === lista_carpeta[posicion]) {
+                    padre = aux;
+                    encontrado = true;
+                }
+                aux = aux.siguiente;
+            }
+            posicion++;
+        }
+
+        if (encontrado) {
+            let nodoAEliminar = null;
+            let aux = padre.primero;
+            // Buscamos el nodo a eliminar en la lista de hijos del nodo padre
+            while (aux && !nodoAEliminar) {
+                if (aux.valor === lista_carpeta[posicion]) {
+                    nodoAEliminar = aux;
+                }
+                aux = aux.siguiente;
+            }
+
+            if (nodoAEliminar) {
+                // Eliminamos el nodo encontrado
+                if (nodoAEliminar.primero) {
+                    this.eliminarNodosHijos(nodoAEliminar.primero);
+                }
+                padre.primero = this.eliminarNodo(padre.primero, nodoAEliminar);
+                console.log(`Se ha eliminado la carpeta ${nodoAEliminar.valor} de la ruta ${ruta}`);
+                console.log("El padre ahora es:" + padre)
+            } else {
+                console.log(`No se encontró la carpeta ${lista_carpeta[posicion]} en la ruta ${ruta}`);
+            }
+        } else {
+            console.log(`No se encontró la carpeta ${lista_carpeta[posicion - 1]} en la ruta ${ruta}`);
+        }
+    }
+
+    eliminarNodo(raiz, nodoAEliminar) {
+        let aux = raiz;
+        let prev = null;
+        while (aux && aux.id !== nodoAEliminar.id) {
+            prev = aux;
+            aux = aux.siguiente;
+        }
+
+        if (aux) {
+            if (prev) {
+                prev.siguiente = aux.siguiente;
+            } else {
+                raiz = aux.siguiente;
+            }
+        }
+
+        return raiz;
+    }
+
+    eliminarNodosHijos(nodo) {
+        let aux = nodo;
+        while (aux) {
+            if (aux.primero) {
+                this.eliminarNodosHijos(aux.primero);
+            }
+            aux = aux.siguiente;
+        }
+    }
+
+
 }
 
 //Clase Nodo para la Matriz Dispersa
@@ -1084,26 +1188,42 @@ function asignarPermisos() {
 // creacion arbol n-ario
 const arbolnario = new ArbolNArio();
 
-// funcion para insertar un nodo en el arbol n-ario
+//funcion para insertar un nodo en el arbol n-ario
 function agregarVarios() {
     const usuarioActuaaal = JSON.parse(localStorage.getItem("usuarioActual"));
     console.log("Usuario Actual: ", usuarioActuaaal);
+    let raizActual = usuarioActuaaal.arbolNario.raiz;
+    console.log("Raiz Actual: ", raizActual);
+    let arbolNarioActual = usuarioActuaaal.arbolNario;
+    console.log("Arbol Nario Actual: ", arbolNarioActual);
     let ruta = document.getElementById("rutaCarpeta").value;
     let carpeta = document.getElementById("NombreCarpeta").value;
     console.log("Ruta: " + ruta);
     console.log("Carpeta: " + carpeta);
     try {
-        arbolnario.insertarValor(ruta, carpeta, 1);
+        arbolnario.insertarValor(ruta, carpeta, 1, raizActual);
         usuarioActuaaal.arbolNario = arbolnario;
         console.log("Arbol Nnnario:", arbolnario);
         console.log("Se inserto el nodo correctamente");
-        agregarUsuario(usuarioActuaaal);
         localStorage.setItem("usuarioActual", JSON.stringify(usuarioActuaaal));
+        console.log("Usuario Luego de insersion: ", usuarioActuaaal);
     } catch (error) {
         alert("Hubo un error al insertar el nodo");
     }
     document.getElementById("NombreCarpeta").value = "";
 }
+
+//Function para eliminar un nodo del arbol n-ario
+function BuscarCarpetaYEliminar() {
+    let usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+    let ruta = document.getElementById("rutaCarpeta").value
+    arbolnario.eliminarCarpeta(ruta);
+    usuarioActual.arbolNario = arbolnario;
+    localStorage.setItem('usuarioActual', JSON.stringify(usuarioActual));
+}
+
+
+
 
 // funcion para refrescar el arbol n-ario
 function refrescarArbolNario() {
@@ -1131,12 +1251,7 @@ function refrescarArbolNario() {
     }
 }
 
-// funcion para eliminar un nodo del arbol n-ario
-function EliminarCarpeta() {
-    let ruta = document.getElementById("rutaCarpeta").value;
-    let carpeta = document.getElementById("NombreCarpeta").value;
-    arbolnario.eliminarValor(ruta, carpeta);
-}
+
 
 // funcion para mostrar las carpetas actuales
 function mostraCarpetas() {
@@ -1180,18 +1295,10 @@ function refrescarArbolAVL() {
     $("#image").attr("src", url + body);
 }
 
-// variables para la tabla de la carga masiva
-let table = document.getElementById("tablecarga");
-let encabezado = document.createElement("thead");
-encabezado.classList.add("text-primary");
-encabezado.innerHTML = `
-    <th>Nombre</th> 
-    <th>Carnet</th>
-    <th>Contraseña</th>
-    <th>Carpeta Raiz</th>
-    `;
 
-let h4444 = document.getElementById("welcomeeeee");
+
+
+
 
 //Funcion que obtiene el arbol del local storage y lo recorre en postOrder
 function retonarDatosStoragePost() {
