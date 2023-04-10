@@ -6,6 +6,7 @@ class user_student {
         this.password = passwordgg;
         this.carpeta_raiz = carpetaRaizgg;
         this.arbolNario = new ArbolNArio();
+        this.listaCircular = new ListaCircularSimple();
     }
 }
 
@@ -71,7 +72,6 @@ class ArbolAVL {
         raiz_izquierdo.factor_equilibrio = this.Equilibrio(raiz_izquierdo);
         return raiz_izquierdo;
     }
-
 
     insertarValorHijo(nodo, raiz) {
         if (raiz === null) {
@@ -306,6 +306,8 @@ class ArbolAVL {
         this.raiz = null;
     }
 
+    BuscarCarnetYRetonarTrue(carnet) { }
+
     VerificandoPasswordYCarnetDelArbol(raiz, carnet, password) {
         if (raiz != null) {
             if (raiz.user_student.carnet == carnet) {
@@ -333,15 +335,125 @@ class ArbolAVL {
             return false;
         }
     }
-
-
 }
 
+//Nodo Lista Circular
+class Nodo {
+    constructor(valor) {
+        this.valor = valor;
+        this.siguiente = null;
+    }
+}
 
+//Clase de la Lista Circular
+class ListaCircularSimple {
+    constructor() {
+        this.primero = null;
+        this.ultimo = null;
+        this.tamaño = 0;
+    }
+
+    //Metodo para agregar un nuevo nodo a la lista
+    agregar(valor) {
+        const nuevoNodo = {
+            valor: valor,
+            siguiente: null,
+        };
+        if (this.primero === null) {
+            nuevoNodo.siguiente = nuevoNodo;
+            this.primero = nuevoNodo;
+            this.ultimo = nuevoNodo;
+        } else {
+            this.ultimo.siguiente = nuevoNodo;
+            nuevoNodo.siguiente = this.primero;
+            this.ultimo = nuevoNodo;
+        }
+        this.tamaño++;
+    }
+
+    //Metodo para eliminar un nodo de la lista
+
+    eliminar(valor) {
+        if (this.primero === null) {
+            return false;
+        }
+        let nodoActual = this.primero;
+        let nodoAnterior = null;
+        do {
+            if (nodoActual.valor === valor) {
+                if (nodoActual === this.primero) {
+                    this.primero = nodoActual.siguiente;
+                    this.ultimo.siguiente = this.primero;
+                } else if (nodoActual === this.ultimo) {
+                    this.ultimo = nodoAnterior;
+                    this.ultimo.siguiente = this.primero;
+                } else {
+                    nodoAnterior.siguiente = nodoActual.siguiente;
+                }
+                this.tamaño--;
+                return true;
+            }
+            nodoAnterior = nodoActual;
+            nodoActual = nodoActual.siguiente;
+        } while (nodoActual !== this.primero);
+        return false;
+    }
+
+    //Metodo para buscar un nodo en la lista
+
+    buscar(valor) {
+        if (this.primero === null) {
+            return null;
+        }
+        let nodoActual = this.primero;
+        do {
+            if (nodoActual.valor === valor) {
+                return nodoActual;
+            }
+            nodoActual = nodoActual.siguiente;
+        } while (nodoActual !== this.primero);
+        return null;
+    }
+
+    //Metodo para obtener el tamaño de la lista
+    getTamaño() {
+        return this.tamaño;
+    }
+
+    //Metodo para generar el codigo dot de la lista y poder graficarla
+    getDot() {
+        let dot = "digraph ListaCircularSimple {\n";
+        dot +=
+            '  node[shape=folder ,fontsize="10pt",penwidth=2,fontname="Courier New",style="filled",fillcolor="goldenrod1",fontcolor="gray6"];\n';
+        dot += "  graph[pencolor=transparent];\n";
+        dot += "  rankdir=LR;\n";
+
+        if (this.primero !== null) {
+            let i = 0;
+            for (
+                let nodoActual = this.primero;
+                nodoActual !== this.ultimo;
+                nodoActual = nodoActual.siguiente
+            ) {
+                dot += `  p${i}[label="${nodoActual.valor}"];\n`;
+                dot += `  p${i} -> p${i + 1};\n`;
+                i++;
+            }
+
+            // Agrega el último nodo y la arista de vuelta al primer nodo
+            dot += `  p${i}[label="${this.ultimo.valor}"];\n`;
+            dot += `  p${i} -> p0[constraint=false, arrowtail=curve];\n`;
+        }
+
+        dot += "}";
+        console.log(dot);
+        return dot;
+    }
+}
 
 //Clase del Nodo del Arbol N-ario
-class nodoArbolN{
-    constructor(valor, id){
+class nodoArbolN {
+    constructor(valor, id) {
         this.siguiente = null;
         this.valor = valor;
         this.primero = null;
@@ -351,139 +463,147 @@ class nodoArbolN{
 }
 
 /*Clase del Arbol N-ario */
-class ArbolNArio{
-    constructor(){
-        this.raiz = new nodoArbolN("/", 0)
+class ArbolNArio {
+    constructor() {
+        this.raiz = new nodoArbolN("/", 0);
         this.nodo_creados = 1;
     }
 
-    BuscarCarpeta(carpeta_nueva, lista_carpeta){
+    BuscarCarpeta(carpeta_nueva, lista_carpeta) {
         //Si la nueva carpeta se creara en la raiz, se buscara si existe o no
-        if(lista_carpeta[1] === "" && this.raiz.primero !== null){
-            let aux = this.raiz.primero
-            while(aux){
-                if(aux.valor === carpeta_nueva){
-                    return 1
+        if (lista_carpeta[1] === "" && this.raiz.primero !== null) {
+            let aux = this.raiz.primero;
+            while (aux) {
+                if (aux.valor === carpeta_nueva) {
+                    return 1;
                 }
-                aux = aux.siguiente
+                aux = aux.siguiente;
             }
-            return 2
+            return 2;
         }
         //Si la nueva carpeta se creara en la raiz pero no existe ninguna carpeta
-        else if (lista_carpeta[1] === "" && this.raiz.primero === null){
-            return 5
+        else if (lista_carpeta[1] === "" && this.raiz.primero === null) {
+            return 5;
         }
         //Si la nueva carpeta se creara en algun directorio pero la raiz no posee ninguna carpeta
-        else if(lista_carpeta[1] !== "" && this.raiz.primero === null){
-            return 3
+        else if (lista_carpeta[1] !== "" && this.raiz.primero === null) {
+            return 3;
         }
         //Buscamos el directorio padre y revisar si en sus hijos existe la carpeta
-        else if(lista_carpeta[1] !== "" && this.raiz.primero !== null){
-            let aux = this.raiz.primero
-            let nivel = lista_carpeta.length
-            let posicion = 1; 
-            for(var i = 1; i < nivel; i++){
-                if(aux !== null){
-                    while(aux){
-                        if(posicion < lista_carpeta.length && lista_carpeta[posicion] === aux.valor){
-                            posicion++
-                            if(aux.primero !== null && posicion < lista_carpeta.length){
-                                aux = aux.primero
+        else if (lista_carpeta[1] !== "" && this.raiz.primero !== null) {
+            let aux = this.raiz.primero;
+            let nivel = lista_carpeta.length;
+            let posicion = 1;
+            for (var i = 1; i < nivel; i++) {
+                if (aux !== null) {
+                    while (aux) {
+                        if (
+                            posicion < lista_carpeta.length &&
+                            lista_carpeta[posicion] === aux.valor
+                        ) {
+                            posicion++;
+                            if (aux.primero !== null && posicion < lista_carpeta.length) {
+                                aux = aux.primero;
                             }
                             break;
-                        }else{
-                            aux = aux.siguiente
+                        } else {
+                            aux = aux.siguiente;
                         }
                     }
-                }else{
+                } else {
                     break;
                 }
             }
-            if(aux !== null){
-                aux = aux.primero
-                while(aux){
-                    if(aux.valor === carpeta_nueva){
-                        return 1
+            if (aux !== null) {
+                aux = aux.primero;
+                while (aux) {
+                    if (aux.valor === carpeta_nueva) {
+                        return 1;
                     }
-                    aux = aux.siguiente
+                    aux = aux.siguiente;
                 }
-                return 2
-            }else{
-                return 4
+                return 2;
+            } else {
+                return 4;
             }
-
         }
     }
     //Funcion solo para ordenar la lista de hijos cuando el padre posee varios hijos
-    insertarOrdenado(raiz, nuevoNodo){
-        let piv = raiz.primero
-        if(nuevoNodo.valor < raiz.primero.valor){
-            nuevoNodo.siguiente = raiz.primero
-            raiz.primero = nuevoNodo
-            return raiz
-        }else{
-            while(piv.siguiente){
-                if( nuevoNodo.valor > piv.valor && nuevoNodo.valor < piv.siguiente.valor){
-                    nuevoNodo.siguiente = piv.siguiente
-                    piv.siguiente = nuevoNodo
-                    return raiz
-                }else if(nuevoNodo.valor < piv.valor){
-                    nuevoNodo.siguiente = piv
-                    piv =  nuevoNodo
-                    return raiz
-                }else{
-                    piv = piv.siguiente
+    insertarOrdenado(raiz, nuevoNodo) {
+        let piv = raiz.primero;
+        if (nuevoNodo.valor < raiz.primero.valor) {
+            nuevoNodo.siguiente = raiz.primero;
+            raiz.primero = nuevoNodo;
+            return raiz;
+        } else {
+            while (piv.siguiente) {
+                if (
+                    nuevoNodo.valor > piv.valor &&
+                    nuevoNodo.valor < piv.siguiente.valor
+                ) {
+                    nuevoNodo.siguiente = piv.siguiente;
+                    piv.siguiente = nuevoNodo;
+                    return raiz;
+                } else if (nuevoNodo.valor < piv.valor) {
+                    nuevoNodo.siguiente = piv;
+                    piv = nuevoNodo;
+                    return raiz;
+                } else {
+                    piv = piv.siguiente;
                 }
             }
-            piv.siguiente = nuevoNodo
-            return raiz
+            piv.siguiente = nuevoNodo;
+            return raiz;
         }
     }
     // /usac/prueba -> prueba1 /usac/prueba(prueba1)
-    insertarHijos(carpeta_nueva, lista_carpeta){
+    insertarHijos(carpeta_nueva, lista_carpeta) {
         /**
          * creamos el nuevo nodo y aumentamos la cantidad de nodos creados
          */
-        const nuevoNodo = new nodoArbolN(carpeta_nueva, this.nodo_creados)
-        this.nodo_creados++
+        const nuevoNodo = new nodoArbolN(carpeta_nueva, this.nodo_creados);
+        this.nodo_creados++;
         //Corroboramos si la insercion es en la raiz y si la raiz no tiene ninguna carpeta
-        if(lista_carpeta[1] === "" && this.raiz.primero === null){
-            this.raiz.primero = nuevoNodo
+        if (lista_carpeta[1] === "" && this.raiz.primero === null) {
+            this.raiz.primero = nuevoNodo;
         }
         //Corroboramos si la insercion es en la raiz y pero la raiz ya tiene carpetas
-        else if(lista_carpeta[1] === "" && this.raiz.primero !== null){
-            this.raiz = this.insertarOrdenado(this.raiz, nuevoNodo)
+        else if (lista_carpeta[1] === "" && this.raiz.primero !== null) {
+            this.raiz = this.insertarOrdenado(this.raiz, nuevoNodo);
         }
         //Corroboramos si la insercion es en algun directorio que no es la raiz
-        else if(lista_carpeta[1] !== "" && this.raiz.primero !== null){
-            let aux = this.raiz.primero
-            let nivel = lista_carpeta.length
-            let posicion = 1; 
+        else if (lista_carpeta[1] !== "" && this.raiz.primero !== null) {
+            let aux = this.raiz.primero;
+            let nivel = lista_carpeta.length;
+            let posicion = 1;
             //Recorremos hasta llegar a la profundidad maxima donde se quiere insertar la nueva carpeta
-            for(var i = 1; i < nivel; i++){
-                if(aux !== null){
-                    while(aux){
+            for (var i = 1; i < nivel; i++) {
+                if (aux !== null) {
+                    while (aux) {
                         //Comparamos si las posiciones de la lista de carpetas es igual a la del nodo actual sino seguimos buscando
-                        if(posicion < lista_carpeta.length && lista_carpeta[posicion] === aux.valor){ 
-                            posicion++
+                        if (
+                            posicion < lista_carpeta.length &&
+                            lista_carpeta[posicion] === aux.valor
+                        ) {
+                            posicion++;
                             //Esta comparacion es para asegurarnos que nos quedaremos en el nodo padre
-                            if(aux.primero !== null && posicion < lista_carpeta.length){
-                                aux = aux.primero
+                            if (aux.primero !== null && posicion < lista_carpeta.length) {
+                                aux = aux.primero;
                             }
                             break;
-                        }else{
-                            aux = aux.siguiente
+                        } else {
+                            aux = aux.siguiente;
                         }
                     }
-                }else{
+                } else {
                     break;
                 }
             }
             //Si la carpeta padre ya tiene carpetas se agrega en el primero sino se manda a insertar en el orden correcto
-            if(aux.primero === null){
-                aux.primero = nuevoNodo
-            }else{
-                aux = this.insertarOrdenado(aux, nuevoNodo)
+            if (aux.primero === null) {
+                aux.primero = nuevoNodo;
+            } else {
+                aux = this.insertarOrdenado(aux, nuevoNodo);
             }
         }
     }
@@ -493,156 +613,177 @@ class ArbolNArio{
      * 3 - El directorio no es correcto o no es valido
      * 4 - Directorio no valido
      * 5 - No existe ninguna carpeta en la raiz
-     * 
+     *
      */
-    insertarValor(ruta, carpeta_nueva){
-        let lista_carpeta = ruta.split('/')
-        let existe_carpeta = this.BuscarCarpeta(carpeta_nueva, lista_carpeta)
-        switch(existe_carpeta){
+    insertarValor(ruta, carpeta_nueva, numero) {
+        let lista_carpeta = ruta.split("/");
+        let existe_carpeta = this.BuscarCarpeta(carpeta_nueva, lista_carpeta);
+        switch (existe_carpeta) {
             case 1:
-                alert("La carpeta ya existe")
+                 //ese código verifica si la carpeta ya existe y si existe crea una copia con el numero que le corresponde
+                let copia = carpeta_nueva + "(" + numero + ")";
+                while (this.BuscarCarpeta(copia, lista_carpeta) === 1) {
+                    numero++;
+                    copia = carpeta_nueva + "(" + numero + ")";
+                }
+                this.insertarHijos(copia, lista_carpeta);
+                console.log(
+                    "Carpeta ya existe y se creará una copia con el número " + numero
+                );
                 break;
             case 2:
-                this.insertarHijos(carpeta_nueva, lista_carpeta)
+                this.insertarHijos(carpeta_nueva, lista_carpeta);
                 break;
             case 3:
-                alert("La ruta actual no existe")
+                alert("La ruta actual no existe");
                 break;
             case 4:
-                alert("La ruta actual no es valida")
+                alert("La ruta actual no es valida");
                 break;
             case 5:
-                this.insertarHijos(carpeta_nueva, lista_carpeta)
+                this.insertarHijos(carpeta_nueva, lista_carpeta);
                 break;
         }
     }
 
-    grafica_arbol(raiz){
+    grafica_arbol(raiz) {
         var cadena = "";
-        if(!(raiz === null)){
+        if (!(raiz === null)) {
             cadena = "digraph arbol{ ";
             cadena = cadena + this.retornarValoresArbol(raiz);
             cadena = cadena + "}";
-        }else{
+        } else {
             cadena = "digraph G { arbol }";
         }
-        console.log(cadena)
+        console.log(cadena);
         return cadena;
     }
 
     /** le mando el parametro primero y solo recorre los siguientes*/
-    retornarValoresArbol(raiz){
-        var cadena = "node[shape=folder ,fontsize=\"10pt\",penwidth=2,fontname=\"Courier New\",style=\"filled\",fillcolor=\"lightslateblue\",fontcolor=\"whitesmoke\"] ";
+    retornarValoresArbol(raiz) {
+        var cadena =
+            'node[shape=folder ,fontsize="10pt",penwidth=2,fontname="Courier New",style="filled",fillcolor="lightslateblue",fontcolor="whitesmoke"] ';
         let nodo = 1;
         let nodo_padre = 0;
-        cadena += "nodo" + nodo_padre + "[label=\"" + raiz.valor  + "\"] "
-        cadena += this.valoresSiguietes(raiz.primero, nodo, nodo_padre)
-        cadena += this.conexionRamas(raiz.primero, 0)
+        cadena += "nodo" + nodo_padre + '[label="' + raiz.valor + '"] ';
+        cadena += this.valoresSiguietes(raiz.primero, nodo, nodo_padre);
+        cadena += this.conexionRamas(raiz.primero, 0);
         return cadena;
     }
 
-
-    valoresSiguietes(raiz, nodo, nodo_padre){
-        let cadena = ""
-        let aux = raiz
-        let nodo_padre_aumento = nodo_padre
-        if(aux !== null){
-            while(aux){
-                cadena += "nodo" + aux.id + "[label=\"" + aux.valor  + "\"] "
-                aux = aux.siguiente
+    valoresSiguietes(raiz, nodo, nodo_padre) {
+        let cadena = "";
+        let aux = raiz;
+        let nodo_padre_aumento = nodo_padre;
+        if (aux !== null) {
+            while (aux) {
+                cadena += "nodo" + aux.id + '[label="' + aux.valor + '"] ';
+                aux = aux.siguiente;
             }
-            aux = raiz
-            while(aux){
-                nodo_padre_aumento++
-                cadena += this.valoresSiguietes(aux.primero, this.nodo_creados, nodo_padre_aumento)
-                aux = aux.siguiente
+            aux = raiz;
+            while (aux) {
+                nodo_padre_aumento++;
+                cadena += this.valoresSiguietes(
+                    aux.primero,
+                    this.nodo_creados,
+                    nodo_padre_aumento
+                );
+                aux = aux.siguiente;
             }
         }
-        return cadena
+        return cadena;
     }
 
-    conexionRamas(raiz, padre){
-        let cadena = ""
-        let aux = raiz
-        if(aux !== null){
-            while(aux){
-                cadena += "nodo" + padre + " -> nodo" + aux.id + " "
-                aux = aux.siguiente
+    conexionRamas(raiz, padre) {
+        let cadena = "";
+        let aux = raiz;
+        if (aux !== null) {
+            while (aux) {
+                cadena += "nodo" + padre + " -> nodo" + aux.id + " ";
+                aux = aux.siguiente;
             }
-            aux = raiz
-            while(aux){
-                cadena += this.conexionRamas(aux.primero, aux.id)
-                aux = aux.siguiente
+            aux = raiz;
+            while (aux) {
+                cadena += this.conexionRamas(aux.primero, aux.id);
+                aux = aux.siguiente;
             }
         }
-        return cadena
+        return cadena;
     }
 
     /** Modificacion 30/03/2023 */
-    BuscarCarpetaV2(lista_carpeta){
+    BuscarCarpetaV2(lista_carpeta) {
         //Directorio Actual seria la Raiz
-        if(lista_carpeta[1] === "" && this.raiz.primero !== null){
-            return this.raiz
+        if (lista_carpeta[1] === "" && this.raiz.primero !== null) {
+            return this.raiz;
         }
         //Directorio Actual seria Raiz pero no contiene elementos
-        else if (lista_carpeta[1] === "" && this.raiz.primero === null){
-            return null
+        else if (lista_carpeta[1] === "" && this.raiz.primero === null) {
+            return null;
         }
         //Actual no es raiz pero tampoco hay elementos en raiz
-        else if(lista_carpeta[1] !== "" && this.raiz.primero === null){
-            return null
+        else if (lista_carpeta[1] !== "" && this.raiz.primero === null) {
+            return null;
         }
         //Buscamos el directorio padre y revisar si en sus hijos existe la carpeta
-        else if(lista_carpeta[1] !== "" && this.raiz.primero !== null){
-            let aux = this.raiz.primero
-            let nivel = lista_carpeta.length
-            let posicion = 1; 
-            for(var i = 1; i < nivel; i++){
-                if(aux !== null){
-                    while(aux){
-                        if(posicion < lista_carpeta.length && lista_carpeta[posicion] === aux.valor){
-                            posicion++
-                            if(aux.primero !== null && posicion < lista_carpeta.length){
-                                aux = aux.primero
+        else if (lista_carpeta[1] !== "" && this.raiz.primero !== null) {
+            let aux = this.raiz.primero;
+            let nivel = lista_carpeta.length;
+            let posicion = 1;
+            for (var i = 1; i < nivel; i++) {
+                if (aux !== null) {
+                    while (aux) {
+                        if (
+                            posicion < lista_carpeta.length &&
+                            lista_carpeta[posicion] === aux.valor
+                        ) {
+                            posicion++;
+                            if (aux.primero !== null && posicion < lista_carpeta.length) {
+                                aux = aux.primero;
                             }
                             break;
-                        }else{
-                            aux = aux.siguiente
+                        } else {
+                            aux = aux.siguiente;
                         }
                     }
-                }else{
+                } else {
                     break;
                 }
             }
-            if(aux !== null){
-                return aux
-            }else{
-                return null
+            if (aux !== null) {
+                return aux;
+            } else {
+                return null;
             }
-
         }
     }
 
-    mostrarCarpetasActuales(ruta){
-        let lista_carpeta = ruta.split('/')
-        let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta)
-        try{
-            if(existe_carpeta !== null){
-                let aux = existe_carpeta.primero
-                while(aux){
-                    console.log(aux.valor)
-                    aux = aux.siguiente
+    mostrarCarpetasActuales(ruta) {
+        let lista_carpeta = ruta.split("/");
+        let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta);
+        try {
+            if (existe_carpeta !== null) {
+                let aux = existe_carpeta.primero;
+                while (aux) {
+                    console.log(aux.valor);
+                    aux = aux.siguiente;
+                }
+                let aux1 = existe_carpeta.matriz;
+                let nodo_Actul_matriz = aux1.principal;
+                while (nodo_Actul_matriz) {
+                    console.log(nodo_Actul_matriz.posicion);
+                    nodo_Actul_matriz = nodo_Actul_matriz.siguiente;
                 }
             }
-        }catch(error){
-            console.log("Hubo un error")
+        } catch (error) {
+            console.log("Hubo un error");
         }
     }
 }
 
 //Clase Nodo para la Matriz Dispersa
-class nodoMatrizDispersa{
-    constructor(posX, posY, nombre_archivo){
+class nodoMatrizDispersa {
+    constructor(posX, posY, nombre_archivo) {
         this.siguiente = null;
         this.anterior = null;
         this.abajo = null;
@@ -650,53 +791,53 @@ class nodoMatrizDispersa{
         this.posX = posX;
         this.posY = posY;
         this.posicion = nombre_archivo;
+        //this.contenidoArchivo = contenidoArchivo;
     }
 }
 
-
 //Clase Matriz Dispersa
-class MatrizDispersa{
-    constructor(){
-        this.principal = new nodoMatrizDispersa(-1,-1,"Raiz")
+class MatrizDispersa {
+    constructor() {
+        this.principal = new nodoMatrizDispersa(-1, -1, "Raiz");
         this.coordenadaY = 0;
         this.coordenadaX = 0;
     }
 
-    buscarF(nombre_archivo){
-        let aux = this.principal
-        while(aux){
+    buscarF(nombre_archivo) {
+        let aux = this.principal;
+        while (aux) {
             /**if(aux.posY === y) */
-            if(aux.posicion === nombre_archivo){
+            if (aux.posicion === nombre_archivo) {
                 return aux;
-            }else{
+            } else {
                 aux = aux.abajo;
             }
         }
         return null;
     }
 
-    buscarC(carnet){
+    buscarC(carnet) {
         let aux = this.principal;
-        while(aux){
+        while (aux) {
             /**if(aux.posX === x) */
-            if(aux.posicion === carnet){
+            if (aux.posicion === carnet) {
                 return aux;
-            }else{
-                aux = aux.siguiente
+            } else {
+                aux = aux.siguiente;
             }
         }
         return null;
     }
 
-    insertarColumna(posicion,texto){
-        const nuevoNodo = new nodoMatrizDispersa(posicion,-1,texto);
+    insertarColumna(posicion, texto) {
+        const nuevoNodo = new nodoMatrizDispersa(posicion, -1, texto);
         let piv = this.principal;
         let pivA = this.principal;
-        while(piv.siguiente){
-            if(nuevoNodo.posX > piv.posX){
+        while (piv.siguiente) {
+            if (nuevoNodo.posX > piv.posX) {
                 pivA = piv;
-                piv = piv.siguiente
-            }else{
+                piv = piv.siguiente;
+            } else {
                 nuevoNodo.siguiente = piv;
                 nuevoNodo.anterior = pivA;
                 pivA.siguiente = nuevoNodo;
@@ -708,15 +849,15 @@ class MatrizDispersa{
         piv.siguiente = nuevoNodo;
     }
 
-    insertarFila(posicion,texto){
-        const nuevoNodo = new nodoMatrizDispersa(-1,posicion,texto);
+    insertarFila(posicion, texto) {
+        const nuevoNodo = new nodoMatrizDispersa(-1, posicion, texto);
         let piv = this.principal;
         let pivA = this.principal;
-        while(piv.abajo){
-            if(nuevoNodo.posY > piv.posY){
+        while (piv.abajo) {
+            if (nuevoNodo.posY > piv.posY) {
                 pivA = piv;
                 piv = piv.abajo;
-            }else{
+            } else {
                 nuevoNodo.abajo = piv;
                 nuevoNodo.arriba = pivA;
                 pivA.abajo = nuevoNodo;
@@ -727,124 +868,146 @@ class MatrizDispersa{
         nuevoNodo.arriba = piv;
         piv.abajo = nuevoNodo;
     }
-    
-    insertarNodo(x,y,texto){
-        const nuevoNodo = new nodoMatrizDispersa(x,y,texto);
+
+    insertarNodo(x, y, texto) {
+        const nuevoNodo = new nodoMatrizDispersa(x, y, texto);
         let tempX = this.principal;
         let tempY = this.principal;
         //Agregar en Columna
-        while(tempX.siguiente){
-            if(tempX.posX === nuevoNodo.posX){
+        while (tempX.siguiente) {
+            if (tempX.posX === nuevoNodo.posX) {
                 break;
             }
             tempX = tempX.siguiente;
         }
-        while(true){
-            if(tempX.posY === nuevoNodo.posY){
+        while (true) {
+            if (tempX.posY === nuevoNodo.posY) {
                 break;
-            }else if(tempX.abajo !== null && tempX.abajo.posY > nuevoNodo.posY){
+            } else if (tempX.abajo !== null && tempX.abajo.posY > nuevoNodo.posY) {
                 nuevoNodo.abajo = tempX.abajo;
                 nuevoNodo.arriba = tempX;
                 tempX.abajo = nuevoNodo;
                 break;
-            }else if(tempX.abajo === null){
-                nuevoNodo.arriba = tempX
-                nuevoNodo.abajo = tempX.abajo
+            } else if (tempX.abajo === null) {
+                nuevoNodo.arriba = tempX;
+                nuevoNodo.abajo = tempX.abajo;
                 tempX.abajo = nuevoNodo;
                 break;
-            }else{
+            } else {
                 tempX = tempX.abajo;
             }
         }
         //Agregar en Fila
-        while(tempY.abajo){
-            if(tempY.posY === nuevoNodo.posY){
+        while (tempY.abajo) {
+            if (tempY.posY === nuevoNodo.posY) {
                 break;
             }
             tempY = tempY.abajo;
         }
-        while(true){
-            if(tempY.posX === nuevoNodo.posX){
+        while (true) {
+            if (tempY.posX === nuevoNodo.posX) {
                 break;
-            }else if(tempY.siguiente !== null && tempY.siguiente.posX > nuevoNodo.posX){
+            } else if (
+                tempY.siguiente !== null &&
+                tempY.siguiente.posX > nuevoNodo.posX
+            ) {
                 nuevoNodo.siguiente = tempY.siguiente;
                 nuevoNodo.anterior = tempY;
                 tempY.siguiente = nuevoNodo;
-            }else if(tempY.siguiente === null){
+            } else if (tempY.siguiente === null) {
                 nuevoNodo.anterior = tempY;
                 nuevoNodo.siguiente = tempY.siguiente;
                 tempY.siguiente = nuevoNodo;
-            }else{
+            } else {
                 tempY = tempY.siguiente;
             }
         }
     }
 
-    insertarElemento(x,y){
+    insertarElemento(x, y) {
         let texto = x + "," + y;
         let nuevaFila = this.buscarF(y);
         let nuevaColumna = this.buscarC(x);
         /** Fila y Columna no existen */
-        if(nuevaFila === null && nuevaColumna === null){
-            this.insertarColumna(x, "C"+x);
-            this.insertarFila(y, "F"+y);
-            this.insertarNodo(x,y,texto);
-        }else if(nuevaFila === null && nuevaColumna !== null){ /* Fila no existe, Columna si existe */
-            this.insertarFila(y,"F"+y);
-            this.insertarNodo(x,y,texto);
-        }else if(nuevaFila !== null && nuevaColumna === null){/* Fila si existe, Columna no existe */
-            this.insertarColumna(x, "C"+x);
-            this.insertarNodo(x,y,texto);
-        }else if(nuevaFila !== null && nuevaColumna !== null){/* Fila si existe, Columna si existe */
-            this.insertarNodo(x,y,texto);
-        }else{
+        if (nuevaFila === null && nuevaColumna === null) {
+            this.insertarColumna(x, "C" + x);
+            this.insertarFila(y, "F" + y);
+            this.insertarNodo(x, y, texto);
+        } else if (nuevaFila === null && nuevaColumna !== null) {
+            /* Fila no existe, Columna si existe */
+            this.insertarFila(y, "F" + y);
+            this.insertarNodo(x, y, texto);
+        } else if (nuevaFila !== null && nuevaColumna === null) {
+            /* Fila si existe, Columna no existe */
+            this.insertarColumna(x, "C" + x);
+            this.insertarNodo(x, y, texto);
+        } else if (nuevaFila !== null && nuevaColumna !== null) {
+            /* Fila si existe, Columna si existe */
+            this.insertarNodo(x, y, texto);
+        } else {
             console.log("Me dio Ansiedad :(");
         }
     }
 
-    insertarArchivo(texto, numero){
-        let nuevaFila = this.buscarF(texto)
-        if(nuevaFila === null){
-            this.insertarFila(this.coordenadaY,texto)
-            this.coordenadaY++
-        }else{
-            let copia_archivo = "(" + (numero++) + ")" + nombreArchivo
-            this.insertarArchivo(copia_archivo, numero)
+    insertarArchivo(texto, numero) {
+        let nuevaFila = this.buscarF(texto);
+        if (nuevaFila === null) {
+            this.insertarFila(this.coordenadaY, texto);
+            this.coordenadaY++;
+        } else {
+            let copia_archivo = "(" + numero++ + ")" + nombreArchivo;
+            this.insertarArchivo(copia_archivo, numero);
         }
     }
 
-    colocarPermiso(archivo, carnet, permisos){
+    colocarPermiso(archivo, carnet, permisos) {
         /** NOTA: Paso Previo Buscar en AVL si existe el carnet*/
-        let nuevaColumna = this.buscarC(carnet)
-        let nuevaFila = this.buscarF(archivo)
-        if(nuevaColumna === null){
-            this.insertarColumna(this.coordenadaX, carnet)
-            this.coordenadaX++
-            nuevaColumna = this.buscarC(carnet)
+        let nuevaColumna = this.buscarC(carnet);
+        let nuevaFila = this.buscarF(archivo);
+        if (nuevaColumna === null) {
+            this.insertarColumna(this.coordenadaX, carnet);
+            this.coordenadaX++;
+            nuevaColumna = this.buscarC(carnet);
         }
-        if(nuevaColumna !== null && nuevaFila !== null){
-            this.insertarNodo(nuevaColumna.posX, nuevaFila.posY, permisos)
+        if (nuevaColumna !== null && nuevaFila !== null) {
+            this.insertarNodo(nuevaColumna.posX, nuevaFila.posY, permisos);
         }
     }
 
-    reporte(){
+    reporte() {
         let cadena = "";
         let aux1 = this.principal;
         let aux2 = this.principal;
         let aux3 = this.principal;
-        if(aux1 !== null){
+        if (aux1 !== null) {
             cadena = "digraph MatrizCapa{ node[shape=box]  rankdir=UD;  {rank=min; ";
             /** Creacion de los nodos actuales */
-            while(aux1){
-                cadena += "nodo" + (aux1.posX+1) + (aux1.posY+1) + "[label=\"" + aux1.posicion + "\" ,rankdir=LR,group=" + (aux1.posX+1) + "]; ";
+            while (aux1) {
+                cadena +=
+                    "nodo" +
+                    (aux1.posX + 1) +
+                    (aux1.posY + 1) +
+                    '[label="' +
+                    aux1.posicion +
+                    '" ,rankdir=LR,group=' +
+                    (aux1.posX + 1) +
+                    "]; ";
                 aux1 = aux1.siguiente;
             }
-            cadena += "}"
-            while(aux2){
+            cadena += "}";
+            while (aux2) {
                 aux1 = aux2;
                 cadena += "{rank=same; ";
-                while(aux1){
-                    cadena += "nodo" + (aux1.posX+1) + (aux1.posY+1) + "[label=\"" + aux1.posicion + "\" ,group=" + (aux1.posX+1) + "]; ";
+                while (aux1) {
+                    cadena +=
+                        "nodo" +
+                        (aux1.posX + 1) +
+                        (aux1.posY + 1) +
+                        '[label="' +
+                        aux1.posicion +
+                        '" ,group=' +
+                        (aux1.posX + 1) +
+                        "]; ";
                     aux1 = aux1.siguiente;
                 }
                 cadena += "}";
@@ -852,95 +1015,134 @@ class MatrizDispersa{
             }
             /** Conexiones entre los nodos de la matriz */
             aux2 = aux3;
-            while(aux2){
+            while (aux2) {
                 aux1 = aux2;
-                while(aux1.siguiente){
-                    cadena += "nodo" + (aux1.posX+1) + (aux1.posY+1) + " -> " + "nodo" + (aux1.siguiente.posX+1) + (aux1.siguiente.posY+1) + " [dir=both];"
-                    aux1 = aux1.siguiente
+                while (aux1.siguiente) {
+                    cadena +=
+                        "nodo" +
+                        (aux1.posX + 1) +
+                        (aux1.posY + 1) +
+                        " -> " +
+                        "nodo" +
+                        (aux1.siguiente.posX + 1) +
+                        (aux1.siguiente.posY + 1) +
+                        " [dir=both];";
+                    aux1 = aux1.siguiente;
                 }
                 aux2 = aux2.abajo;
             }
             aux2 = aux3;
-            while(aux2){
+            while (aux2) {
                 aux1 = aux2;
-                while(aux1.abajo){
-                    cadena += "nodo" + (aux1.posX+1) + (aux1.posY+1) + " -> " + "nodo" + (aux1.abajo.posX+1) + (aux1.abajo.posY+1) + " [dir=both];"
-                    aux1 = aux1.abajo
+                while (aux1.abajo) {
+                    cadena +=
+                        "nodo" +
+                        (aux1.posX + 1) +
+                        (aux1.posY + 1) +
+                        " -> " +
+                        "nodo" +
+                        (aux1.abajo.posX + 1) +
+                        (aux1.abajo.posY + 1) +
+                        " [dir=both];";
+                    aux1 = aux1.abajo;
                 }
                 aux2 = aux2.siguiente;
             }
-            cadena +=  "}";
-        }else{
-            cadena = "No hay elementos en la matriz"
+            cadena += "}";
+        } else {
+            cadena = "No hay elementos en la matriz";
         }
         return cadena;
     }
 }
 
 //Creacion Maatriz Dispersa
-const matriz = new MatrizDispersa()
+const matriz = new MatrizDispersa();
 
-function reporteMatriz(){
-    let url = 'https://quickchart.io/graphviz?graph=';
+//Funciones para el reporte de la matriz
+function reporteMatriz() {
+    let url = "https://quickchart.io/graphviz?graph=";
     let body = matriz.reporte();
-    $("#image").attr("src",url+body)
+    $("#imageMatriz").attr("src", url + body);
 }
 
-function cargarArchivo(){
-    matriz.insertarArchivo(nombreArchivo,1)
+//Funcion para insertar un archivo en la matriz
+function cargarArchivo() {
+    //falta validar si ya existe el archivo
+    matriz.insertarArchivo(nombreArchivo, 1);
     reporteMatriz();
 }
 
-function asignarPermisos(){
-    let cadena = document.getElementById("permiso").value
-    let arreglo = cadena.split('-')
-    matriz.colocarPermiso(arreglo[0],arreglo[1],arreglo[2])
-    reporteMatriz()
+//Funcion para asignar permisos
+function asignarPermisos() {
+    let cadena = document.getElementById("permiso").value;
+    let arreglo = cadena.split("-");
+    matriz.colocarPermiso(arreglo[0], arreglo[1], arreglo[2]);
+    reporteMatriz();
 }
-
-
-
 
 // creacion arbol n-ario
-const arbolnario = new ArbolNArio()
-function agregarVarios(){
-    const usuarioActuaaal = JSON.parse((localStorage.getItem('usuarioActual')));
-    console.log("Usuario Actual: ", usuarioActuaaal)
-    let ruta = document.getElementById("rutaCarpeta").value
-    let carpeta = document.getElementById("NombreCarpeta").value
-    console.log("Ruta: " + ruta)
-    console.log("Carpeta: " + carpeta)
-    try{
-        arbolnario.insertarValor(ruta,carpeta)
-        usuarioActuaaal.arbolNario = arbolnario
-        console.log("Arbol Nnnario:", arbolnario)
-        console.log("Se inserto el nodo correctamente")
-        localStorage.setItem('usuarioActual', JSON.stringify(usuarioActuaaal));
-    }catch(error){
-        alert("Hubo un error al insertar el nodo")
+const arbolnario = new ArbolNArio();
+
+// funcion para insertar un nodo en el arbol n-ario
+function agregarVarios() {
+    const usuarioActuaaal = JSON.parse(localStorage.getItem("usuarioActual"));
+    console.log("Usuario Actual: ", usuarioActuaaal);
+    let ruta = document.getElementById("rutaCarpeta").value;
+    let carpeta = document.getElementById("NombreCarpeta").value;
+    console.log("Ruta: " + ruta);
+    console.log("Carpeta: " + carpeta);
+    try {
+        arbolnario.insertarValor(ruta, carpeta, 1);
+        usuarioActuaaal.arbolNario = arbolnario;
+        console.log("Arbol Nnnario:", arbolnario);
+        console.log("Se inserto el nodo correctamente");
+        agregarUsuario(usuarioActuaaal);
+        localStorage.setItem("usuarioActual", JSON.stringify(usuarioActuaaal));
+    } catch (error) {
+        alert("Hubo un error al insertar el nodo");
     }
-    document.getElementById("NombreCarpeta").value = ""; 
-
-}
-
-function refrescarArbolNario(){
-    let usuarioActuaaal = JSON.parse((localStorage.getItem('usuarioActual')));
-    console.log("Usuario Actual: ", usuarioActuaaal)
-    let arbolNario = usuarioActuaaal.arbolNario.raiz
-    console.log( "Arbol Nario: ", arbolNario)
-    let url = 'https://quickchart.io/graphviz?graph=';
-    let body = arbolnario.grafica_arbol(arbolNario);
-    $("#imageNario").attr("src", url + body);
     document.getElementById("NombreCarpeta").value = "";
 }
 
-function mostraCarpetas(){
-    let ruta = document.getElementById("ruta").value
-    arbolnario.mostrarCarpetasActuales(ruta)
+// funcion para refrescar el arbol n-ario
+function refrescarArbolNario() {
+    let usuarioActuaaal = JSON.parse(localStorage.getItem("usuarioActual"));
+    let arbolNario = usuarioActuaaal.arbolNario.raiz;
+    console.log("Arbol Nario: ", arbolNario);
+    let url = "https://quickchart.io/graphviz?graph=";
+    let body = arbolnario.grafica_arbol(arbolNario);
+    $("#imageNario").attr("src", url + body);
+    document.getElementById("NombreCarpeta").value = "";
+    console.log(
+        "El tamaño estimado de localStorage es de:",
+        getLocalStorageSize(),
+        "bytes."
+    );
+    // Actualizar el árbolNario del usuario en el array de usuarios
+    let usuariosArray = JSON.parse(localStorage.getItem("usuarios")) || []; // Obtener array de usuarios del localStorage
+    let usuarioIndex = usuariosArray.findIndex(
+        (u) => u.carnet === usuarioActuaaal.carnet
+    ); // Buscar el índice del usuario en el array
+    if (usuarioIndex !== -1) {
+        // Si el usuario existe en el array, actualizarlo
+        usuariosArray[usuarioIndex].arbolNario = usuarioActuaaal.arbolNario;
+        localStorage.setItem("usuarios", JSON.stringify(usuariosArray)); // Guardar el array de usuarios actualizado en el localStorage
+    }
 }
 
+// funcion para eliminar un nodo del arbol n-ario
+function EliminarCarpeta() {
+    let ruta = document.getElementById("rutaCarpeta").value;
+    let carpeta = document.getElementById("NombreCarpeta").value;
+    arbolnario.eliminarValor(ruta, carpeta);
+}
 
-
+// funcion para mostrar las carpetas actuales
+function mostraCarpetas() {
+    let ruta = document.getElementById("ruta").value;
+    arbolnario.mostrarCarpetasActuales(ruta);
+}
 
 // creación de arbol AVL
 const arbolBinarioAVL = new ArbolAVL();
@@ -958,7 +1160,7 @@ function agregarVariosNumeros() {
     refrescarArbolAVL();
 }
 
-//funcion para limpiar el arbol
+//funcion para limpiar el arbol AVL
 function limpiar() {
     arbolBinarioAVL.eliminarTodo();
     let url = "https://quickchart.io/graphviz?graph=digraph G { arbol }";
@@ -973,6 +1175,7 @@ function refrescarArbolAVL() {
     console.log("Arbol: ", ArbolenStorage);
     let url = "https://quickchart.io/graphviz?graph=";
     let body = arbolBinarioAVL.grafica_arbol(ArbolenStorage);
+
     console.log(body);
     $("#image").attr("src", url + body);
 }
@@ -987,42 +1190,8 @@ encabezado.innerHTML = `
     <th>Contraseña</th>
     <th>Carpeta Raiz</th>
     `;
-const inputElement = document.getElementById("inputt");
+
 let h4444 = document.getElementById("welcomeeeee");
-inputElement.addEventListener("change", onChange, false);
-
-
-// funcion para leer el archivo json
-function onChange(event) {
-    var reader = new FileReader();
-    reader.onload = onReaderLoad;
-    reader.readAsText(event.target.files[0]);
-}
-
-
-// funcion para cargar el archivo json
-function onReaderLoad(event) {
-    var obj = JSON.parse(event.target.result);
-    console.log(obj);
-    for (var i = 0; i < obj.alumnos.length; i++) {
-        let nombreTemp = obj.alumnos[i].nombre;
-        let carnetTemp = obj.alumnos[i].carnet;
-        let passwordTemp = obj.alumnos[i].password;
-        let carpetaRaizTemp = obj.alumnos[i].Carpeta_Raiz;
-        let UserTemp = new user_student(
-            nombreTemp,
-            parseInt(carnetTemp),
-            passwordTemp,
-            carpetaRaizTemp
-        );
-        arbolBinarioAVL.insertaValor(UserTemp);
-    }
-    localStorage.setItem("TreeAVL", JSON.stringify(arbolBinarioAVL.raiz));
-    console.log(typeof arbolBinarioAVL.raiz);
-    alert("Se cargo el archivo correctamente");
-
-    console.log(arbolBinarioAVL.raiz);
-}
 
 //Funcion que obtiene el arbol del local storage y lo recorre en postOrder
 function retonarDatosStoragePost() {
@@ -1054,8 +1223,8 @@ function retonarDatosStorageInOrder() {
     let inOrder = arbolBinarioAVL.InOrderAVL(ArbolitoStorage2);
     // console.log(typeof ArbolenStorage);
     // console.log("Arbol: ", ArbolenStorage)
-    console.log("InOrder: ", typeof ArbolitoStorage2,ArbolitoStorage2);
-    
+    console.log("InOrder: ", typeof ArbolitoStorage2, ArbolitoStorage2);
+
     clinTable();
     table.appendChild(encabezado);
     recorrerArbolInOrder(ArbolitoStorage2);
@@ -1090,7 +1259,6 @@ function recorrerArbolInOrder(raiz) {
     }
 }
 
-
 // Funcion para recorrer el árbol en postorden y mostrarlo en la tabla
 function recorrerArbolPostOrder(raiz) {
     if (raiz !== null) {
@@ -1111,7 +1279,6 @@ function recorrerArbolPostOrder(raiz) {
         table.appendChild(fila);
     }
 }
-
 
 // Funcion para limpiar el contenido de la tabla
 function clinTable() {
@@ -1139,46 +1306,132 @@ function recorrerArbolPreOrder(raiz) {
     }
 }
 
-
+//funcion para cerrar sesion
+function cerrarSesion() {
+    window.location.href = "/EDD_Proyecto1_Fase2/Code/Login/index.html";
+}
 
 /*Función que verifica le entrada del admin y de los estudiantes */
 function Loginn() {
     let user = document.getElementById("useeer").value;
     let pass = document.getElementById("passsword").value;
     let ArbolenStorageLogin = JSON.parse(window.localStorage.getItem("TreeAVL"));
-    let resultado = arbolBinarioAVL.VerificandoPasswordYCarnetDelArbol(ArbolenStorageLogin, user, pass);
-    try{
-    console.log("ArbolStorage: ", ArbolenStorageLogin);
-    console.log("Resultado: ", resultado);
-    if (user == "admin" && pass == "admin") {
-        let ruta = "/EDD_Proyecto1_Fase2/Code/Dashboard/examples/dashboard.html";
-        window.location.href = ruta;
-        console.log(ruta);
-        alert("Bienvenido Admin");
-        
-    }else if(resultado != false){
-        localStorage.setItem('usuarioActual', JSON.stringify(resultado));
-        let rutaa = "/EDD_Proyecto1_Fase2/Code/User/examples/user.html";
-        console.log(rutaa);
-        window.location.href = rutaa;
-        alert("Bienvenido Estudiante: " + resultado.nombre);
+    let resultado = arbolBinarioAVL.VerificandoPasswordYCarnetDelArbol(
+        ArbolenStorageLogin,
+        user,
+        pass
+    );
+    let usuariosArray = JSON.parse(localStorage.getItem("usuarios")) || [];
+    let usuariActualdelArray = usuariosArray.find(
+        (usuario) => usuario.carnet == user
+    );
+
+    try {
+        if (user == "admin" && pass == "admin") {
+            let ruta = "/EDD_Proyecto1_Fase2/Code/Dashboard/examples/dashboard.html";
+            window.location.href = ruta;
+            console.log(ruta);
+            alert("Bienvenido Admin");
+        } else if (resultado != false) {
+            console.log("ArbolStorage: ", ArbolenStorageLogin);
+            console.log("Resultado: ", resultado);
+            if (
+                usuariActualdelArray &&
+                usuariActualdelArray.carnet == resultado.carnet
+            ) {
+                console.log("Usuario Actual: ", usuariActualdelArray);
+                localStorage.setItem(
+                    "usuarioActual",
+                    JSON.stringify(usuariActualdelArray)
+                );
+            } else {
+                usuariosArray.push(resultado);
+                localStorage.setItem("usuarios", JSON.stringify(usuariosArray));
+                localStorage.setItem("usuarioActual", JSON.stringify(resultado));
+                usuariActualdelArray = resultado;
+            }
+            let rutaa = "/EDD_Proyecto1_Fase2/Code/User/examples/user.html";
+            console.log(rutaa);
+            window.location.href = rutaa;
+            alert("Bienvenido Estudiante: " + resultado.nombre);
+        } else {
+            alert("Usuario o contraseña incorrecta");
+        }
+    } catch (error) {
+        alert(error);
     }
-    else {
-        alert("Usuario o contraseña incorrecta")
-    }
-    }catch(error){
-        alert(error)
-    }
-    
 }
 
+function agregarUsuario(usuario) {
+    let usuariosArray = JSON.parse(localStorage.getItem("usuarios")) || []; // Obtener array de usuarios del localStorage
+    let usuarioIndex = usuariosArray.findIndex(
+        (u) => u.carnet === usuario.carnet
+    ); // Buscar el índice del usuario en el array
+    if (usuarioIndex === -1) {
+        // Si el usuario no existe en el array, agregarlo
+        usuariosArray.push(usuario);
+    } else if (usuariosArray[usuarioIndex].usuarioActual !== true) {
+        // Si el usuario ya existe en el array y no es el usuario actual, actualizarlo
+        usuariosArray[usuarioIndex] = usuario;
+    }
+    localStorage.setItem("usuarios", JSON.stringify(usuariosArray)); // Guardar el array de usuarios en el localStorage
+}
+
+function getLocalStorageSize() {
+    let size = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key);
+        size += key.length + value.length;
+    }
+    return size;
+}
+
+// function Loginn() {
+//     let user = document.getElementById("useeer").value;
+//     let pass = document.getElementById("passsword").value;
+//     let ArbolenStorageLogin = JSON.parse(window.localStorage.getItem("TreeAVL"));
+//     let resultado = arbolBinarioAVL.VerificandoPasswordYCarnetDelArbol(ArbolenStorageLogin, user, pass);
+//     try {
+//         console.log("ArbolStorage: ", ArbolenStorageLogin);
+//         console.log("Resultado: ", resultado);
+
+//         if (user == "admin" && pass == "admin") {
+//             let ruta = "/EDD_Proyecto1_Fase2/Code/Dashboard/examples/dashboard.html";
+//             window.location.href = ruta;
+//             console.log(ruta);
+//             alert("Bienvenido Admin");
+//         } else if (resultado != false) {
+//             let usuariosArray = JSON.parse(localStorage.getItem('usuarios')) || []; // Obtener array de usuarios del localStorage
+//             let usuarioIndex = usuariosArray.findIndex(usuario => usuario.carnet === resultado.carnet); // Buscar el índice del usuario en el array
+//             if (usuarioIndex === -1) { // Si el usuario no existe en el array, agregarlo
+//                 usuariosArray.push(resultado);
+//             } else { // Si el usuario ya existe en el array, actualizarlo
+//                 usuariosArray[usuarioIndex] = resultado;
+//             }
+//             console.log(usuariosArray);
+//             localStorage.setItem('usuarios', JSON.stringify(usuariosArray)); // Guardar el array de usuarios en el localStorage
+//             localStorage.setItem('usuarioActual', JSON.stringify(resultado));
+//             let rutaa = "/EDD_Proyecto1_Fase2/Code/User/examples/user.html";
+//             console.log(rutaa);
+//             window.location.href = rutaa;
+//             alert("Bienvenido Estudiante: " + resultado.nombre);
+//         } else {
+//             alert("Usuario o contraseña incorrecta")
+//         }
+//     } catch (error) {
+//         alert(error)
+//     }
+// }
+
 // Funcion para mostrar el nombre del usuario en el dashboard
-function BienvenidaUser_student(){
-    const usuarioActual = (localStorage.getItem('usuarioActual'));
+function BienvenidaUser_student() {
+    const usuarioActual = localStorage.getItem("usuarioActual");
     const user = JSON.parse(usuarioActual);
     const bienvenida = `¡Bienvenido ${user.carnet}!`;
     h4444.textContent = bienvenida;
 }
+
 // Funcon para seleccionaaaar el orden del arbol avl en lat  tablaaaa
 function seleccionarOpcion() {
     const selectElement = document.getElementById("miSelect");

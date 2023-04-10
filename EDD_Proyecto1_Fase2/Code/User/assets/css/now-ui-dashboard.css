@@ -29,6 +29,37 @@ Copyright (c) 2015 Daniel Eden
   animation-fill-mode: both;
 }
 
+.uploadfile {
+  font-family: 'Roboto Mono', monospace;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgb(255, 214, 214);
+  padding: 10px;
+  width: 350px;
+  outline: none;
+}
+
+input[type=file]::file-selector-button {
+  border: none;
+  margin-left: 3%;
+  background: #ffcfcf;
+  width: 140px;
+  font-size: 12px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #5d2f2f;
+  cursor: pointer;
+  outline: none;
+  transition: background .2s ease-in-out;
+}
+
+
+
+input[type=file]::file-selector-button:hover {
+  background: #deb7b7;
+  
+}
+
 .animated.infinite {
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
@@ -364,6 +395,7 @@ Copyright (c) 2015 Daniel Eden
   background-color: transparent;
   cursor: pointer;
 }
+
 
 
 .ps__rail-x:hover>.ps__thumb-x,
@@ -4370,6 +4402,8 @@ Created using IcoMoon - icomoon.io
 .zzzooom:hover img{
   transform: scale(1.2);
 }
+
+
 
 .fixed-plugin {
   position: fixed;

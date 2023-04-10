@@ -97,7 +97,9 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="../../Login/index.html">Cerrar Sesión</a>
+                  <a class="dropdown-item" onclick="cerrarSesion()">Cerrar Sesion</a>
+                  <!-- href="../../Login/index.html" -->
+            
                 </div>
               </li>
             </ul>
@@ -137,11 +139,18 @@
                     </button>
                     <br>
                     <br>
-                    <button class="ov-btn-slide-close">
+                    <button class="ov-btn-slide-close" onclick="ObtenerArrayUsers()">
                       Eliminar Carpeta
                     </button>
+                    <br>
+                    <br>
+                    <button class="ov-btn-slide-close" onclick="ObtenerArrayUsers()">
+                      Eliminar Carpeta
+                    </button>
+                    
                   </div>
                 </div>
+                    <input type="file" id="inputFiles" accept=".pdf,.txt,.jpg,.jpeg,.png,.gif" />
                 <div class="card-footer">
                   <div class="stats">
                     <i class="now-ui-icons users_single-02"></i> Usuarioo
@@ -168,7 +177,34 @@
                           </tr>
                         </thead>
                         <tbody>
-                          
+                          <tr>
+                            <td>Archivo 1</td>
+                            <td>Imagen</td>
+                          </tr>
+                          <tr>
+                            <td>Archivo 1</td>
+                            <td>Imagen</td>
+                          </tr>
+                          <tr>
+                            <td>Archivo 1</td>
+                            <td>Imagen</td>
+                          </tr>
+                          <tr>
+                            <td>Archivo 1</td>
+                            <td>Imagen</td>
+                          </tr>
+                          <tr>
+                            <td>Archivo 1</td>
+                            <td>Imagen</td>
+                          </tr>
+                          <tr>
+                            <td>Archivo 1</td>
+                            <td>Imagen</td>
+                          </tr>
+                          <tr>
+                            <td>Archivo 1</td>
+                            <td>Imagen</td>
+                          </tr>
                           <!-- Agrega más filas si lo necesitas -->
                         </tbody>
                       </table>
@@ -185,24 +221,12 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4">
-            <center>
-              <button class="uwuxd">
-                <img src="../assets/img/upload.png">
-              </button>
-              <br>
-              <h5>Subir Archivo</h5>
-            </center>
-          </div>
-          
-        </div>
-
-        <div class="row">
             <div class="col-md-12">
               <div class="card ">
                 <div class="card-header ">
                   <h4 class="card-title">Reporte de Carpetas</h4>
                 </div>
+                
                 <div class="col-lg-2">
                   <center>
                     <!-- color boton (254, 216, 236) -->
@@ -218,10 +242,6 @@
                 </div>
               </div>
         </div>
-
-
-        
-
       </div>
       <div class="row">
         <div class="col-md-12">
@@ -240,12 +260,33 @@
             <div class="card-body ">
               <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
               <br>
-                <center><img id="image" class="zzzooom"></center>
+                <center><img id="imageMatriz" class="zzzooom"></center>
                 
             </div>
           </div>
-    </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card ">
+                <div class="card-header ">
+                  <h4 class="card-title">Reporte de Bitácora</h4>
+                </div>
+                <div class="col-lg-2">
+                  <center>
+                    <!-- color boton (254, 216, 236) -->
+                    <button class="ov-btn-slide-close">
+                      Reporte Bitácora
+                    </button>
+                  </center>
+                </div>
+                <div class="card-body ">
+                  <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
+                  <br>
+                    <center><img id="imageBitácora" class="zzzooom"></center>
+                    
+                </div>
+              </div>
 
+    </div>
       <footer class="footer">
         <div class=" container-fluid ">
           <nav>
@@ -260,15 +301,37 @@
                   Linkedin
                 </a>
               </li>
-
             </ul>
           </nav>
         </div>
       </footer>
     </div>
-  
-
   </div>
+  <script>
+    const inputFiles = document.getElementById("inputFiles");
+inputFiles.addEventListener("change", onFilesChange, false);
+
+
+function onFilesChange(event) {
+    var files = event.target.files;
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (file.type.includes('image') || file.type.includes('pdf') || file.type.includes('text')) {
+            var reader = new FileReader();
+            reader.onload = onFileReaderLoad;
+            reader.readAsDataURL(file);
+        }
+    }
+}
+
+function onFileReaderLoad(event) {
+    console.log(event.target.result);
+    base64String = event.target.result
+}
+
+
+
+  </script>
   <script src="../../Login/js/mainproject.js"></script>
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>

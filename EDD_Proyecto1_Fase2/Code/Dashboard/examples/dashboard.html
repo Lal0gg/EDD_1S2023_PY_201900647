@@ -110,7 +110,8 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="../../Login/index.html">Cerrar Sesion</a>
+                  <a class="dropdown-item" onclick="cerrarSesion()">Cerrar Sesion</a>
+                  <!-- href="../../Login/index.html" -->
                 </div>
               </li>
             </ul>
@@ -163,6 +164,44 @@
     </div>
   </div>
   <!--   Core JS Files   -->
+
+
+  <script>
+
+    
+const inputElement = document.getElementById("inputt");
+inputElement.addEventListener("change", onChange, false);
+// funcion para leer el archivo json
+function onChange(event) {
+    var reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(event.target.files[0]);
+}
+
+// funcion para cargar el archivo json
+function onReaderLoad(event) {
+    var obj = JSON.parse(event.target.result);
+    console.log(obj);
+    for (var i = 0; i < obj.alumnos.length; i++) {
+        let nombreTemp = obj.alumnos[i].nombre;
+        let carnetTemp = obj.alumnos[i].carnet;
+        let passwordTemp = obj.alumnos[i].password;
+        let carpetaRaizTemp = obj.alumnos[i].Carpeta_Raiz;
+        let UserTemp = new user_student(
+            nombreTemp,
+            parseInt(carnetTemp),
+            passwordTemp,
+            carpetaRaizTemp
+        );
+        arbolBinarioAVL.insertaValor(UserTemp);
+    }
+    localStorage.setItem("TreeAVL", JSON.stringify(arbolBinarioAVL.raiz));
+    console.log(typeof arbolBinarioAVL.raiz);
+    alert("Se cargo el archivo correctamente");
+
+    console.log(arbolBinarioAVL.raiz);
+}
+  </script>
 
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
