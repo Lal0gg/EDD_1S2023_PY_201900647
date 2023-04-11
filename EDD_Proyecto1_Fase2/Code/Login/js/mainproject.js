@@ -1724,7 +1724,7 @@ function Loginn() {
 
     try {
         if (user == "admin" && pass == "admin") {
-            let ruta = "/EDD_Proyecto1_Fase2/Code/Dashboard/examples/dashboard.html";
+            let ruta = "../../Dashboard/examples/dashboard.html";
             window.location.href = ruta;
             console.log(ruta);
             window.alert("Bienvenido Admin");
@@ -1746,7 +1746,7 @@ function Loginn() {
                 localStorage.setItem("usuarioActual", JSON.stringify(resultado));
                 usuariActualdelArray = resultado;
             }
-            let rutaa = "/EDD_Proyecto1_Fase2/Code/User/examples/user.html";
+            let rutaa = "../../User/examples/user.html";
             console.log(rutaa);
             window.location.href = rutaa;
             window.alert("Bienvenido Estudiante: " + resultado.nombre);
