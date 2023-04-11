@@ -144,8 +144,16 @@
                     </button>
                     <br>
                     <br>
-                    <button class="ov-btn-slide-close" onclick="">
+                    <button class="ov-btn-slide-close" onclick="MostrarTabla()">
+                      Mostrar Tabla
+                    </button>
+                    <br>
+                    <br>
+                    <button class="ov-btn-slide-close" onclick="cargarArchivo(nombreArchivo,base64String)">
                       Cargar Archivo
+                    </button>
+                    <button class="ov-btn-slide-close" onclick="asignarPermisos()">
+                      Dar Permiso
                     </button>
                     
                   </div>
@@ -164,47 +172,16 @@
               
               <div class="card-body ">
                 <div class="input-group no-border">
-                  <input type="text" value="" class="form-control" placeholder="Ej. arhivo.png-201700918-rw">
+                  <input type="text" id="permisosCarnet"value="" class="form-control" placeholder="Ej. arhivo.png-201700918-rw">
                 </div>
                 <div class="card-body">
                   <div class="chart-area">
                     <div class="table-container">
                       <table id="tablArchivos">
                         <thead class="text-primary">
-                          <tr>
-                            <th>Nombre Archivo</th>
-                            <th>Tipo Archivo</th>
-                          </tr>
+                          
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Archivo 1</td>
-                            <td>Imagen</td>
-                          </tr>
-                          <tr>
-                            <td>Archivo 1</td>
-                            <td>Imagen</td>
-                          </tr>
-                          <tr>
-                            <td>Archivo 1</td>
-                            <td>Imagen</td>
-                          </tr>
-                          <tr>
-                            <td>Archivo 1</td>
-                            <td>Imagen</td>
-                          </tr>
-                          <tr>
-                            <td>Archivo 1</td>
-                            <td>Imagen</td>
-                          </tr>
-                          <tr>
-                            <td>Archivo 1</td>
-                            <td>Imagen</td>
-                          </tr>
-                          <tr>
-                            <td>Archivo 1</td>
-                            <td>Imagen</td>
-                          </tr>
                           <!-- Agrega más filas si lo necesitas -->
                         </tbody>
                       </table>
@@ -252,7 +229,7 @@
             <div class="col-lg-2">
               <center>
                 <!-- color boton (254, 216, 236) -->
-                <button class="ov-btn-slide-close">
+                <button class="ov-btn-slide-close" onclick="reporteMatriz()">
                   Reporte Archivos
                 </button>
               </center>
@@ -273,7 +250,7 @@
                 <div class="col-lg-2">
                   <center>
                     <!-- color boton (254, 216, 236) -->
-                    <button class="ov-btn-slide-close">
+                    <button class="ov-btn-slide-close" onclick="ReporteListaCircular()">
                       Reporte Bitácora
                     </button>
                   </center>
@@ -281,7 +258,7 @@
                 <div class="card-body ">
                   <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
                   <br>
-                    <center><img id="imageBitácora" class="zzzooom"></center>
+                    <center><img id="imageBitacora" class="zzzooom"></center>
                     
                 </div>
               </div>
@@ -326,9 +303,15 @@ function onFilesChange(event) {
     }
 }
 
+
+
 function onFileReaderLoad(event) {
     base64String = event.target.result
-}
+    console.log("Nombre: ", nombreArchivo)
+    console.log("Contenido: ", base64String)
+  }
+
+
 
 
 

@@ -1,17 +1,20 @@
 // variables para la tabla de la carga masiva
 let table = document.getElementById("tablecarga");
+let table2 = document.getElementById("tablArchivos");
+let encabezado2 = document.createElement("thead");
 let encabezado = document.createElement("thead");
 encabezado.classList.add("text-primary");
+encabezado2.classList.add("text-primary");
+encabezado2.innerHTML = `
+<th></th>
+<th>Nombre Archivo</th>`
 encabezado.innerHTML = `
     <th>Nombre</th> 
     <th>Carnet</th>
     <th>Contraseña</th>
     <th>Carpeta Raiz</th>
     `;
-
 let h4444 = document.getElementById("welcomeeeee");
-
-
 
 /*Clase de usuario de tipo estudiante */
 class user_student {
@@ -321,8 +324,6 @@ class ArbolAVL {
         this.raiz = null;
     }
 
-    BuscarCarnetYRetonarTrue(carnet) { }
-
     VerificandoPasswordYCarnetDelArbol(raiz, carnet, password) {
         if (raiz != null) {
             if (raiz.user_student.carnet == carnet) {
@@ -344,6 +345,22 @@ class ArbolAVL {
                         carnet,
                         password
                     );
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    CarnetExiste(raiz, carnet) {
+        if (raiz != null) {
+            if (raiz.user_student.carnet == carnet) {
+                return true;
+            } else {
+                if (carnet < raiz.user_student.carnet) {
+                    return this.CarnetExiste(raiz.izquierdo, carnet);
+                } else {
+                    return this.CarnetExiste(raiz.derecho, carnet);
                 }
             }
         } else {
@@ -437,11 +454,11 @@ class ListaCircularSimple {
 
     //Metodo para generar el codigo dot de la lista y poder graficarla
     getDot() {
-        let dot = "digraph ListaCircularSimple {\n";
+        let dot = "digraph ListaCircularSimple {";
         dot +=
-            '  node[shape=folder ,fontsize="10pt",penwidth=2,fontname="Courier New",style="filled",fillcolor="goldenrod1",fontcolor="gray6"];\n';
-        dot += "  graph[pencolor=transparent];\n";
-        dot += "  rankdir=LR;\n";
+            '  node[shape=folder ,fontsize="10pt",penwidth=2,fontname="Courier New",style="filled",fillcolor="goldenrod1",fontcolor="gray6"];';
+        dot += "  graph[pencolor=transparent];";
+        dot += "  rankdir=LR;";
 
         if (this.primero !== null) {
             let i = 0;
@@ -450,20 +467,21 @@ class ListaCircularSimple {
                 nodoActual !== this.ultimo;
                 nodoActual = nodoActual.siguiente
             ) {
-                dot += `  p${i}[label="${nodoActual.valor}"];\n`;
-                dot += `  p${i} -> p${i + 1};\n`;
+                dot += `  p${i}[label="${nodoActual.valor}"];`;
+                dot += `  p${i} -> p${i + 1};`;
                 i++;
             }
 
             // Agrega el último nodo y la arista de vuelta al primer nodo
-            dot += `  p${i}[label="${this.ultimo.valor}"];\n`;
-            dot += `  p${i} -> p0[constraint=false, arrowtail=curve];\n`;
+            dot += `  p${i}[label="${this.ultimo.valor}"];`;
+            dot += `  p${i} -> p0[constraint=false, arrowtail=curve];`;
         }
 
         dot += "}";
         console.log(dot);
         return dot;
     }
+
 }
 
 //Clase del Nodo del Arbol N-ario
@@ -483,9 +501,6 @@ class ArbolNArio {
         this.raiz = new nodoArbolN("/", 0);
         this.nodo_creados = 1;
     }
-
-
-
 
     BuscarCarpeta(carpeta_nueva, lista_carpeta) {
         //Si la nueva carpeta se creara en la raiz, se buscara si existe o no
@@ -547,8 +562,6 @@ class ArbolNArio {
         }
     }
 
-
-
     insertarOrdenado(raiz, nuevoNodo) {
         let piv = raiz.primero;
         if (nuevoNodo.valor < raiz.primero.valor) {
@@ -576,11 +589,7 @@ class ArbolNArio {
             return raiz;
         }
     }
-
-
     // /usac/prueba -> prueba1 /usac/prueba(prueba1)
-
-
     insertarHijos(carpeta_nueva, lista_carpeta) {
         /**
          * creamos el nuevo nodo y aumentamos la cantidad de nodos creados
@@ -631,8 +640,6 @@ class ArbolNArio {
             }
         }
     }
-
-
     /**
      * 1 - Carpeta ya existe
      * 2 - la carpeta no existe
@@ -671,8 +678,6 @@ class ArbolNArio {
                 break;
         }
     }
-
-
     grafica_arbol(raiz) {
         var cadena = "";
         if (!(raiz === null)) {
@@ -737,9 +742,6 @@ class ArbolNArio {
         }
         return cadena;
     }
-
-
-
     /** Modificacion 30/03/2023 */
     BuscarCarpetaV2(lista_carpeta) {
         //Directorio Actual seria la Raiz
@@ -787,8 +789,6 @@ class ArbolNArio {
         }
     }
 
-
-
     mostrarCarpetasActuales(ruta) {
         let lista_carpeta = ruta.split("/");
         let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta);
@@ -796,14 +796,115 @@ class ArbolNArio {
             if (existe_carpeta !== null) {
                 let aux = existe_carpeta.primero;
                 while (aux) {
-                    console.log(aux.valor);
+                    console.log("Carpeta: ", aux.valor);
                     aux = aux.siguiente;
                 }
                 let aux1 = existe_carpeta.matriz;
-                let nodo_Actul_matriz = aux1.principal;
-                while (nodo_Actul_matriz) {
-                    console.log(nodo_Actul_matriz.posicion);
-                    nodo_Actul_matriz = nodo_Actul_matriz.siguiente;
+
+            }
+        } catch (error) {
+            console.log("Hubo un error");
+        }
+    }
+
+
+    // BuscarCarpetaV2(lista_carpeta, raiz) {
+    //     //Directorio Actual seria la Raiz
+    //     if (lista_carpeta[1] === "" && raiz.primero !== null) {
+    //         return raiz;
+    //     }
+    //     //Directorio Actual seria Raiz pero no contiene elementos
+    //     else if (lista_carpeta[1] === "" && raiz.primero === null) {
+    //         return null;
+    //     }
+    //     //Actual no es raiz pero tampoco hay elementos en raiz
+    //     else if (lista_carpeta[1] !== "" && raiz.primero === null) {
+    //         return null;
+    //     }
+    //     //Buscamos el directorio padre y revisar si en sus hijos existe la carpeta
+    //     else if (lista_carpeta[1] !== "" && raiz.primero !== null) {
+    //         let aux = raiz.primero;
+    //         let nivel = lista_carpeta.length;
+    //         let posicion = 1;
+    //         for (var i = 1; i < nivel; i++) {
+    //             if (aux !== null) {
+    //                 while (aux) {
+    //                     if (
+    //                         posicion < lista_carpeta.length &&
+    //                         lista_carpeta[posicion] === aux.valor
+    //                     ) {
+    //                         posicion++;
+    //                         if (aux.primero !== null && posicion < lista_carpeta.length) {
+    //                             aux = aux.primero;
+    //                         }
+    //                         break;
+    //                     } else {
+    //                         aux = aux.siguiente;
+    //                     }
+    //                 }
+    //             } else {
+    //                 break;
+    //             }
+    //         }
+    //         if (aux !== null) {
+    //             return aux;
+    //         } else {
+    //             return null;
+    //         }
+    //     }
+    // }
+
+    agregarFilaTablaCarpeta(carpeta, tabla) {
+
+
+        // Crear una nueva fila en la tabla
+        let fila = tabla.insertRow();
+
+        // Agregar una celda con el ícono de la carpeta
+        let celdaIcono = fila.insertCell();
+        let icono = document.createElement("i");
+        icono.classList.add("fa", "fa-folder");
+        celdaIcono.appendChild(icono);
+
+        // Agregar una celda con el nombre de la carpeta
+        let celdaNombre = fila.insertCell();
+        celdaNombre.textContent = carpeta.valor;
+    }
+
+    // mostrarCarpetasActuales(ruta) {
+    //     let lista_carpeta = ruta.split("/");
+    //     let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta);
+    //     try {
+    //         if (existe_carpeta !== null) {
+    //             let aux = existe_carpeta.primero;
+    //             while (aux) {
+    //                 this.agregarFilaTablaCarpeta(aux, table2);
+    //                 aux = aux.siguiente;
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.log("Hubo un error");
+    //     }
+    // }
+
+    mostrarCarpetasActuales(ruta) {
+        let lista_carpeta = ruta.split("/");
+        let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta);
+        try {
+            if (existe_carpeta !== null) {
+                let aux = existe_carpeta.primero;
+                table2.innerHTML = "";
+                while (aux) {
+                    let fila = table2.insertRow(-1);
+                    let celdaIcono = fila.insertCell(0);
+                    let celdaNombre = fila.insertCell(1);
+                    celdaNombre.innerText = aux.valor;
+                    if (aux.valor.endsWith(".txt")) {
+                        celdaIcono.innerHTML = '<i class="fas fa-file-alt"></i>';
+                    } else {
+                        celdaIcono.innerHTML = '<i class="fas fa-folder"></i>';
+                    }
+                    aux = aux.siguiente;
                 }
             }
         } catch (error) {
@@ -811,36 +912,125 @@ class ArbolNArio {
         }
     }
 
-    eliminarCarpeta(ruta, carpeta){
-        let lista_carpeta = ruta.split('/')
-        let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta)
-        if(existe_carpeta !== null){
-            let aux = existe_carpeta.primero
-            let aux_anterior = null
-            while(aux){
-                if(aux.valor === carpeta){
-                    if(aux_anterior !== null){
-                        aux_anterior.siguiente = aux.siguiente
-                    }else{
-                        existe_carpeta.primero = aux.siguiente
+    eliminarCarpeta(ruta, carpeta) {
+        let lista_carpeta = ruta.split("/");
+        let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta);
+        if (existe_carpeta !== null) {
+            let aux = existe_carpeta.primero;
+            let aux_anterior = null;
+            while (aux) {
+                if (aux.valor === carpeta) {
+                    if (aux_anterior !== null) {
+                        aux_anterior.siguiente = aux.siguiente;
+                    } else {
+                        existe_carpeta.primero = aux.siguiente;
                     }
                     break;
-                }else{
-                    aux_anterior = aux
-                    aux = aux.siguiente
+                } else {
+                    aux_anterior = aux;
+                    aux = aux.siguiente;
                 }
             }
-            
         }
-        console.log("Carpeta Eliminada")
+        console.log("Carpeta Eliminada");
+    }
+
+
+
+    eliminarCarpeta(ruta, carpeta, raiz) {
+        let lista_carpeta = ruta.split("/");
+        let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta, raiz);
+        if (existe_carpeta !== null) {
+            let aux = existe_carpeta.primero;
+            let aux_anterior = null;
+            while (aux) {
+                if (aux.valor === carpeta) {
+                    if (aux_anterior !== null) {
+                        aux_anterior.siguiente = aux.siguiente;
+                    } else {
+                        existe_carpeta.primero = aux.siguiente;
+                    }
+                    console.log("Carpeta eliminada");
+                    break;
+                } else {
+                    aux_anterior = aux;
+                    aux = aux.siguiente;
+                }
+            }
+            // Verificar si la carpeta se eliminó correctamente
+            let eliminado = true;
+            aux = existe_carpeta.primero;
+            while (aux) {
+                if (aux.valor === carpeta) {
+                    eliminado = false;
+                    break;
+                }
+                aux = aux.siguiente;
+            }
+            if (!eliminado) {
+                console.log("La carpeta no se pudo eliminar");
+            }
+        } else {
+            console.log("La carpeta no existe");
+        }
     }
     
 
-}
+    // agregarArchivoDesdeArbol(ruta, numeroArchivo, nombreArchivo, contenidoArchivo) {
+    //     // Obtener el nodo de la carpeta en la que deseas agregar el archivo en el árbol n-ario
+    //     let lista_carpeta = ruta.split("/");
+    //     let carpeta = this.BuscarCarpetaV2(lista_carpeta);
 
+    //     // Si se encontró la carpeta en el árbol n-ario
+    //     if (carpeta !== null) {
+    //         let aux = carpeta.primero;
+    //         while (aux) {
+    //             let nuevamatriz = aux.matriz
+    //             // Copiar la matriz auxiliar en la matriz del nodo
+    //             nuevamatriz.insertarArchivo(nombreArchivo, numeroArchivo, contenidoArchivo);
+    //             console.log("Archivo agregado a la matriz dispersa.");
+    //             console.log("Matriz dispersa: " + nuevamatriz.recorrerMatrizzzzz());
+    //             aux = aux.siguiente;
+    //         }
+    //     } else {
+    //         console.log("No se encontró la carpeta en el árbol n-ario.");
+    //     }
+    // }
+
+
+    // agregarArchivoDesdeArbol(ruta, numeroArchivo, nombreArchivo, contenidoArchivo) {
+    //     // Obtener el nodo de la carpeta en la que deseas agregar el archivo en el árbol n-ario
+    //     let lista_carpeta = ruta.split("/");
+    //     let carpeta = this.BuscarCarpetaV2(lista_carpeta);
+    //     // Si se encontró la carpeta en el árbol n-ario
+    //     if (carpeta !== null) {
+    //         let aux = carpeta.primero;
+    //         while (aux) {
+    //             let nuevamatriz = aux.matriz;
+    //             // Verificar si el archivo ya existe en la matriz antes de insertarlo
+    //             let archivoExistente = nuevamatriz.buscarF(nombreArchivo);
+    //             if (archivoExistente) {
+    //                 console.log("El archivo ya existe en la carpeta.");
+    //             } else {
+    //                 // Insertar el archivo en la matriz
+    //                 nuevamatriz.insertarArchivo(nombreArchivo, numeroArchivo, contenidoArchivo);
+    //                 console.log("Archivo agregado a la matriz dispersa.");
+    //                 console.log("Matriz dispersa: " + nuevamatriz.recorrerMatrizzzzz());
+    //             }
+    //             aux = aux.siguiente;
+    //         }
+    //     } else {
+    //         console.log("No se encontró la carpeta en el árbol n-ario.");
+    //     }
+    // }
+
+
+
+
+}
 //Clase Nodo para la Matriz Dispersa
 class nodoMatrizDispersa {
-    constructor(posX, posY, nombre_archivo) {
+    constructor(posX, posY, nombre_archivo, contenidoArchivo) {
         this.siguiente = null;
         this.anterior = null;
         this.abajo = null;
@@ -848,14 +1038,14 @@ class nodoMatrizDispersa {
         this.posX = posX;
         this.posY = posY;
         this.posicion = nombre_archivo;
-        //this.contenidoArchivo = contenidoArchivo;
+        this.contenidoArchivo = contenidoArchivo;
     }
 }
 
 //Clase Matriz Dispersa
 class MatrizDispersa {
     constructor() {
-        this.principal = new nodoMatrizDispersa(-1, -1, "Raiz");
+        this.principal = new nodoMatrizDispersa(-1, -1, "", null);
         this.coordenadaY = 0;
         this.coordenadaX = 0;
     }
@@ -886,8 +1076,13 @@ class MatrizDispersa {
         return null;
     }
 
-    insertarColumna(posicion, texto) {
-        const nuevoNodo = new nodoMatrizDispersa(posicion, -1, texto);
+    insertarColumna(posicion, texto, contenidoArchivo) {
+        const nuevoNodo = new nodoMatrizDispersa(
+            posicion,
+            -1,
+            texto,
+            contenidoArchivo
+        );
         let piv = this.principal;
         let pivA = this.principal;
         while (piv.siguiente) {
@@ -906,8 +1101,13 @@ class MatrizDispersa {
         piv.siguiente = nuevoNodo;
     }
 
-    insertarFila(posicion, texto) {
-        const nuevoNodo = new nodoMatrizDispersa(-1, posicion, texto);
+    insertarFila(posicion, texto, contenidoArchivo) {
+        const nuevoNodo = new nodoMatrizDispersa(
+            -1,
+            posicion,
+            texto,
+            contenidoArchivo
+        );
         let piv = this.principal;
         let pivA = this.principal;
         while (piv.abajo) {
@@ -926,8 +1126,8 @@ class MatrizDispersa {
         piv.abajo = nuevoNodo;
     }
 
-    insertarNodo(x, y, texto) {
-        const nuevoNodo = new nodoMatrizDispersa(x, y, texto);
+    insertarNodo(x, y, texto, contenidoArchivo) {
+        const nuevoNodo = new nodoMatrizDispersa(x, y, texto, contenidoArchivo);
         let tempX = this.principal;
         let tempY = this.principal;
         //Agregar en Columna
@@ -1006,20 +1206,22 @@ class MatrizDispersa {
         }
     }
 
-    insertarArchivo(texto, numero) {
+    insertarArchivo(texto, numero, contenidoArchivo) {
         let nuevaFila = this.buscarF(texto);
         if (nuevaFila === null) {
-            this.insertarFila(this.coordenadaY, texto);
+            this.insertarFila(this.coordenadaY, texto, contenidoArchivo);
             this.coordenadaY++;
         } else {
             let copia_archivo = "(" + numero++ + ")" + nombreArchivo;
-            this.insertarArchivo(copia_archivo, numero);
+            this.insertarArchivo(copia_archivo, numero, contenidoArchivo);
         }
     }
 
     colocarPermiso(archivo, carnet, permisos) {
         /** NOTA: Paso Previo Buscar en AVL si existe el carnet*/
-        let nuevaColumna = this.buscarC(carnet);
+        let AbolitoStor = JSON.parse(localStorage.getItem("TreeAVL"));
+        if(arbolBinarioAVL.CarnetExiste(AbolitoStor,carnet) == true){
+            let nuevaColumna = this.buscarC(carnet);
         let nuevaFila = this.buscarF(archivo);
         if (nuevaColumna === null) {
             this.insertarColumna(this.coordenadaX, carnet);
@@ -1029,7 +1231,89 @@ class MatrizDispersa {
         if (nuevaColumna !== null && nuevaFila !== null) {
             this.insertarNodo(nuevaColumna.posX, nuevaFila.posY, permisos);
         }
+
+        }else{
+            alert("El carnet no existe en el sistema");
+        }
+        
     }
+
+    recorrerMatrizzzzz() {
+        let nodoActual = this.principal;
+        while (nodoActual) {
+            let nodoFila = nodoActual;
+            while (nodoFila) {
+                let nodoColumna = nodoFila;
+                while (nodoColumna) {
+                    console.log("Posición: ", nodoColumna.posicion);
+                    nodoColumna = nodoColumna.derecha;
+                }
+                nodoFila = nodoFila.abajo;
+            }
+            nodoActual = nodoActual.siguiente;
+        }
+    }
+
+    existeArchivo(numeroArchivo, nombreArchivo) {
+        let nodoActual = this.principal;
+        while (nodoActual) {
+            let nodoFila = nodoActual;
+            while (nodoFila) {
+                let nodoColumna = nodoFila;
+                while (nodoColumna) {
+                    if (nodoColumna.numero === numeroArchivo && nodoColumna.nombre === nombreArchivo) {
+                        return true;
+                    }
+                    nodoColumna = nodoColumna.derecha;
+                }
+                nodoFila = nodoFila.abajo;
+            }
+            nodoActual = nodoActual.siguiente;
+        }
+        return false;
+    }
+
+    // recorrerMatriz() {
+    //     let nodoActual = this.principal;
+    //     while (nodoActual) {
+    //         let nodoFila = nodoActual;
+    //         while (nodoFila) {
+    //             let nodoColumna = nodoFila;
+    //             while (nodoColumna) {
+    //                 // Crear una nueva fila para la tabla
+    //                 let fila = document.createElement("tr");
+
+    //                 // Crear una celda para el nombre del archivo
+    //                 let celdaNombre = document.createElement("td");
+    //                 celdaNombre.innerText = nodoColumna.posicion;
+
+    //                 // Crear una celda para el icono
+    //                 let celdaIcono = document.createElement("td");
+    //                 let extension = nodoColumna.posicion.split('.').pop().toLowerCase();
+    //                 if (extension === "pdf") {
+    //                     celdaIcono.innerHTML = '<i class="far fa-file-pdf"></i>';
+    //                 } else if (extension === "jpg" || extension === "jpeg" || extension === "png") {
+    //                     celdaIcono.innerHTML = '<i class="far fa-image"></i>';
+    //                 } else if (extension === "txt") {
+    //                     celdaIcono.innerHTML = '<i class="far fa-file-alt"></i>';
+    //                 } else {
+    //                     celdaIcono.innerHTML = '<i class="far fa-file"></i>';
+    //                 }
+
+    //                 // Agregar las celdas a la fila
+    //                 fila.appendChild(celdaIcono);
+    //                 fila.appendChild(celdaNombre);
+
+    //                 // Agregar la fila a la tabla
+    //                 table2.appendChild(fila);
+
+    //                 nodoColumna = nodoColumna.derecha;
+    //             }
+    //             nodoFila = nodoFila.abajo;
+    //         }
+    //         nodoActual = nodoActual.siguiente;
+    //     }
+    // }
 
     reporte() {
         let cadena = "";
@@ -1037,7 +1321,8 @@ class MatrizDispersa {
         let aux2 = this.principal;
         let aux3 = this.principal;
         if (aux1 !== null) {
-            cadena = "digraph MatrizCapa{ node[shape=box]  rankdir=UD;  {rank=min; ";
+            //cadena = "digraph MatrizCapa{ node[shape=box]  rankdir=UD;  {rank=min; ";
+            cadena="digraph MatrizCapa{node[shape=folder ,fontsize=\"10pt\",penwidth=2,fontname=\"Courier New\",style=\"filled\",fillcolor=\"lightslateblue\",fontcolor=\"whitesmoke\"] rankdir=UD;  {rank=min;";
             /** Creacion de los nodos actuales */
             while (aux1) {
                 cadena +=
@@ -1113,30 +1398,60 @@ class MatrizDispersa {
     }
 }
 
-//Creacion Maatriz Dispersa
-const matriz = new MatrizDispersa();
 
+
+
+//Creacion Maatriz Dispersa
+const matriZ = new MatrizDispersa();
+const listaCircular = new ListaCircularSimple();
 //Funciones para el reporte de la matriz
 function reporteMatriz() {
     let url = "https://quickchart.io/graphviz?graph=";
-    let body = matriz.reporte();
+    let body = matriZ.reporte();
     $("#imageMatriz").attr("src", url + body);
 }
 
 //Funcion para insertar un archivo en la matriz
-function cargarArchivo() {
-    //falta validar si ya existe el archivo
-    matriz.insertarArchivo(nombreArchivo, 1);
+
+// function cargarArchivo(nombreArchivo, contenidoArchivo) {
+//     let usuarioActuaaal = JSON.parse(localStorage.getItem("usuarioActual"));
+//     let rutaaa = document.getElementById("rutaCarpeta").value;
+//     arbolnario.agregarArchivoDesdeArbol(rutaaa, 1, nombreArchivo, contenidoArchivo);
+//     usuarioActuaaal.arbolNario = arbolnario;
+//     localStorage.setItem("usuarioActual", JSON.stringify(usuarioActuaaal));
+
+//     listaCircular.agregar("Se creo un archivo " + obtenerFechaYHoraActual())
+//     console.log("Arbolito actualizado: ", arbolnario);
+
+//     //localStorage.setItem("usuarioActual", JSON.stringify(usuarioActuaaal));
+//     //reporteMatriz();
+// }
+function cargarArchivo(nombreArchivo, contenidoArchivo){
+    matriZ.insertarArchivo(nombreArchivo,1,base64String)
+    console.log(matriZ)
     reporteMatriz();
 }
 
-//Funcion para asignar permisos
-function asignarPermisos() {
-    let cadena = document.getElementById("permiso").value;
-    let arreglo = cadena.split("-");
-    matriz.colocarPermiso(arreglo[0], arreglo[1], arreglo[2]);
-    reporteMatriz();
+function ReporteListaCircular() {
+    let url = "https://quickchart.io/graphviz?graph=";
+    let body = listaCircular.getDot();
+    $("#imageBitacora").attr("src", url + body);
+
 }
+
+function obtenerFechaYHoraActual() {
+    var fecha = new Date();
+    var dia = fecha.getDate();
+    var mes = fecha.getMonth() + 1;
+    var anio = fecha.getFullYear();
+    var hora = fecha.getHours();
+    var minutos = fecha.getMinutes();
+    var segundos = fecha.getSeconds();
+    var fechaYHoraActual = "El: " + dia.toString() + "/" + mes.toString() + "/" + anio.toString() + " " + " a las: " + hora.toString() + ":" + minutos.toString() + ":" + segundos.toString();
+    return fechaYHoraActual;
+}
+
+
 
 // creacion arbol n-ario
 const arbolnario = new ArbolNArio();
@@ -1155,6 +1470,7 @@ function agregarVarios() {
     console.log("Carpeta: " + carpeta);
     try {
         arbolnario.insertarValor(ruta, carpeta, 1, raizActual);
+        listaCircular.agregar("Se creo una carpeta " + obtenerFechaYHoraActual())
         usuarioActuaaal.arbolNario = arbolnario;
         console.log("Arbol Nnnario:", arbolnario);
         console.log("Se inserto el nodo correctamente");
@@ -1168,12 +1484,13 @@ function agregarVarios() {
 
 //Function para eliminar un nodo del arbol n-ario
 function BuscarCarpetaYEliminar() {
-    let usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
-    let ruta = document.getElementById("rutaCarpeta").value
+    let usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
+    let ruta = document.getElementById("rutaCarpeta").value;
     let carpeta = document.getElementById("NombreCarpeta").value;
     arbolnario.eliminarCarpeta(ruta, carpeta);
+    listaCircular.agregar("Se eliminó una carpeta " + obtenerFechaYHoraActual())
     usuarioActual.arbolNario = arbolnario;
-    localStorage.setItem('usuarioActual', JSON.stringify(usuarioActual));
+    localStorage.setItem("usuarioActual", JSON.stringify(usuarioActual));
 }
 
 // funcion para refrescar el arbol n-ario
@@ -1202,28 +1519,25 @@ function refrescarArbolNario() {
     }
 }
 
-//funcion para agregar un archivo ala maatriz del nodo del arboll n-ario acutal
-function agregarArchivo() {
+// funcion para mostrar las carpetas actuales
+function mostraCarpetas() {
+    localStorage.getItem("usuarioActual");
     let usuarioActuaaal = JSON.parse(localStorage.getItem("usuarioActual"));
+    let arbolNario = usuarioActuaaal.arbolNario.raiz;
     let ruta = document.getElementById("rutaCarpeta").value;
-
-    let permiso = document.getElementById("permisoArchivo").value;
-    let archivo = new Archivo(nombreArchivo, contenidoArchivo, permiso);
-    arbolnario.insertarArchivo(ruta, carpeta, archivo);
-    usuarioActuaaal.arbolNario = arbolnario;
-    localStorage.setItem("usuarioActual", JSON.stringify(usuarioActuaaal));
-    document.getElementById("nombreArchivo").value = "";
-    document.getElementById("contenidoArchivo").value = "";
-    document.getElementById("permisoArchivo").value = "";
-  
+    table2.appendChild(encabezado2);
+    arbolnario.mostrarCarpetasActuales(ruta, arbolNario);
 }
 
 
+function MostrarTabla() {
+    LimpiarTabla();
+    mostraCarpetas();
+}
 
-// funcion para mostrar las carpetas actuales
-function mostraCarpetas() {
-    let ruta = document.getElementById("ruta").value;
-    arbolnario.mostrarCarpetasActuales(ruta);
+function LimpiarTabla() {
+    table2.innerHTML = "";
+
 }
 
 // creación de arbol AVL
@@ -1240,6 +1554,17 @@ function agregarVariosNumeros() {
         console.log(error);
     }
     refrescarArbolAVL();
+}
+
+
+//Funcion para asignar permisos
+function asignarPermisos() {
+    let cadena = document.getElementById("permisosCarnet").value;
+    let arreglo = cadena.split("-");
+    
+    matriZ.colocarPermiso(arreglo[0], arreglo[1], arreglo[2]);
+        reporteMatriz()
+    
 }
 
 //funcion para limpiar el arbol AVL
@@ -1261,11 +1586,6 @@ function refrescarArbolAVL() {
     console.log(body);
     $("#image").attr("src", url + body);
 }
-
-
-
-
-
 
 //Funcion que obtiene el arbol del local storage y lo recorre en postOrder
 function retonarDatosStoragePost() {
@@ -1311,7 +1631,6 @@ function retonarDatosStorage() {
     clinTable();
     recorrerArbol(ArbolenStorage);
 }
-
 //funcion para recorrer el arbol inorden y mostrarlo en la tabla
 function recorrerArbolInOrder(raiz) {
     if (raiz !== null) {
@@ -1357,6 +1676,9 @@ function recorrerArbolPostOrder(raiz) {
 // Funcion para limpiar el contenido de la tabla
 function clinTable() {
     table.innerHTML = "";
+}
+function clinTable2() {
+    table2.innerHTML = "";
 }
 
 //funcion para recorrer el arbol en preorden y mostrarlo en la tabla
