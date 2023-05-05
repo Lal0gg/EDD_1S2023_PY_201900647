@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?ccsbf9');
+  src:  url('../fonts/icomoon.eot?ccsbf9#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?ccsbf9') format('truetype'),
+    url('../fonts/icomoon.woff?ccsbf9') format('woff'),
+    url('../fonts/icomoon.svg?ccsbf9#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-document-file-txt:before {
+  content: "\e900";
+}
+.icon-image:before {
+  content: "\e90d";
+}
+.icon-folder:before {
+  content: "\e92f";
+}
+.icon-folder-open:before {
+  content: "\e930";
+}
+.icon-file-pdf:before {
+  content: "\eadf";
+}
+
+.table-container {
+  height: 200px; /* Altura máxima de la tabla */
+  overflow-y: auto; /* Agrega un scroll vertical si la tabla se desborda */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
