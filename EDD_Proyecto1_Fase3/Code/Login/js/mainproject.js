@@ -2118,7 +2118,7 @@ function Loginn() {
     try {
         if (user == "admin" && pass == "admin") {
         
-            let rutaaa = "../../../../EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
+            let rutaaa = "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
             window.location.href = rutaaa;
             console.log(rutaaa);
             window.alert("Bienvenido Admin");
@@ -2135,7 +2135,7 @@ function Loginn() {
                 usuariActualdelArray = resultado;
             }
             let rutaa =
-                "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+                "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
             console.log(rutaa);
             window.location.href = rutaa;
             window.alert("Bienvenido Estudiante: " + resultado.nombre);

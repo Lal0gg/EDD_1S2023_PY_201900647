@@ -290,6 +290,47 @@ Copyright (c) 2015 Daniel Eden
   opacity: 0.9;
 }
 
+/*** ESTILOS BOTÓN GROW ELLIPSE ***/
+.ov-btn-slide-close {
+  background: #fff; /* color de fondo */
+  color: #000000; /* color de fuente */
+  border: 2px solid #ffaaff; /* tamaño y color de borde */
+  padding: 10px 15px;
+  border-radius: 3px; /* redondear bordes */
+  position: relative;
+  z-index: 1;
+  font-family: 'Roboto Mono', monospace;
+  overflow: hidden;
+  text-align: center; 
+  display: inline-block;
+}
+
+.ov-btn-slide-close:before, .ov-btn-slide-close:after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  left: -50%;
+  background-color: #e8aaff; /* color de fondo hover */
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.ov-btn-slide-close:after {
+  left: 100%;
+}
+.ov-btn-slide-close:hover {
+  color: #000000; /* color de fuente hover */
+}
+.ov-btn-slide-close:hover:before {
+  left: 0;
+}
+.ov-btn-slide-close:hover:after {
+  left: 50%;
+}
+
 /*
  * Scrollbar thumb styles
  */
