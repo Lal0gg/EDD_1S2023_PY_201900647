@@ -40,7 +40,7 @@
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
 
-<body class=""  onload="BienvenidaUser_student()">
+<body class="" onload="BienvenidaUser_student()">
   <div class="wrapper ">
     <div class="sidebar" data-color="orange">
       <!--
@@ -52,7 +52,7 @@
         </a>
         <a href="" class="simple-text logo-normal">
           GoDrive
-          
+
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
@@ -99,7 +99,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a class="dropdown-item" onclick="cerrarSesion()">Cerrar Sesion</a>
                   <!-- href="../../Login/index.html" -->
-            
+
                 </div>
               </li>
             </ul>
@@ -113,10 +113,11 @@
         <br>
         <br>
         <br>
-        <div class="row"> 
+        <div class="row">
           <!-- div para barra de buscar -->
           <div class="input-group no-border">
-            <input id="rutaCarpeta"type="text" value="" class="form-control" placeholder="Ej. (ruta) /Documentos/Prueba">
+            <input id="rutaCarpeta" type="text" value="" class="form-control"
+              placeholder="Ej. (ruta) /Documentos/Prueba">
           </div>
           <div class="input-group no-border">
             <input id="NombreCarpeta" type="text" value="" class="form-control" placeholder="Ej. NombreCarpeta">
@@ -128,7 +129,7 @@
           <div class="col-lg-4">
             <div class="card card-chart">
               <div class="card-body ">
-                <div class="card-header" >
+                <div class="card-header">
                   <h4 id="welcomeeeee" class="card-title"></h4>
                 </div>
                 <br>
@@ -142,28 +143,34 @@
                     <button class="ov-btn-slide-close" onclick="BuscarCarpetaYEliminar()">
                       Eliminar Carpeta
                     </button>
-                    <br>
-                    <br>
-                    <button class="ov-btn-slide-close" onclick="ConvertAvlfromLocalStorageToTablaHash()">
-                      Migracion
-                    </button>
                     <button class="ov-btn-slide-close" onclick="MostrarTabla()">
                       Mostrar Tabla
                     </button>
                     <br>
                     <br>
-                    
+                    <button class="ov-btn-slide-close" onclick="ConvertAvlfromLocalStorageToTablaHash()">
+                      Migracion
+                    </button>
+
+                    <button class="ov-btn-slide-close" onclick="ActualizarAvl()">
+                      Actualizar
+                    </button>
+
+
+                    <br>
+                    <br>
+
                     <button class="ov-btn-slide-close" onclick="cargarAr(nombreArchivo, base64String)">
                       Cargar Archivo
                     </button>
                     <button class="ov-btn-slide-close" onclick="asignarPermisos()">
                       Dar Permiso
                     </button>
-                    
-                    
+
+
                   </div>
                 </div>
-                    <input type="file" id="inputFiles" accept=".pdf,.txt,.jpg,.jpeg,.png,.gif" />
+                <input type="file" id="inputFiles" accept=".pdf,.txt,.jpg,.jpeg,.png,.gif" />
                 <div class="card-footer">
                   <div class="stats">
                     <i class="now-ui-icons users_single-02"></i> Usuarioo
@@ -174,17 +181,18 @@
           </div>
           <div class="col-lg-8 col-md-9">
             <div class="card card-chart">
-              
+
               <div class="card-body ">
                 <div class="input-group no-border">
-                  <input type="text" id="permisosCarnet"value="" class="form-control" placeholder="Ej. arhivo.png-201700918-rw">
+                  <input type="text" id="permisosCarnet" value="" class="form-control"
+                    placeholder="Ej. arhivo.png-201700918-rw">
                 </div>
                 <div class="card-body">
                   <div class="chart-area">
                     <div class="table-container">
                       <table id="tablArchivos">
                         <thead class="text-primary">
-                          
+
                         </thead>
                         <tbody>
                           <!-- Agrega más filas si lo necesitas -->
@@ -202,143 +210,177 @@
             </div>
           </div>
         </div>
+
         <div class="row">
-            <div class="col-md-12">
-              <div class="card ">
-                <div class="card-header ">
-                  <h4 class="card-title">Reporte de Carpetas</h4>
-                </div>
-                
-                <div class="col-lg-2">
-                  <center>
-                    <!-- color boton (254, 216, 236) -->
-                    <button class="ov-btn-slide-close" onclick="refrescarArbolNario()">
-                      Reporte Carpetas
-                    </button>
-                  </center>
-                </div>
-                <div class="card-body ">
-                  <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
-                  <br>
-                    <center><div class="zzzooom"><img id="imageNario" ></div></center>
-                </div>
+          <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header ">
+                <h4 class="card-title">Reporte de Carpetas</h4>
               </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card ">
-            <div class="card-header ">
-              <h4 class="card-title">Reporte de Archivos</h4>
-            </div>
-            <div class="col-lg-2">
-              <center>
-                <!-- color boton (254, 216, 236) -->
-                <button class="ov-btn-slide-close" onclick="reporteMatriz()">
-                  <!-- <button class="ov-btn-slide-close" onclick="xd()"> -->
-                  Reporte Archivos
-                </button>
-              </center>
-            </div>
-            <div class="card-body ">
-              <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
-              <br>
-                <center><img id="imageMatriz" class="zzzooom"></center>
-                
+
+              <div class="col-lg-2">
+                <center>
+                  <!-- color boton (254, 216, 236) -->
+                  <button class="ov-btn-slide-close" onclick="refrescarArbolNario()">
+                    Reporte Carpetas
+                  </button>
+                </center>
+              </div>
+              <div class="card-body ">
+                <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
+                <br>
+                <center>
+                  <div class="zzzooom"><img id="imageNario"></div>
+                </center>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card ">
-                <div class="card-header ">
-                  <h4 class="card-title">Reporte de Bitácora</h4>
-                </div>
-                <div class="col-lg-2">
-                  <center>
-                    <!-- color boton (254, 216, 236) -->
-                    <button class="ov-btn-slide-close" onclick="ReporteListaCircular()">
-                      Reporte Bitácora
-                    </button>
-                  </center>
-                </div>
-                <div class="card-body ">
-                  <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
-                  <br>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header ">
+                <h4 class="card-title">Reporte de Archivos</h4>
+              </div>
+              <div class="col-lg-2">
+                <center>
+                  <!-- color boton (254, 216, 236) -->
+                  <button class="ov-btn-slide-close" onclick="reporteMatriz()">
+                    <!-- <button class="ov-btn-slide-close" onclick="xd()"> -->
+                    Reporte Archivos
+                  </button>
+                </center>
+              </div>
+              <div class="card-body ">
+                <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
+                <br>
+                <center><img id="imageMatriz" class="zzzooom"></center>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card ">
+                  <div class="card-header ">
+                    <h4 class="card-title">Reporte de Bitácora</h4>
+                  </div>
+                  <div class="col-lg-2">
+                    <center>
+                      <!-- color boton (254, 216, 236) -->
+                      <button class="ov-btn-slide-close" onclick="ReporteListaCircular()">
+                        Reporte Bitácora
+                      </button>
+                    </center>
+                  </div>
+                  <div class="card-body ">
+                    <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
+                    <br>
                     <center><img id="imageBitacora" class="zzzooom"></center>
-                    
+                  </div>
                 </div>
               </div>
-
-    </div>
-      <footer class="footer">
-        <div class=" container-fluid ">
-          <nav>
-            <ul>
-              <li>
-                <a href="https://github.com/Lal0gg">
-                  Github
-                </a>
-              </li>
-              <li>
-                <a href="https://www.linkedin.com/in/eduardo-gonzalez-077389114/">
-                  Linkedin
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </footer>
-    </div>
-  </div>
-  <script>
-    const inputFiles = document.getElementById("inputFiles");
-    inputFiles.addEventListener("change", onFilesChange, false);
-    let nombreArchivo = ""
-    let base64String = ""
-
-function onFilesChange(event) {
-    var files = event.target.files;
-    for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        if (file.type.includes('image') || file.type.includes('pdf') || file.type.includes('text')) {
-            var reader = new FileReader();
-            reader.onload = onFileReaderLoad;
-            nombreArchivo = event.target.files[0].name
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    }
-}
+            </div>
 
 
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card ">
+                  <div class="card-header ">
+                    <h4 class="card-title">Archivos Compartidos</h4>
+                  </div>
+                  <div class="col-lg-2">
+                    <center>
+                      <!-- color boton (254, 216, 236) -->
+                      <button class="ov-btn-slide-close" onclick="ReporteListaCircular()">
+                        Reporte Bitácora
+                      </button>
+                    </center>
+                  </div>
+                  <div class="card-body ">
+                    <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
+                    <br>
+                    <center><img id="imageBitacora" class="zzzooom"></center>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-function onFileReaderLoad(event) {
-    base64String = event.target.result
-    console.log("Nombre: ", nombreArchivo)
-    console.log("Contenido: ", base64String)
-  }
+              <footer class="footer">
+                <div class=" container-fluid ">
+                  <nav>
+                    <ul>
+                      <li>
+                        <a href="https://github.com/Lal0gg">
+                          Github
+                        </a>
+                      </li>
+                      <li>
+                        <a href="https://www.linkedin.com/in/eduardo-gonzalez-077389114/">
+                          Linkedin
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </footer>
+            </div>
+            
+          </div>
+          <script>
+            const inputFiles = document.getElementById("inputFiles");
+            inputFiles.addEventListener("change", onFilesChange, false);
+            let nombreArchivo = ""
+            let base64String = ""
+
+            function onFilesChange(event) {
+              var files = event.target.files;
+              for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                if (file.type.includes('image') || file.type.includes('pdf') || file.type.includes('text')) {
+                  var reader = new FileReader();
+                  reader.onload = onFileReaderLoad;
+                  nombreArchivo = event.target.files[0].name
+                  reader.readAsDataURL(event.target.files[0]);
+                }
+              }
+            }
+
+
+
+            function onFileReaderLoad(event) {
+              base64String = event.target.result
+              console.log("Nombre: ", nombreArchivo)
+              console.log("Contenido: ", base64String)
+            }
 
 
 
 
 
-  </script>
-  <script src="../../Login/js/mainproject.js"></script>
-  <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-  <!-- Chart JS -->
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <!--  Notifications Plugin    -->
-  <script src="../assets/js/plugins/bootstrap-notify.js"></script>
-  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script>
-  <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
-  <script src="../assets/demo/demo.js"></script>
-  <!-- <script>
+          </script>
+          <script src="../../Login/js/mainproject.js"></script>
+          <!--   Core JS Files   -->
+          <script src="../assets/js/core/jquery.min.js"></script>
+          <script src="../assets/js/core/popper.min.js"></script>
+          <script src="../assets/js/core/bootstrap.min.js"></script>
+          <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+          <!--  Google Maps Plugin    -->
+          <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+          <!-- Chart JS -->
+          <script src="../assets/js/plugins/chartjs.min.js"></script>
+          <!--  Notifications Plugin    -->
+          <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+          <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+          <script src="../assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script>
+          <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+          <script src="../assets/demo/demo.js"></script>
+          <!-- <script>
     $(document).ready(function () {
       // Javascript method's body can be found in assets/js/demos.js
       demo.initGoogleMaps();

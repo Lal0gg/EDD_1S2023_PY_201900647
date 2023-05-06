@@ -1,6 +1,7 @@
 // variables para la tabla de la carga masiva
 let table = document.getElementById("tablecarga");
 let StudentsPermisos = [];
+let PermisosxD = [];
 let table2 = document.getElementById("tablArchivos");
 let encabezado2 = document.createElement("thead");
 let encabezado = document.createElement("thead");
@@ -26,6 +27,24 @@ class user_student {
         this.carpeta_raiz = carpetaRaizgg;
         this.arbolNario = new ArbolNArio();
         this.listaCircular = new ListaCircularSimple();
+    }
+}
+
+class permisos{
+    constructor(carnetPropetario, carnetDestino, ubicacion, nombreArchivo, tipoPermiso, Archivoenbase64){
+        this.carnetPropetario = carnetPropetario;
+        this.carnetDestino = carnetDestino;
+        this.ubicacion = ubicacion;
+        this.nombreArchivo = nombreArchivo;
+        this.tipoPermiso = tipoPermiso;
+        this.Archivoenbase64 = Archivoenbase64;
+    }
+}
+
+class Permisoxd{
+    constructor(nombre,contenido){
+        this.nombre = nombre;
+        this.contenido = contenido;
     }
 }
 
@@ -369,6 +388,7 @@ class ArbolAVL {
         }
     }
 
+
     //funcin para el recorrido del avl
     recorrerPorAmplitud() {
         let cola = [];
@@ -391,6 +411,29 @@ class ArbolAVL {
         }
         return visitados;
     }
+
+
+
+    //Buscar un nodo en el arbol por medio de carnet y que pueda darle un nuevo nodo useeer_student y que se actualice el arbol avl
+    BuscarNodo(raiz,carnet,userrstudent){
+        if(raiz != null){
+            if(raiz.user_student.carnet == carnet){
+                raiz.user_student = userrstudent;
+                return raiz;
+            }else{
+                if(carnet < raiz.user_student.carnet){
+                    return this.BuscarNodo(raiz.izquierdo,carnet,userrstudent);
+                }else{
+                    return this.BuscarNodo(raiz.derecho,carnet,userrstudent);
+                }
+            }
+        }else{
+            return false;
+        }
+    }
+    
+
+
 }
 
 //Nodo Lista Circular
@@ -1414,7 +1457,90 @@ class MatrizDispersa {
         }
         return cadena;
     }
+
+    serializarMatrizDispersa() {
+        let nodos = [];
+        let tempY = this.principal;
+
+        // Recorrer filas
+        while (tempY.abajo) {
+            tempY = tempY.abajo;
+            let tempX = tempY;
+
+            // Recorrer columnas
+            while (tempX.siguiente) {
+                tempX = tempX.siguiente;
+
+                // Agregar nodo a la lista de nodos
+                nodos.push({
+                    posX: tempX.posX,
+                    posY: tempY.posY,
+                    posicion: tempX.posicion,
+                    contenidoArchivo: tempX.contenidoArchivo,
+                });
+            }
+        }
+
+        // Retornar objeto JSON con la lista de nodos
+        return { nodos: nodos };
+    }
+
+    BuscarPosicionYcontenidoArchivo(posicion) {
+        let tempY = this.principal;
+
+        // Recorrer filas
+        while (tempY.abajo) {
+            tempY = tempY.abajo;
+            let tempX = tempY;
+
+            // Recorrer columnas
+            while (tempX.siguiente) {
+                tempX = tempX.siguiente;
+                if (tempX.posicion === posicion) {
+                    return tempX.contenidoArchivo;
+                }
+            }
+        }
+        return null;
+    }
 }
+
+// function matrizToJson(matriz) {
+//     let nodos = [];
+
+//     let nodo = matriz.principal;
+//     while (nodo != null) {
+//         let columnas = [];
+
+//         let temp = nodo;
+//         while (temp != null) {
+//             columnas.push({
+//                 posX: temp.posX,
+//                 posY: temp.posY,
+//                 nombre_archivo: temp.posicion,
+//                 contenidoArchivo: temp.contenidoArchivo,
+//             });
+//             temp = temp.abajo;
+//         }
+
+//         nodos.push(columnas);
+//         nodo = nodo.derecha;
+//     }
+
+//     let json = {
+//         nodos: nodos,
+//         coordenadaX: matriz.coordenadaX,
+//         coordenadaY: matriz.coordenadaY,
+//     };
+
+//     return JSON.stringify(json);
+// }
+
+
+
+
+
+// clase nodo para la tabla hash
 
 function matrizToJson(matriz) {
     let nodos = [];
@@ -1425,12 +1551,20 @@ function matrizToJson(matriz) {
 
         let temp = nodo;
         while (temp != null) {
-            columnas.push({
-                posX: temp.posX,
-                posY: temp.posY,
-                nombre_archivo: temp.posicion,
-                contenidoArchivo: temp.contenidoArchivo,
-            });
+            let fila = [];
+
+            let aux = temp;
+            while (aux != null) {
+                fila.push({
+                    posX: aux.posX,
+                    posY: aux.posY,
+                    nombre_archivo: aux.posicion,
+                    contenidoArchivo: aux.contenidoArchivo,
+                });
+                aux = aux.siguiente;
+            }
+
+            columnas.push(fila);
             temp = temp.abajo;
         }
 
@@ -1447,12 +1581,13 @@ function matrizToJson(matriz) {
     return JSON.stringify(json);
 }
 
-// clase nodo para la tabla hash
+//clase nodo para la tabla hash
 class nodoHash {
-    constructor(carnet, usuario, password) {
+    constructor(carnet, usuario, password ,arbolnnario) {
         this.carnet = carnet;
         this.usuario = usuario;
         this.password = password;
+        this.arbolnnario =arbolnnario;
     }
 }
 // clase tabla hash
@@ -1463,9 +1598,9 @@ class TablaHash {
         this.utilizacion = 0;
     }
 
-    insertar(carnet, usuario, password) {
+    insertar(carnet, usuario, password,arbolnnario) {
         let indice = this.calcularIndice(carnet);
-        const nuevoNodo = new nodoHash(carnet, usuario, password);
+        const nuevoNodo = new nodoHash(carnet, usuario, password,arbolnnario);
         if (indice < this.capacidad) {
             try {
                 if (this.tabla[indice] == null) {
@@ -1539,7 +1674,7 @@ class TablaHash {
         const aux_tabla = this.tabla;
         this.tabla = new Array(this.capacidad);
         aux_tabla.forEach((alumno) => {
-            this.insertar(alumno.carnet, alumno.usuario, alumno.password);
+            this.insertar(alumno.carnet, alumno.usuario, alumno.password,alumno.arbolnnario);
         });
     }
 
@@ -1566,10 +1701,7 @@ class TablaHash {
             try {
                 if (this.tabla[indice] == null) {
                     alert("Bienvenido " + this.tabla[indice].usuario);
-                } else if (
-                    this.tabla[indice] != null &&
-                    this.tabla[indice].carnet == carnet
-                ) {
+                } else if (this.tabla[indice] != null && this.tabla[indice].carnet == carnet) {
                     alert("Bienvenido " + this.tabla[indice].usuario);
                 } else {
                     let contador = 1;
@@ -1588,6 +1720,8 @@ class TablaHash {
             }
         }
     }
+
+
 }
 
 // creacion arbol n-ario
@@ -1602,16 +1736,57 @@ const listaCircular = new ListaCircularSimple();
 //Funciones para el reporte de la matriz
 function reporteMatriz() {
     let url = "https://quickchart.io/graphviz?graph=";
-    let matrizz = arbolnario.encontrarMatriz(
-        document.getElementById("rutaCarpeta").value
-    );
-    console.log("Matriz actual: ", matrizz);
+    let matrizz = arbolnario.encontrarMatriz(document.getElementById("rutaCarpeta").value);
+    let usuarioActualAux = JSON.parse(localStorage.getItem("usuarioActual"));
+    let arbolActualusuario = usuarioActualAux.arbolNario;
     matriZ = matrizz;
     let matrizInLocal = matrizToJson(matriZ);
+    arbolActualusuario.matriz = matrizInLocal;
     localStorage.setItem("matrizActual", matrizInLocal);
+    localStorage.setItem("usuarioActual", JSON.stringify(usuarioActualAux));
+    console.log("Matriz actual: ", matrizInLocal);
+    console.log("Carnet actual: ", usuarioActualAux.carnet);
+    console.log("Usuario actual: ", usuarioActualAux)
+    let auxmatrix = JSON.parse(localStorage.getItem("matrizActual"));
+    console.log("xd: ", auxmatrix);
     let body = matriZ.reporte();
     $("#imageMatriz").attr("src", url + body);
 }
+
+
+//Funcion para asignar permisos
+function asignarPermisos() {
+    let cadena = document.getElementById("permisosCarnet").value;
+    let ubicacionaux = document.getElementById("rutaCarpeta").value;
+    let usuarioActualAux = JSON.parse(localStorage.getItem("usuarioActual"));
+    let contenido64="";
+    let arreglo = cadena.split("-");
+    let matrixx = arbolnario.encontrarMatriz(
+        document.getElementById("rutaCarpeta").value
+    );
+
+    for (let i=0;i<PermisosxD.length;i++){
+        if(PermisosxD[i].nombre== arreglo[0]){
+            contenido64 = PermisosxD[i].contenido;
+        }
+    }
+    matriZ = matrixx;
+    matriZ.colocarPermiso(arreglo[0], arreglo[1], arreglo[2]);
+    
+    const permiso={
+        carnetPropetario:usuarioActualAux.carnet,
+        carnetDestino:arreglo[1],
+        ubicacion:ubicacionaux,
+        nombreArchivo:arreglo[0],
+        tipoPermiso:arreglo[2],
+        Archivoenbase64:contenido64
+    }
+    StudentsPermisos.push(permiso);
+    localStorage.setItem("StudentsPermisos",JSON.stringify(StudentsPermisos));
+    console.log("Matrizzzzz: ", matriZ);
+    reporteMatriz();
+}
+
 
 function xd() {
     let ruta = document.getElementById("rutaCarpeta").value;
@@ -1619,17 +1794,16 @@ function xd() {
 }
 
 //Funcion para insertar un archivo en la matriz
-
 function cargarAr(nombreArchivo, contenidoArchivo) {
     let usuarioActuaaal = JSON.parse(localStorage.getItem("usuarioActual"));
     let rutaaa = document.getElementById("rutaCarpeta").value;
+    const nuevoPermisoAuxiliar ={
+        nombre:nombreArchivo,
+        contenido:contenidoArchivo,
+    }
+    PermisosxD.push(nuevoPermisoAuxiliar);
 
-    arbolnario.agregarArchivoDesdeArbol(
-        rutaaa,
-        1,
-        nombreArchivo,
-        contenidoArchivo
-    );
+    arbolnario.agregarArchivoDesdeArbol(rutaaa, 1, nombreArchivo, contenidoArchivo);
     // usuarioActuaaal.arbolNario = arbolnario;
     // localStorage.setItem("usuarioActual", JSON.stringify(usuarioActuaaal));
 
@@ -1639,6 +1813,17 @@ function cargarAr(nombreArchivo, contenidoArchivo) {
     //localStorage.setItem("usuarioActual", JSON.stringify(usuarioActuaaal));
     //reporteMatriz();
 }
+
+// funcion para actualizar avl en local storage
+function ActualizarAvl(){
+    let arbolitoAvlenLocal = JSON.parse(localStorage.getItem("TreeAVL"));
+    let usuarioActuaalAux = JSON.parse(localStorage.getItem("usuarioActual"))
+    let avlActualizaod = arbolBinarioAVL.BuscarNodo(arbolitoAvlenLocal,usuarioActuaalAux.carnet,usuarioActuaalAux)
+    console.log("AVL actualizado: ",avlActualizaod);
+    localStorage.setItem("TreeAVL",JSON.stringify(avlActualizaod));
+}
+
+
 
 function cargar() {
     console.log("xd");
@@ -1780,17 +1965,7 @@ function agregarVariosNumeros() {
     refrescarArbolAVL();
 }
 
-//Funcion para asignar permisos
-function asignarPermisos() {
-    let cadena = document.getElementById("permisosCarnet").value;
-    let arreglo = cadena.split("-");
-    let matrixx = arbolnario.encontrarMatriz(
-        document.getElementById("rutaCarpeta").value
-    );
-    matriZ = matrixx;
-    matriZ.colocarPermiso(arreglo[0], arreglo[1], arreglo[2]);
-    reporteMatriz();
-}
+
 
 //funcion para limpiar el arbol AVL
 function limpiar() {
@@ -1929,7 +2104,7 @@ function recorrerArbolPreOrder(raiz) {
 
 //funcion para cerrar sesion
 function cerrarSesion() {
-    window.location.href = "/EDD_Proyecto1_Fase2/Code/Login/index.html";
+    window.location.href = "../../../Code/Login/index.html";
 }
 
 /*Función que verifica le entrada del admin y de los estudiantes */
@@ -1937,34 +2112,22 @@ function Loginn() {
     let user = document.getElementById("useeer").value;
     let pass = document.getElementById("passsword").value;
     let ArbolenStorageLogin = JSON.parse(window.localStorage.getItem("TreeAVL"));
-    let resultado = arbolBinarioAVL.VerificandoPasswordYCarnetDelArbol(
-        ArbolenStorageLogin,
-        user,
-        pass
-    );
+    let resultado = arbolBinarioAVL.VerificandoPasswordYCarnetDelArbol(ArbolenStorageLogin, user, pass);
     let usuariosArray = JSON.parse(localStorage.getItem("usuarios")) || [];
-    let usuariActualdelArray = usuariosArray.find(
-        (usuario) => usuario.carnet == user
-    );
-
+    let usuariActualdelArray = usuariosArray.find((usuario) => usuario.carnet == user);
     try {
         if (user == "admin" && pass == "admin") {
-            let ruta = "../../../Code/Dashboard/examples/dashboard.html";
-            window.location.href = ruta;
-            console.log(ruta);
+        
+            let rutaaa = "../../Dashboard/examples/dashboard.html";
+            window.location.href = rutaaa;
+            console.log(rutaaa);
             window.alert("Bienvenido Admin");
         } else if (resultado != false) {
             console.log("ArbolStorage: ", ArbolenStorageLogin);
             console.log("Resultado: ", resultado);
-            if (
-                usuariActualdelArray &&
-                usuariActualdelArray.carnet == resultado.carnet
-            ) {
+            if (usuariActualdelArray && usuariActualdelArray.carnet == resultado.carnet) {
                 console.log("Usuario Actual: ", usuariActualdelArray);
-                localStorage.setItem(
-                    "usuarioActual",
-                    JSON.stringify(usuariActualdelArray)
-                );
+                localStorage.setItem("usuarioActual", JSON.stringify(usuariActualdelArray));
             } else {
                 usuariosArray.push(resultado);
                 localStorage.setItem("usuarios", JSON.stringify(usuariosArray));
@@ -1972,7 +2135,7 @@ function Loginn() {
                 usuariActualdelArray = resultado;
             }
             let rutaa =
-                "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+                "../../../Code/User/examples/user.html";
             console.log(rutaa);
             window.location.href = rutaa;
             window.alert("Bienvenido Estudiante: " + resultado.nombre);
@@ -2074,19 +2237,60 @@ function seleccionarOpcion() {
     }
 }
 
-function ConvertAvlfromLocalStorageToTablaHash() {
+
+// Funcion para mandar a llamar el reporte de mensajes
+function seleccionaaaarrOpcion() {
+    const selectElement = document.getElementById("miSelect2");
+    const selectedOption =
+        selectElement.options[selectElement.selectedIndex].value;
+    switch (selectedOption) {
+        case "opcion1":
+            retonarDatosStorageInOrder();
+            break;
+        default:
+            console.log("Opción no válida");
+    }
+}
+
+
+//Funcion que migra los datos del avl en el localstorage a la tabla hash y la guarda en el localstorage
+async function ConvertAvlfromLocalStorageToTablaHash() {
     let tablaHashhhhh = new TablaHash();
     let arboolAVL = JSON.parse(localStorage.getItem("TreeAVL"));
     let Nuevoavl = new ArbolAVL();
-    Nuevoavl.raiz=arboolAVL;
+    Nuevoavl.raiz = arboolAVL;
     let nodosAVL = Nuevoavl.recorrerPorAmplitud();
     console.log("Nodos del árbol AVL:", nodosAVL);
     for (let i = 0; i < nodosAVL.length; i++) {
-        tablaHashhhhh.insertar(nodosAVL[i].user_student.carnet, nodosAVL[i].user_student.nombre,nodosAVL[i].user_student.password);
+        const password = await encriptarPassSha256(nodosAVL[i].user_student.password);
+        tablaHashhhhh.insertar(nodosAVL[i].user_student.carnet, nodosAVL[i].user_student.nombre,password ,nodosAVL[i].user_student.arbolNario);
     }
-
     let TablaHashEnStorage = JSON.stringify(tablaHashhhhh);
     localStorage.setItem("TablaHashhh", TablaHashEnStorage);
 
     console.log("Tabla hash generada a partir del árbol AVL:", tablaHashhhhh);
+}
+
+
+
+
+async function  sha256(mensaje){
+    let cadenaFinal
+    const enconder =  new TextEncoder();
+    const mensajeCodificado = enconder.encode(mensaje)
+    await crypto.subtle.digest("SHA-256", mensajeCodificado)
+    .then(result => { // 100 -> 6a 
+        const hashArray =  Array.from(new Uint8Array(result))
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+        cadenaFinal = hashHex
+    })
+    .catch(error => console.log(error))
+    return cadenaFinal
+}
+
+
+async function encriptarPassSha256(password){
+    const paww = await sha256(password);
+    return paww;
+    
 }
