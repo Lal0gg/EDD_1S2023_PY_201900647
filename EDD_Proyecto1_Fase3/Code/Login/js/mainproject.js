@@ -1,21 +1,49 @@
 // variables para la tabla de la carga masiva
-let table = document.getElementById("tablecarga");
+
 let StudentsPermisos = [];
 let PermisosxD = [];
+
+let table = document.getElementById("tablecarga");
 let table2 = document.getElementById("tablArchivos");
-let encabezado2 = document.createElement("thead");
+let table3 = document.getElementById("tableReport");
+let table4 = document.getElementById("tablaPermisos");
+
 let encabezado = document.createElement("thead");
+let encabezado2 = document.createElement("thead");
+let encabezado3 = document.createElement("thead");
+let encabezado4 = document.createElement("thead");
+
 encabezado.classList.add("text-primary");
 encabezado2.classList.add("text-primary");
-encabezado2.innerHTML = `
-<th></th>
-<th>Nombre Archivo</th>`;
+encabezado3.classList.add("text-primary");
+encabezado4.classList.add("text-primary");
+
+
 encabezado.innerHTML = `
     <th>Nombre</th> 
     <th>Carnet</th>
     <th>Contraseña</th>
     <th>Carpeta Raiz</th>
     `;
+
+encabezado2.innerHTML = `
+<th></th>
+<th>Nombre Archivo</th>`;
+
+encabezado3.innerHTML = `
+    <th>Nombre</th> 
+    <th>Carnet</th>
+    <th>Contraseña</th>
+    `;
+
+encabezado4.innerHTML = `
+    <th>Propietario</th> 
+    <th>Destino</th>
+    <th>Ubicacion</th>
+    <th>Nombre Archivo</th>
+    <th>Tipo Permiso</th>
+    `;
+
 let h4444 = document.getElementById("welcomeeeee");
 
 /*Clase de usuario de tipo estudiante */
@@ -30,8 +58,19 @@ class user_student {
     }
 }
 
-class permisos{
-    constructor(carnetPropetario, carnetDestino, ubicacion, nombreArchivo, tipoPermiso, Archivoenbase64){
+class user_student_hash {
+    constructor(carnet, nombre, password,carpetaRaizgg, arbolNario,listaCircular) {
+        this.nombre = nombre;
+        this.carnet = carnet;
+        this.password = password;
+        this.carpeta_raiz = carpetaRaizgg;
+        this.arbolNario = arbolNario;
+        this.listaCircular = listaCircular
+    }
+}
+
+class permisos {
+    constructor(carnetPropetario, carnetDestino, ubicacion, nombreArchivo, tipoPermiso, Archivoenbase64) {
         this.carnetPropetario = carnetPropetario;
         this.carnetDestino = carnetDestino;
         this.ubicacion = ubicacion;
@@ -41,8 +80,8 @@ class permisos{
     }
 }
 
-class Permisoxd{
-    constructor(nombre,contenido){
+class Permisoxd {
+    constructor(nombre, contenido) {
         this.nombre = nombre;
         this.contenido = contenido;
     }
@@ -415,23 +454,61 @@ class ArbolAVL {
 
 
     //Buscar un nodo en el arbol por medio de carnet y que pueda darle un nuevo nodo useeer_student y que se actualice el arbol avl
-    BuscarNodo(raiz,carnet,userrstudent){
-        if(raiz != null){
-            if(raiz.user_student.carnet == carnet){
+    // BuscarNodo(raiz, carnet, userrstudent) {
+    //     if (raiz != null) {
+    //         if (raiz.user_student.carnet == carnet) {
+    //             raiz.user_student = userrstudent;
+    //             return raiz;
+    //         } else {
+    //             if (carnet < raiz.user_student.carnet) {
+    //                 return this.BuscarNodo(raiz.izquierdo, carnet, userrstudent);
+    //             } else {
+    //                 return this.BuscarNodo(raiz.derecho, carnet, userrstudent);
+    //             }
+    //         }
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    BuscarNodo(raiz, carnet, userrstudent) {
+        if (raiz != null) {
+            if (raiz.user_student.carnet == carnet) {
                 raiz.user_student = userrstudent;
                 return raiz;
-            }else{
-                if(carnet < raiz.user_student.carnet){
-                    return this.BuscarNodo(raiz.izquierdo,carnet,userrstudent);
-                }else{
-                    return this.BuscarNodo(raiz.derecho,carnet,userrstudent);
+            } else {
+                if (carnet < raiz.user_student.carnet) {
+                    raiz.izquierdo = this.BuscarNodo(raiz.izquierdo, carnet, userrstudent);
+                } else {
+                    raiz.derecho = this.BuscarNodo(raiz.derecho, carnet, userrstudent);
+                }
+                raiz.altura =
+                    1 + Math.max(this.Altura(raiz.izquierdo), this.Altura(raiz.derecho));
+                let balanceo = this.Equilibrio(raiz);
+                raiz.factor_equilibrio = balanceo;
+                // Rotacion Simple a la Izquierda
+                if (balanceo > 1 && carnet > raiz.derecho.user_student.carnet) {
+                    return this.RotacionI(raiz);
+                }
+                // Rotacion Simple a la Derecha
+                if (balanceo < -1 && carnet < raiz.izquierdo.user_student.carnet) {
+                    return this.RotacionD(raiz);
+                }
+                // Rotacion Doble a la Izquierda
+                if (balanceo > 1 && carnet < raiz.derecho.user_student.carnet) {
+                    raiz.derecho = this.RotacionD(raiz.derecho);
+                    return this.RotacionI(raiz);
+                }
+                // Rotacion Doble a la Derecha
+                if (balanceo < -1 && carnet > raiz.izquierdo.user_student.carnet) {
+                    raiz.izquierdo = this.RotacionI(raiz.izquierdo);
+                    return this.RotacionD(raiz);
                 }
             }
-        }else{
-            return false;
         }
+        return raiz;
     }
-    
+
 
 
 }
@@ -1583,11 +1660,13 @@ function matrizToJson(matriz) {
 
 //clase nodo para la tabla hash
 class nodoHash {
-    constructor(carnet, usuario, password ,arbolnnario) {
+    constructor(carnet, usuario, password, carpetaRaizgg, arbolnnario, listaCircular) {
         this.carnet = carnet;
         this.usuario = usuario;
         this.password = password;
-        this.arbolnnario =arbolnnario;
+        this.carpeta_raiz = carpetaRaizgg;
+        this.arbolnnario = arbolnnario;
+        this.listaCircular = listaCircular;
     }
 }
 // clase tabla hash
@@ -1598,9 +1677,9 @@ class TablaHash {
         this.utilizacion = 0;
     }
 
-    insertar(carnet, usuario, password,arbolnnario) {
+    insertar(carnet, usuario, password, carpetaRaizgg, arbolnnario, listaCircular) {
         let indice = this.calcularIndice(carnet);
-        const nuevoNodo = new nodoHash(carnet, usuario, password,arbolnnario);
+        const nuevoNodo = new nodoHash(carnet, usuario, password, carpetaRaizgg, arbolnnario, listaCircular);
         if (indice < this.capacidad) {
             try {
                 if (this.tabla[indice] == null) {
@@ -1674,7 +1753,7 @@ class TablaHash {
         const aux_tabla = this.tabla;
         this.tabla = new Array(this.capacidad);
         aux_tabla.forEach((alumno) => {
-            this.insertar(alumno.carnet, alumno.usuario, alumno.password,alumno.arbolnnario);
+            this.insertar(alumno.carnet, alumno.usuario, alumno.password, alumno.carpetaRaizgg,alumno.arbolnnario,alumno.listaCircular);
         });
     }
 
@@ -1695,40 +1774,16 @@ class TablaHash {
         return nueva_posicion;
     }
 
-    busquedaUsuario(carnet) {
-        let indice = this.calcularIndice(carnet);
-        if (indice < this.capacidad) {
-            try {
-                if (this.tabla[indice] == null) {
-                    alert("Bienvenido " + this.tabla[indice].usuario);
-                } else if (this.tabla[indice] != null && this.tabla[indice].carnet == carnet) {
-                    alert("Bienvenido " + this.tabla[indice].usuario);
-                } else {
-                    let contador = 1;
-                    indice = this.RecalcularIndice(carnet, contador);
-                    while (this.tabla[indice] != null) {
-                        contador++;
-                        indice = this.RecalcularIndice(carnet, contador);
-                        if (this.tabla[indice].carnet == carnet) {
-                            alert("Bienvenido " + this.tabla[indice].usuario);
-                            return;
-                        }
-                    }
-                }
-            } catch (err) {
-                console.log("Hubo un error en busqueda");
-            }
-        }
-    }
-
-
 }
+
+
+
 
 // creacion arbol n-ario
 const arbolnario = new ArbolNArio();
 
 // creacion tabla hash
-const tablaHash = new TablaHash();
+let tablaHash = new TablaHash();
 
 //Creacion Maatriz Dispersa
 let matriZ = new MatrizDispersa();
@@ -1759,30 +1814,30 @@ function asignarPermisos() {
     let cadena = document.getElementById("permisosCarnet").value;
     let ubicacionaux = document.getElementById("rutaCarpeta").value;
     let usuarioActualAux = JSON.parse(localStorage.getItem("usuarioActual"));
-    let contenido64="";
+    let contenido64 = "";
     let arreglo = cadena.split("-");
     let matrixx = arbolnario.encontrarMatriz(
         document.getElementById("rutaCarpeta").value
     );
 
-    for (let i=0;i<PermisosxD.length;i++){
-        if(PermisosxD[i].nombre== arreglo[0]){
+    for (let i = 0; i < PermisosxD.length; i++) {
+        if (PermisosxD[i].nombre == arreglo[0]) {
             contenido64 = PermisosxD[i].contenido;
         }
     }
     matriZ = matrixx;
     matriZ.colocarPermiso(arreglo[0], arreglo[1], arreglo[2]);
-    
-    const permiso={
-        carnetPropetario:usuarioActualAux.carnet,
-        carnetDestino:arreglo[1],
-        ubicacion:ubicacionaux,
-        nombreArchivo:arreglo[0],
-        tipoPermiso:arreglo[2],
-        Archivoenbase64:contenido64
+
+    const permiso = {
+        carnetPropetario: usuarioActualAux.carnet,
+        carnetDestino: arreglo[1],
+        ubicacion: ubicacionaux,
+        nombreArchivo: arreglo[0],
+        tipoPermiso: arreglo[2],
+        Archivoenbase64: contenido64
     }
     StudentsPermisos.push(permiso);
-    localStorage.setItem("StudentsPermisos",JSON.stringify(StudentsPermisos));
+    localStorage.setItem("StudentsPermisos", JSON.stringify(StudentsPermisos));
     console.log("Matrizzzzz: ", matriZ);
     reporteMatriz();
 }
@@ -1797,9 +1852,9 @@ function xd() {
 function cargarAr(nombreArchivo, contenidoArchivo) {
     let usuarioActuaaal = JSON.parse(localStorage.getItem("usuarioActual"));
     let rutaaa = document.getElementById("rutaCarpeta").value;
-    const nuevoPermisoAuxiliar ={
-        nombre:nombreArchivo,
-        contenido:contenidoArchivo,
+    const nuevoPermisoAuxiliar = {
+        nombre: nombreArchivo,
+        contenido: contenidoArchivo,
     }
     PermisosxD.push(nuevoPermisoAuxiliar);
 
@@ -1815,12 +1870,12 @@ function cargarAr(nombreArchivo, contenidoArchivo) {
 }
 
 // funcion para actualizar avl en local storage
-function ActualizarAvl(){
+function ActualizarAvl() {
     let arbolitoAvlenLocal = JSON.parse(localStorage.getItem("TreeAVL"));
     let usuarioActuaalAux = JSON.parse(localStorage.getItem("usuarioActual"))
-    let avlActualizaod = arbolBinarioAVL.BuscarNodo(arbolitoAvlenLocal,usuarioActuaalAux.carnet,usuarioActuaalAux)
-    console.log("AVL actualizado: ",avlActualizaod);
-    localStorage.setItem("TreeAVL",JSON.stringify(avlActualizaod));
+    let avlActualizaod = arbolBinarioAVL.BuscarNodo(arbolitoAvlenLocal, usuarioActuaalAux.carnet, usuarioActuaalAux)
+    console.log("AVL actualizado: ", avlActualizaod);
+    localStorage.setItem("TreeAVL", JSON.stringify(avlActualizaod));
 }
 
 
@@ -2073,6 +2128,8 @@ function recorrerArbolPostOrder(raiz) {
     }
 }
 
+
+
 // Funcion para limpiar el contenido de la tabla
 function clinTable() {
     table.innerHTML = "";
@@ -2088,7 +2145,7 @@ function recorrerArbolPreOrder(raiz) {
         let fila = document.createElement("tr");
         // Insertar las columnas con los valores del nodo
         fila.innerHTML = `
-			<td>${raiz.user_student.nombre}</td>
+			<td>${raiz.user_student.usuario}</td>
 			<td>${raiz.user_student.carnet}</td>
 			<td>${raiz.user_student.password}</td>
 			<td>${raiz.user_student.carpeta_raiz}</td>
@@ -2107,22 +2164,98 @@ function cerrarSesion() {
     window.location.href = "../../../Code/Login/index.html";
 }
 
+function xdxdxd() {
+    let hashhhhh = JSON.parse(window.localStorage.getItem("TablaHashhh"));
+    console.log(hashhhhh);
+    for (let i = 0; i < hashhhhh.tabla.length; i++) {
+        if (hashhhhh.tabla[i] == null) {
+            continue;
+        }
+        console.log(hashhhhh.tabla[i]);
+    }
+
+}
+
+
 /*Función que verifica le entrada del admin y de los estudiantes */
-function Loginn() {
+// async function Loginn() {
+//     let user = document.getElementById("useeer").value;
+//     let pass = document.getElementById("passsword").value;
+//     let ArbolenStorageLogin = JSON.parse(window.localStorage.getItem("TreeAVL"));
+//     let hashhhhh2 = JSON.parse(window.localStorage.getItem("TablaHashhh"));
+//     let passwordEncriptada = await sha256(pass);
+//     let effect = VerificarEstudiante(user, passwordEncriptada, hashhhhh2);
+//     let resultado = arbolBinarioAVL.VerificandoPasswordYCarnetDelArbol(ArbolenStorageLogin, user, pass);
+//     let usuariosArray = JSON.parse(localStorage.getItem("usuarios")) || [];
+//     let usuariActualdelArray = usuariosArray.find((usuario) => usuario.carnet == user);
+//     try {
+//         if (user == "admin" && pass == "admin") {
+//             ruta buena en web
+//             let rutaaaa = "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
+//             let rutaaaa = "../../../../EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
+//             console.log(rutaaaa);
+//             window.location.href = rutaaaa;
+//             window.alert("Bienvenido Admin");
+//         } else if (!resultado) {
+//             console.log("ArbolStorage: ", ArbolenStorageLogin);
+//             console.log("Resultado: ", resultado);
+//             if (usuariActualdelArray && usuariActualdelArray.carnet == resultado.carnet) {
+//                 console.log("Usuario Actual: ", usuariActualdelArray);
+//                 localStorage.setItem("usuarioActual", JSON.stringify(usuariActualdelArray));
+//             } else {
+//                 usuariosArray.push(resultado);
+//                 localStorage.setItem("usuarios", JSON.stringify(usuariosArray));
+//                 localStorage.setItem("usuarioActual", JSON.stringify(resultado));
+//                 usuariActualdelArray = resultado;
+//             }
+
+
+
+
+//             ruta buenta en web
+//             let rutaax ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+
+//             let rutaax = "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+//             console.log(rutaax);
+//             window.location.href = rutaax;
+//             window.alert("Bienvenido Estudiante: " + resultado.nombre);
+//         } else {
+//             alert("Usuario o contraseña incorrecta");
+//         }
+//     } catch (error) {
+//         alert(error);
+//     }
+// }
+
+async function Loginn() {
     let user = document.getElementById("useeer").value;
     let pass = document.getElementById("passsword").value;
     let ArbolenStorageLogin = JSON.parse(window.localStorage.getItem("TreeAVL"));
+    let hashhhhh2 = JSON.parse(window.localStorage.getItem("TablaHashhh"));
+    let passwordEncriptada = await sha256(pass);
+    let effect = VerificarEstudiante(user, passwordEncriptada, hashhhhh2);
     let resultado = arbolBinarioAVL.VerificandoPasswordYCarnetDelArbol(ArbolenStorageLogin, user, pass);
     let usuariosArray = JSON.parse(localStorage.getItem("usuarios")) || [];
     let usuariActualdelArray = usuariosArray.find((usuario) => usuario.carnet == user);
     try {
         if (user == "admin" && pass == "admin") {
-        
-            let rutaaaa = "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
+            // ruta buena en web
+            // let rutaaaa = "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
+            let rutaaaa = "../../../../EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
             console.log(rutaaaa);
             window.location.href = rutaaaa;
             window.alert("Bienvenido Admin");
-        } else if (resultado != false) {
+        } else if (effect !== null) {
+            console.log("Usuario encontrado en la tabla hash:", effect);
+
+            
+            // ruta buena en web
+            // let rutaax ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+            let rutaax = "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+            console.log(rutaax);
+            window.location.href = rutaax;
+            window.alert("Bienvenido Estudiante: " + effect.nombre);
+        } else if (resultado !== false) {
             console.log("ArbolStorage: ", ArbolenStorageLogin);
             console.log("Resultado: ", resultado);
             if (usuariActualdelArray && usuariActualdelArray.carnet == resultado.carnet) {
@@ -2134,11 +2267,13 @@ function Loginn() {
                 localStorage.setItem("usuarioActual", JSON.stringify(resultado));
                 usuariActualdelArray = resultado;
             }
-            let rutaax =
-                "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+
+            //ruta buena en web
+            // let rutaax ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+            let rutaax = "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
             console.log(rutaax);
             window.location.href = rutaax;
-            window.alert("Bienvenido Estudiante: " + resultado.nombre);
+            window.alert("Bienvenido Estudiante: " + resultado);
         } else {
             alert("Usuario o contraseña incorrecta");
         }
@@ -2146,6 +2281,10 @@ function Loginn() {
         alert(error);
     }
 }
+
+
+
+
 
 function agregarUsuario(usuario) {
     let usuariosArray = JSON.parse(localStorage.getItem("usuarios")) || []; // Obtener array de usuarios del localStorage
@@ -2254,43 +2393,174 @@ function seleccionaaaarrOpcion() {
 
 
 //Funcion que migra los datos del avl en el localstorage a la tabla hash y la guarda en el localstorage
+// async function ConvertAvlfromLocalStorageToTablaHash() {
+//     let tablaHashhhhh = new TablaHash();
+//     let arboolAVL = JSON.parse(localStorage.getItem("TreeAVL"));
+//     let Nuevoavl = new ArbolAVL();
+//     Nuevoavl.raiz = arboolAVL;
+//     let nodosAVL = Nuevoavl.recorrerPorAmplitud();
+//     console.log("Nodos del árbol AVL:", nodosAVL);
+//     for (let i = 0; i < nodosAVL.length; i++) {
+//         const password = await encriptarPassSha256(nodosAVL[i].user_student.password);
+//         tablaHashhhhh.insertar(nodosAVL[i].user_student.carnet, nodosAVL[i].user_student.nombre, password, nodosAVL[i].user_student.arbolNario);
+//     }
+//     let TablaHashEnStorage = JSON.stringify(tablaHashhhhh);
+//     localStorage.setItem("TablaHashhh", TablaHashEnStorage);
+
+//     console.log("Tabla hash generada a partir del árbol AVL:", tablaHashhhhh);
+// }
+
+
+
 async function ConvertAvlfromLocalStorageToTablaHash() {
-    let tablaHashhhhh = new TablaHash();
-    let arboolAVL = JSON.parse(localStorage.getItem("TreeAVL"));
-    let Nuevoavl = new ArbolAVL();
-    Nuevoavl.raiz = arboolAVL;
-    let nodosAVL = Nuevoavl.recorrerPorAmplitud();
-    console.log("Nodos del árbol AVL:", nodosAVL);
-    for (let i = 0; i < nodosAVL.length; i++) {
-        const password = await encriptarPassSha256(nodosAVL[i].user_student.password);
-        tablaHashhhhh.insertar(nodosAVL[i].user_student.carnet, nodosAVL[i].user_student.nombre,password ,nodosAVL[i].user_student.arbolNario);
+    try {
+        const tablaHashhhhh = new TablaHash();
+        const arbolAVL = JSON.parse(localStorage.getItem("TreeAVL"));
+        if (!arbolAVL) {
+            throw new Error("El árbol AVL en el almacenamiento local no existe o es inválido");
+        }
+        const nuevoAVL = new ArbolAVL();
+        nuevoAVL.raiz = arbolAVL;
+        const nodosAVL = nuevoAVL.recorrerPorAmplitud();
+        console.log("Nodos del árbol AVL:", nodosAVL);
+        for (let i = 0; i < nodosAVL.length; i++) {
+            const password = await encriptarPassSha256(nodosAVL[i].user_student.password);
+            tablaHashhhhh.insertar(
+                nodosAVL[i].user_student.carnet,
+                nodosAVL[i].user_student.nombre,
+                password,
+                nodosAVL[i].user_student.carpeta_raiz,
+                nodosAVL[i].user_student.arbolNario,
+                nodosAVL[i].user_student.listaDobleCircular
+            );
+           
+        }
+        const tablaHashEnStorage = JSON.stringify(tablaHashhhhh);
+        window.localStorage.setItem("TablaHashhh", tablaHashEnStorage);
+        window.localStorage.removeItem("TreeAVL");
+        console.log("Tabla hash generada a partir del árbol AVL:", tablaHashhhhh);
+    } catch (error) {
+        console.error("Error en la conversión de AVL a Tabla Hash:", error);
     }
-    let TablaHashEnStorage = JSON.stringify(tablaHashhhhh);
-    localStorage.setItem("TablaHashhh", TablaHashEnStorage);
-
-    console.log("Tabla hash generada a partir del árbol AVL:", tablaHashhhhh);
 }
-
-
-
-
-async function  sha256(mensaje){
+async function sha256(mensaje) {
     let cadenaFinal
-    const enconder =  new TextEncoder();
+    const enconder = new TextEncoder();
     const mensajeCodificado = enconder.encode(mensaje)
     await crypto.subtle.digest("SHA-256", mensajeCodificado)
-    .then(result => { // 100 -> 6a 
-        const hashArray =  Array.from(new Uint8Array(result))
-        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
-        cadenaFinal = hashHex
-    })
-    .catch(error => console.log(error))
+        .then(result => { // 100 -> 6a 
+            const hashArray = Array.from(new Uint8Array(result))
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+            cadenaFinal = hashHex
+        })
+        .catch(error => console.log(error))
     return cadenaFinal
 }
 
 
-async function encriptarPassSha256(password){
+async function encriptarPassSha256(password) {
     const paww = await sha256(password);
     return paww;
-    
+
+}
+
+
+function VerificarEstudiante(carnet, password, tablaHashInLocalstorage) {
+    console.log("Tabla hash en localstorage:", tablaHashInLocalstorage)
+    console.log("Carnet:", carnet);
+    console.log("Password:", password);
+    if (tablaHashInLocalstorage != null) {
+        for (let i = 0; i < tablaHashInLocalstorage.tabla.length; i++) {
+            if (tablaHashInLocalstorage.tabla[i] == null) {
+                continue;
+            }
+            if (tablaHashInLocalstorage.tabla[i].carnet == carnet && tablaHashInLocalstorage.tabla[i].password == password) {
+                console.log("Estudiante encontrado:", tablaHashInLocalstorage.tabla[i]);
+                const usuariogg = new user_student_hash(
+                    tablaHashInLocalstorage.tabla[i].carnet,
+                    tablaHashInLocalstorage.tabla[i].usuario,
+                    tablaHashInLocalstorage.tabla[i].password,
+                    tablaHashInLocalstorage.tabla[i].carpeta_raiz,
+                    tablaHashInLocalstorage.tabla[i].arbolnnario,
+                    tablaHashInLocalstorage.tabla[i].listaDobleCircular
+                );
+                console.log(usuariogg)
+                window.localStorage.setItem("usuarioActual", JSON.stringify(usuariogg));
+                return usuariogg;
+            }
+        }
+    }
+    else if (tablaHashInLocalstorage == null) {
+        console.log("Tabla hash vacía");
+        return null;
+    }
+}
+
+//Funcion qeu crea el cuerpo de una tabla en html y agrega los atributos de la tabla hash
+function GuardarenHashenTable(Tablahashsh){
+    if(Tablahashsh!=null){
+        
+        // Insertar las columnas con los valores del nodo
+        for (let i = 0; i < Tablahashsh.tabla.length; i++) {
+            let fila2 = document.createElement("tr");
+            if(Tablahashsh.tabla[i]==null){
+                continue;
+            }
+            console.log(Tablahashsh.tabla[i])
+            fila2.innerHTML = `
+            <td>${Tablahashsh.tabla[i].usuario}</td>
+            <td>${Tablahashsh.tabla[i].carnet}</td>
+            <td>${Tablahashsh.tabla[i].password}</td>
+            `;
+            table3.appendChild(fila2);
+        }
+        
+    }else{
+        console.log("No hay nada en la tabla hash");
+    }
+
+}
+
+/*funcion que llama la hash del localstorage y
+crea un encabezado para la tabla y se concatena el cuerpo de la tabla en html*/
+function TableHashinTable(){
+    let Tablahashsh = JSON.parse(window.localStorage.getItem("TablaHashhh"));
+    console.log("Tabla Hash: ", Tablahashsh);
+    table3.appendChild(encabezado3);
+    GuardarenHashenTable(Tablahashsh);
+}
+
+//funcion que crea el cuerpo de la tabla de permisos
+function CuerpoTablaPermiso(ListaPermisos){
+    if(ListaPermisos!=null){
+        // Insertar las columnas con los valores del nodo
+        for (let i = 0; i < ListaPermisos.length; i++) {
+            let fila4 = document.createElement("tr");
+            if(ListaPermisos[i]==null){
+                continue;
+            }
+            fila4.innerHTML = `
+            <td>${ListaPermisos[i].carnetPropetario}</td>
+            <td>${ListaPermisos[i].carnetDestino}</td>
+            <td>${ListaPermisos[i].ubicacion}</td>
+            <td>${ListaPermisos[i].nombreArchivo}</td>
+            <td>${ListaPermisos[i].tipoPermiso}</td>
+            `;
+            table4.appendChild(fila4);
+        }
+    }else{
+        console.log("No hay nada en la tabla hash");
+    }
+}
+
+function TablaPermisos(){
+    let ListaPermisos = JSON.parse(window.localStorage.getItem("StudentsPermisos"));
+    console.log("Lista Permisos: ", ListaPermisos);
+    table4.appendChild(encabezado4);
+    CuerpoTablaPermiso(ListaPermisos);
+}
+
+function FuncionesOnload(){
+    TableHashinTable();
+    TablaPermisos();
 }
