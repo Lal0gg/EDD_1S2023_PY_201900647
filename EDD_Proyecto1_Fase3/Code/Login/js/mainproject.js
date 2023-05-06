@@ -2118,9 +2118,9 @@ function Loginn() {
     try {
         if (user == "admin" && pass == "admin") {
         
-            let rutaaa = "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
-            window.location.href = rutaaa;
-            console.log(rutaaa);
+            let rutaaaa = "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
+            console.log(rutaaaa);
+            window.location.href = rutaaaa;
             window.alert("Bienvenido Admin");
         } else if (resultado != false) {
             console.log("ArbolStorage: ", ArbolenStorageLogin);
@@ -2134,10 +2134,10 @@ function Loginn() {
                 localStorage.setItem("usuarioActual", JSON.stringify(resultado));
                 usuariActualdelArray = resultado;
             }
-            let rutaa =
+            let rutaax =
                 "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
-            console.log(rutaa);
-            window.location.href = rutaa;
+            console.log(rutaax);
+            window.location.href = rutaax;
             window.alert("Bienvenido Estudiante: " + resultado.nombre);
         } else {
             alert("Usuario o contraseña incorrecta");
