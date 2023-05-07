@@ -851,6 +851,34 @@ class ArbolNArio {
             return raiz;
         }
     }
+
+    insertarArbol(nuevoArbol) {
+        if (nuevoArbol.raiz !== null) {
+            this.raiz.primero = this.insertarNodo(this.raiz.primero, nuevoArbol.raiz);
+        }
+    }
+
+    insertarNodo(raiz, nuevoNodo) {
+        if (raiz === null) {
+            return nuevoNodo;
+        }
+        
+        if (nuevoNodo.valor < raiz.valor) {
+            nuevoNodo.siguiente = raiz;
+            return nuevoNodo;
+        }
+        
+        let aux = raiz;
+        while (aux.siguiente !== null && nuevoNodo.valor > aux.siguiente.valor) {
+            aux = aux.siguiente;
+        }
+        
+        nuevoNodo.siguiente = aux.siguiente;
+        aux.siguiente = nuevoNodo;
+        
+        return raiz;
+    }
+
     // /usac/prueba -> prueba1 /usac/prueba(prueba1)
     insertarHijos(carpeta_nueva, lista_carpeta) {
         /**
@@ -1267,6 +1295,35 @@ class ArbolNArio {
             return null;
         }
     }
+    /** Extra 04/05/2023 */
+    grafos(){
+        this.retornarSiguientes(this.raiz.valor, this.raiz.primero)
+    }
+
+    retornarSiguientes(padre, raiz){ 
+        let hijos = ''
+        let carp_padre = padre
+        let aux = raiz
+        while(aux){
+            hijos += aux.valor + ','
+            aux = aux.siguiente
+        }
+        hijos = hijos.substr(0, hijos.length - 1);
+        if(hijos !== ''){
+            //console.log("Padre: " + padre + " Hijos: " + hijos)
+            GraFo.insertarValores(padre, hijos)
+        }
+        aux = raiz
+        while(aux){
+            carp_padre = padre + aux.valor + "/"
+            //carp_padre = carp_padre.substr(0, carp_padre.length - 1);
+            this.retornarSiguientes(carp_padre , aux.primero)
+            aux = aux.siguiente
+        }
+    }
+
+
+
 }
 //Clase Nodo para la Matriz Dispersa
 class nodoMatrizDispersa {
@@ -1895,6 +1952,138 @@ class TablaHash {
 
 }
 
+
+//clase nodo para el grafo
+class nodoMatrizAdyacencia {
+    constructor(valor) {
+        this.siguiente = null
+        this.abajo = null
+        this.valor = valor
+    }
+}
+
+//clase grafo dirigido
+class grafoDirigido {
+    constructor() {
+        this.principal = null
+    }
+
+    insertarF(texto) {
+        const nuevoNodo = new nodoMatrizAdyacencia(texto)
+        if (this.principal === null) {
+            this.principal = nuevoNodo
+        } else {
+            let aux = this.principal
+            while (aux.abajo) {
+                if (aux.valor === nuevoNodo.valor) {
+                    return
+                }
+                aux = aux.abajo
+            }
+            aux.abajo = nuevoNodo
+        }
+    }
+
+    insertarC(padre, hijo) {
+        const nuevoNodo = new nodoMatrizAdyacencia(hijo)
+        if (this.principal !== null && this.principal.valor === padre) {
+            let aux = this.principal
+            while (aux.siguiente) {
+                aux = aux.siguiente
+            }
+            aux.siguiente = nuevoNodo
+        } else {
+            this.insertarF(padre)
+            let aux = this.principal
+            while (aux) {
+                if (aux.valor === padre) {
+                    break;
+                }
+                aux = aux.abajo
+            }
+            if (aux !== null) {
+                while (aux.siguiente) {
+                    aux = aux.siguiente
+                }
+                aux.siguiente = nuevoNodo
+            }
+        }
+    }
+
+    insertarValores(padre, hijos) {
+        let cadena = hijos.split(',')
+        for (let i = 0; i < cadena.length; i++) {
+            this.insertarC(padre, cadena[i])
+        }
+    }
+
+    //Reporte modificado para trabajar con carpetas
+    grafica() {
+        let cadena = "graph grafoDirigido{ rankdir=LR; node [shape=box]; \"/\"; node [shape = ellipse] ; layout=neato; "
+        let auxPadre = this.principal
+        let auxHijo = this.principal
+        let peso = 0
+        while (auxPadre) {
+            auxHijo = auxPadre.siguiente
+            let profundidad = auxPadre.valor.split('/')
+            let padre = ""
+            if (profundidad.length == 2 && profundidad[1] == "") { peso = 1 }
+            else if (profundidad.length == 2 && profundidad[1] != "") { peso = 2 }
+            else { peso = profundidad.length }
+            if (auxPadre.valor != "/") { padre = profundidad[profundidad.length - 1] }
+            else { padre = "/" }
+            while (auxHijo) {
+                cadena += "\"" + padre + "\"" + " -- " + "\"" + auxHijo.valor + "\"" + " [label=\"" + peso + "\"] "
+                auxHijo = auxHijo.siguiente
+            }
+            auxPadre = auxPadre.abajo
+        }
+        cadena += "}"
+        return cadena
+    }
+
+
+    // busquedaCarpetas(rutaa) {
+    //     let aux = this.principal
+    //     while (aux) {
+    //         let rutaa = aux.valor
+    //         rutaa = rutaa.substr(0, rutaa.length - 1); // /c1/c1.1
+    //         if (rutaa == aux.valor) {
+    //             while (aux.siguiente) {
+    //                 console.log(aux.siguiente.valor)
+    //             }
+    //         }
+    //         aux = aux.abajo
+    //     }
+    // }
+
+    busquedaCarpetas(ruta) {
+        let aux = this.principal;
+        console.log("Ruta: " + ruta);
+        console.log("nodo",aux)
+        while (aux!=null) {
+            console.log("xd")
+            let valor = aux.valor;
+            valor = valor.substr(0, valor.length - 1); // Quitamos el último carácter de la ruta
+            console.log("valor",valor)
+            if (valor === ruta) {
+                let auxHijo = aux.siguiente;
+                while (auxHijo) {
+                    console.log(auxHijo.valor);
+                    auxHijo = auxHijo.siguiente;
+                }
+                return; // Terminamos la búsqueda si encontramos la carpeta buscada
+            }
+            aux = aux.abajo;
+        }
+    }
+
+
+}
+
+//creacion grafo
+
+const GraFo = new grafoDirigido();
 // creacion arbol n-ario
 const arbolnario = new ArbolNArio();
 
@@ -2363,8 +2552,8 @@ async function Loginn() {
 
 
             // ruta buena en web
-            // let rutaax ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
-            let rutaax = "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+            let rutaax ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+            //let rutaax = "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
             console.log(rutaax);
             window.location.href = rutaax;
             window.alert("Bienvenido Estudiante: " + effect.nombre);
@@ -2382,8 +2571,8 @@ async function Loginn() {
             }
 
             //ruta buena en web
-            // let rutaax ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
-            let rutaax = "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+            let rutaax ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+            //let rutaax = "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
             console.log(rutaax);
             window.location.href = rutaax;
             window.alert("Bienvenido Estudiante: " + resultado);
@@ -2703,45 +2892,75 @@ function ArchivosCompartidos() {
 
 function convertirArchivos(archivos) {
     const container = document.getElementById("uwu");
-  
+
     archivos.forEach((archivo) => {
-      const { nombre, contenido } = archivo;
-      const extension = nombre.split('.').pop().toLowerCase();
-  
-      // Crear un contenedor para el archivo
-      const fileContainer = document.createElement('div');
-  
-      // Agregar el nombre del archivo
-      const nombreArchivoElement = document.createElement('h3');
-      nombreArchivoElement.textContent = nombre;
-      fileContainer.appendChild(nombreArchivoElement);
-  
-      if (extension === 'pdf') {
-        // Crear un elemento <iframe> para visualizar el archivo PDF
-        const iframe = document.createElement('iframe');
-        iframe.src = `${contenido}`;
-        iframe.style.width = '100%'; // Redimensionar el ancho del iframe
-        iframe.style.height = '500px'; // Redimensionar el alto del iframe
-        fileContainer.appendChild(iframe);
-      } else if (extension.match(/(jpg|jpeg|png|gif)$/)) {
-        // Crear un elemento <img> para mostrar la imagen
-        const img = document.createElement('img');
-        img.src = `${contenido}`;
-        fileContainer.appendChild(img);
-      } else if (extension === 'txt') {
-        // Crear un elemento <textarea> para mostrar el contenido del archivo de texto
-        const textarea = document.createElement('textarea');
-        let nueva = contenido.split("base64,")[1];
-        textarea.value = atob(nueva);
-        textarea.style.width = '100%'; // Redimensionar el ancho del textarea
-        textarea.style.height = '300px'; // Redimensionar el alto del textarea
-        fileContainer.appendChild(textarea);
-      }
-  
-      // Agregar el contenedor del archivo al contenedor principal
-      container.appendChild(fileContainer);
+        const { nombre, contenido } = archivo;
+        const extension = nombre.split('.').pop().toLowerCase();
+
+        // Crear un contenedor para el archivo
+        const fileContainer = document.createElement('div');
+
+        // Agregar el nombre del archivo
+        const nombreArchivoElement = document.createElement('h3');
+        nombreArchivoElement.textContent = nombre;
+        fileContainer.appendChild(nombreArchivoElement);
+
+        if (extension === 'pdf') {
+            // Crear un elemento <iframe> para visualizar el archivo PDF
+            const iframe = document.createElement('iframe');
+            iframe.src = `${contenido}`;
+            iframe.style.width = '100%'; // Redimensionar el ancho del iframe
+            iframe.style.height = '500px'; // Redimensionar el alto del iframe
+            fileContainer.appendChild(iframe);
+        } else if (extension.match(/(jpg|jpeg|png|gif)$/)) {
+            // Crear un elemento <img> para mostrar la imagen
+            const img = document.createElement('img');
+            img.src = `${contenido}`;
+            fileContainer.appendChild(img);
+        } else if (extension === 'txt') {
+            // Crear un elemento <textarea> para mostrar el contenido del archivo de texto
+            const textarea = document.createElement('textarea');
+            let nueva = contenido.split("base64,")[1];
+            textarea.value = atob(nueva);
+            textarea.style.width = '100%'; // Redimensionar el ancho del textarea
+            textarea.style.height = '300px'; // Redimensionar el alto del textarea
+            fileContainer.appendChild(textarea);
+        }
+
+        // Agregar el contenedor del archivo al contenedor principal
+        container.appendChild(fileContainer);
     });
-  }
+}
+
+
+function refrescarGrafo(){
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = GraFo.grafica()
+    $("#imageBitacora").attr("src", url + body);
+}
+
+
+function ConvertirarbolNarioAGrafoDirigido() {
+    let usuarioActuaaal = JSON.parse(localStorage.getItem("usuarioActual"))
+    let arbolitoActual = usuarioActuaaal.arbolNario
+    let matriz = arbolitoActual.matriz
+    let narioAuxialiar = new ArbolNArio();
+    let rutaaa = document.getElementById("rutaCarpeta").value;
+    console.log("Arbolito Actual", arbolitoActual)
+    narioAuxialiar.raiz = arbolitoActual.raiz
+    narioAuxialiar.matriz= matriz
+    
+    narioAuxialiar.grafos()
+    console.log("Nuevo",narioAuxialiar)
+    GraFo.busquedaCarpetas(rutaaa);
+
+    //console.log("Nuevo Grafo:" ,GraFo)
+    
+
+    
+
+}
+
 
 
 
