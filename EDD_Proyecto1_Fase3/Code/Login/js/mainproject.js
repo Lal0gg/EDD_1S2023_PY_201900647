@@ -2542,8 +2542,8 @@ async function Loginn() {
     try {
         if (user == "admin" && pass == "admin") {
             // ruta buena en web
-            // let rutaaaa = "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
-            let rutaaaa = "../../../../EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
+            let rutaaaaxx = "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
+            //let rutaaaa = "../../../../EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
             console.log(rutaaaa);
             window.location.href = rutaaaa;
             window.alert("Bienvenido Admin");
@@ -2552,7 +2552,7 @@ async function Loginn() {
 
 
             // ruta buena en web
-            let rutaax ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
+            let rutaaxd ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
             //let rutaax = "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
             console.log(rutaax);
             window.location.href = rutaax;
