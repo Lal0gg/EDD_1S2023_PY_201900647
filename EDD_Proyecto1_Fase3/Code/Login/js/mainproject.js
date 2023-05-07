@@ -2544,8 +2544,8 @@ async function Loginn() {
             // ruta buena en web
             let rutaaaaxx = "../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
             //let rutaaaa = "../../../../EDD_Proyecto1_Fase3/Code/Dashboard/examples/dashboard.html";
-            console.log(rutaaaa);
-            window.location.href = rutaaaa;
+            console.log(rutaaaaxx);
+            window.location.href = rutaaaaxx;
             window.alert("Bienvenido Admin");
         } else if (effect !== null) {
             console.log("Usuario encontrado en la tabla hash:", effect);
@@ -2554,8 +2554,8 @@ async function Loginn() {
             // ruta buena en web
             let rutaaxd ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
             //let rutaax = "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
-            console.log(rutaax);
-            window.location.href = rutaax;
+            console.log(rutaaxd);
+            window.location.href = rutaaxd;
             window.alert("Bienvenido Estudiante: " + effect.nombre);
         } else if (resultado !== false) {
             console.log("ArbolStorage: ", ArbolenStorageLogin);
