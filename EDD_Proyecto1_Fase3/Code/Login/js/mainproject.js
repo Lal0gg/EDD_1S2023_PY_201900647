@@ -2,22 +2,29 @@
 
 let StudentsPermisos = [];
 let PermisosxD = [];
+let CarnetsDeHash = []
 
 let table = document.getElementById("tablecarga");
 let table2 = document.getElementById("tablArchivos");
 let table3 = document.getElementById("tableReport");
 let table4 = document.getElementById("tablaPermisos");
+let tabla5 = document.getElementById("tablaPermisos2");
 
 let encabezado = document.createElement("thead");
 let encabezado2 = document.createElement("thead");
 let encabezado3 = document.createElement("thead");
 let encabezado4 = document.createElement("thead");
+let encabezado5 = document.createElement("thead");
+
+
+
+
 
 encabezado.classList.add("text-primary");
 encabezado2.classList.add("text-primary");
 encabezado3.classList.add("text-primary");
 encabezado4.classList.add("text-primary");
-
+encabezado5.classList.add("text-primary");
 
 encabezado.innerHTML = `
     <th>Nombre</th> 
@@ -44,7 +51,119 @@ encabezado4.innerHTML = `
     <th>Tipo Permiso</th>
     `;
 
+encabezado5.innerHTML = `
+    <th>Propietario</th> 
+    <th>Destino</th>
+    <th>Ubicacion</th>
+    <th>Nombre Archivo</th>
+    <th>Tipo Permiso</th>
+    `;
+
 let h4444 = document.getElementById("welcomeeeee");
+
+
+/*             Meotods para la encriptacion                  */
+const clave = 'clave-secreta'
+const buffer = new ArrayBuffer(16)
+const view = new Uint8Array(buffer)
+for (let i = 0; i < clave.length; i++) {
+    view[i] = clave.charCodeAt(i)
+}
+/** Guardar la variable view y guardar algoritmos*/
+const iv = crypto.getRandomValues(new Uint8Array(16))
+const algoritmo = { name: 'AES-GCM', iv: iv }
+
+async function encriptacion(mensaje) {
+    const enconder = new TextEncoder()
+    const data = enconder.encode(mensaje)
+
+    const claveCrypto = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['encrypt'])
+
+    const mensajeCifrado = await crypto.subtle.encrypt(algoritmo, claveCrypto, data)
+
+    const cifradoBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(mensajeCifrado)))
+
+    return cifradoBase64;
+}
+
+async function desencriptacion(mensaje) {
+    const mensajeCifrado = new Uint8Array(atob(mensaje).split('').map(char => char.charCodeAt(0)))
+
+    const claveCrypto = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['decrypt'])
+
+    const mensajeDescifrado = await crypto.subtle.decrypt(algoritmo, claveCrypto, mensajeCifrado)
+
+    const decoder = new TextDecoder()
+    const mensajeOriginal = decoder.decode(mensajeDescifrado)
+
+    return mensajeOriginal
+}
+
+/* bloques para los mensajes */
+
+class nodoBloque {
+    constructor(index, fecha, emisor, receptor, mensaje, previousHash, hash) {
+        this.valor = {
+            'index': index,
+            'timestamp': fecha,
+            'transmitter': emisor,
+            'receiver': receptor,
+            'message': mensaje,
+            'previoushash': previousHash,
+            'hash': hash
+        }
+        this.siguiente = null
+        this.anterior = null
+    }
+}
+
+class Bloque {
+    constructor() {
+        this.inicio = null
+        this.bloques_creados = 0
+    }
+
+    async insertarBloque(fecha, emisor, receptor, mensaje) {
+        if (this.inicio === null) {
+            let cadena = this.bloques_creados + fecha + emisor + receptor + mensaje
+            let hash = await this.sha256(cadena)
+            let mensajeEncriptado = await encriptacion(mensaje)
+            const nuevoBloque = new nodoBloque(this.bloques_creados, fecha, emisor, receptor, mensajeEncriptado, '0000', hash)
+            this.inicio = nuevoBloque
+            this.bloques_creados++
+        } else {
+            let cadena = this.bloques_creados + fecha + emisor + receptor + mensaje
+            let hash = await this.sha256(cadena)
+            let mensajeEncriptado = await encriptacion(mensaje)
+            let aux = this.inicio
+            while (aux.siguiente) {
+                aux = aux.siguiente
+            }
+            const nuevoBloque = new nodoBloque(this.bloques_creados, fecha, emisor, receptor, mensajeEncriptado, aux.valor['hash'], hash)
+            nuevoBloque.anterior = aux
+            aux.siguiente = nuevoBloque
+            this.bloques_creados++
+        }
+    }
+
+    async sha256(mensaje) {
+        let cadenaFinal
+        const enconder = new TextEncoder();
+        const mensajeCodificado = enconder.encode(mensaje)
+        await crypto.subtle.digest("SHA-256", mensajeCodificado)
+            .then(result => { // 100 -> 6a 
+                const hashArray = Array.from(new Uint8Array(result))
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+                cadenaFinal = hashHex
+            })
+            .catch(error => console.log(error))
+        return cadenaFinal
+    }
+}
+
+
+
+
 
 /*Clase de usuario de tipo estudiante */
 class user_student {
@@ -59,7 +178,7 @@ class user_student {
 }
 
 class user_student_hash {
-    constructor(carnet, nombre, password,carpetaRaizgg, arbolNario,listaCircular) {
+    constructor(carnet, nombre, password, carpetaRaizgg, arbolNario, listaCircular) {
         this.nombre = nombre;
         this.carnet = carnet;
         this.password = password;
@@ -1753,7 +1872,7 @@ class TablaHash {
         const aux_tabla = this.tabla;
         this.tabla = new Array(this.capacidad);
         aux_tabla.forEach((alumno) => {
-            this.insertar(alumno.carnet, alumno.usuario, alumno.password, alumno.carpetaRaizgg,alumno.arbolnnario,alumno.listaCircular);
+            this.insertar(alumno.carnet, alumno.usuario, alumno.password, alumno.carpetaRaizgg, alumno.arbolnnario, alumno.listaCircular);
         });
     }
 
@@ -1775,9 +1894,6 @@ class TablaHash {
     }
 
 }
-
-
-
 
 // creacion arbol n-ario
 const arbolnario = new ArbolNArio();
@@ -1877,8 +1993,6 @@ function ActualizarAvl() {
     console.log("AVL actualizado: ", avlActualizaod);
     localStorage.setItem("TreeAVL", JSON.stringify(avlActualizaod));
 }
-
-
 
 function cargar() {
     console.log("xd");
@@ -2020,8 +2134,6 @@ function agregarVariosNumeros() {
     refrescarArbolAVL();
 }
 
-
-
 //funcion para limpiar el arbol AVL
 function limpiar() {
     arbolBinarioAVL.eliminarTodo();
@@ -2128,8 +2240,6 @@ function recorrerArbolPostOrder(raiz) {
     }
 }
 
-
-
 // Funcion para limpiar el contenido de la tabla
 function clinTable() {
     table.innerHTML = "";
@@ -2172,9 +2282,12 @@ function xdxdxd() {
             continue;
         }
         console.log(hashhhhh.tabla[i]);
+        CarnetsDeHash.push(hashhhhh.tabla[i].carnet);
     }
-
+    console.log(CarnetsDeHash);
+    window.localStorage.setItem("CarnetsDeHash", JSON.stringify(CarnetsDeHash));
 }
+
 
 
 /*Función que verifica le entrada del admin y de los estudiantes */
@@ -2248,7 +2361,7 @@ async function Loginn() {
         } else if (effect !== null) {
             console.log("Usuario encontrado en la tabla hash:", effect);
 
-            
+
             // ruta buena en web
             // let rutaax ="../../../../../EDD_1S2023_PY_201900647/EDD_Proyecto1_Fase3/Code/User/examples/user.html";
             let rutaax = "../../../../EDD_Proyecto1_Fase3/Code/User/examples/user.html";
@@ -2281,10 +2394,6 @@ async function Loginn() {
         alert(error);
     }
 }
-
-
-
-
 
 function agregarUsuario(usuario) {
     let usuariosArray = JSON.parse(localStorage.getItem("usuarios")) || []; // Obtener array de usuarios del localStorage
@@ -2376,7 +2485,6 @@ function seleccionarOpcion() {
     }
 }
 
-
 // Funcion para mandar a llamar el reporte de mensajes
 function seleccionaaaarrOpcion() {
     const selectElement = document.getElementById("miSelect2");
@@ -2390,7 +2498,6 @@ function seleccionaaaarrOpcion() {
             console.log("Opción no válida");
     }
 }
-
 
 //Funcion que migra los datos del avl en el localstorage a la tabla hash y la guarda en el localstorage
 // async function ConvertAvlfromLocalStorageToTablaHash() {
@@ -2409,7 +2516,6 @@ function seleccionaaaarrOpcion() {
 
 //     console.log("Tabla hash generada a partir del árbol AVL:", tablaHashhhhh);
 // }
-
 
 
 async function ConvertAvlfromLocalStorageToTablaHash() {
@@ -2433,7 +2539,7 @@ async function ConvertAvlfromLocalStorageToTablaHash() {
                 nodosAVL[i].user_student.arbolNario,
                 nodosAVL[i].user_student.listaDobleCircular
             );
-           
+
         }
         const tablaHashEnStorage = JSON.stringify(tablaHashhhhh);
         window.localStorage.setItem("TablaHashhh", tablaHashEnStorage);
@@ -2497,13 +2603,13 @@ function VerificarEstudiante(carnet, password, tablaHashInLocalstorage) {
 }
 
 //Funcion qeu crea el cuerpo de una tabla en html y agrega los atributos de la tabla hash
-function GuardarenHashenTable(Tablahashsh){
-    if(Tablahashsh!=null){
-        
+function GuardarenHashenTable(Tablahashsh) {
+    if (Tablahashsh != null) {
+
         // Insertar las columnas con los valores del nodo
         for (let i = 0; i < Tablahashsh.tabla.length; i++) {
             let fila2 = document.createElement("tr");
-            if(Tablahashsh.tabla[i]==null){
+            if (Tablahashsh.tabla[i] == null) {
                 continue;
             }
             console.log(Tablahashsh.tabla[i])
@@ -2514,8 +2620,8 @@ function GuardarenHashenTable(Tablahashsh){
             `;
             table3.appendChild(fila2);
         }
-        
-    }else{
+
+    } else {
         console.log("No hay nada en la tabla hash");
     }
 
@@ -2523,7 +2629,7 @@ function GuardarenHashenTable(Tablahashsh){
 
 /*funcion que llama la hash del localstorage y
 crea un encabezado para la tabla y se concatena el cuerpo de la tabla en html*/
-function TableHashinTable(){
+function TableHashinTable() {
     let Tablahashsh = JSON.parse(window.localStorage.getItem("TablaHashhh"));
     console.log("Tabla Hash: ", Tablahashsh);
     table3.appendChild(encabezado3);
@@ -2531,12 +2637,12 @@ function TableHashinTable(){
 }
 
 //funcion que crea el cuerpo de la tabla de permisos
-function CuerpoTablaPermiso(ListaPermisos){
-    if(ListaPermisos!=null){
+function CuerpoTablaPermiso(ListaPermisos) {
+    if (ListaPermisos != null) {
         // Insertar las columnas con los valores del nodo
         for (let i = 0; i < ListaPermisos.length; i++) {
             let fila4 = document.createElement("tr");
-            if(ListaPermisos[i]==null){
+            if (ListaPermisos[i] == null) {
                 continue;
             }
             fila4.innerHTML = `
@@ -2548,19 +2654,118 @@ function CuerpoTablaPermiso(ListaPermisos){
             `;
             table4.appendChild(fila4);
         }
-    }else{
+    } else {
         console.log("No hay nada en la tabla hash");
     }
 }
 
-function TablaPermisos(){
+function TablaPermisos() {
     let ListaPermisos = JSON.parse(window.localStorage.getItem("StudentsPermisos"));
     console.log("Lista Permisos: ", ListaPermisos);
     table4.appendChild(encabezado4);
     CuerpoTablaPermiso(ListaPermisos);
 }
 
-function FuncionesOnload(){
+let Archivos = []
+
+function ArchivosCompartidos() {
+    let listaPermisos = JSON.parse(window.localStorage.getItem("StudentsPermisos"));
+    let usuarioActual = JSON.parse(window.localStorage.getItem("usuarioActual"));
+    let carnetActual = usuarioActual.carnet;
+    console.log("Carnet Actual: ", carnetActual);
+    console.log("Lista Permisos: ", listaPermisos);
+    let archivosCompartidosEncontrados = false;
+    tabla5.appendChild(encabezado5);
+    for (let i = 0; i < listaPermisos.length; i++) {
+        if (listaPermisos[i].carnetDestino == carnetActual) {
+            console.log("Archivo compartido: ", listaPermisos[i].nombreArchivo);
+            //.log("Archivo en base 64: ", listaPermisos[i].Archivoenbase64)
+            let fila5 = document.createElement("tr");
+            fila5.innerHTML = `
+            <td>${listaPermisos[i].carnetPropetario}</td>
+            <td>${listaPermisos[i].carnetDestino}</td>
+            <td>${listaPermisos[i].ubicacion}</td>
+            <td>${listaPermisos[i].nombreArchivo}</td>
+            <td>${listaPermisos[i].tipoPermiso}</td>
+            `;
+            tabla5.appendChild(fila5);
+            let nuevoPErmiso = new Permisoxd(listaPermisos[i].nombreArchivo, listaPermisos[i].Archivoenbase64)
+            Archivos.push(nuevoPErmiso)
+            archivosCompartidosEncontrados = true;
+        }
+    }
+    convertirArchivos(Archivos);
+    if (!archivosCompartidosEncontrados) {
+        console.log("No hay archivos compartidos");
+    }
+}
+
+
+function convertirArchivos(archivos) {
+    const container = document.getElementById("uwu");
+  
+    archivos.forEach((archivo) => {
+      const { nombre, contenido } = archivo;
+      const extension = nombre.split('.').pop().toLowerCase();
+  
+      // Crear un contenedor para el archivo
+      const fileContainer = document.createElement('div');
+  
+      // Agregar el nombre del archivo
+      const nombreArchivoElement = document.createElement('h3');
+      nombreArchivoElement.textContent = nombre;
+      fileContainer.appendChild(nombreArchivoElement);
+  
+      if (extension === 'pdf') {
+        // Crear un elemento <iframe> para visualizar el archivo PDF
+        const iframe = document.createElement('iframe');
+        iframe.src = `${contenido}`;
+        iframe.style.width = '100%'; // Redimensionar el ancho del iframe
+        iframe.style.height = '500px'; // Redimensionar el alto del iframe
+        fileContainer.appendChild(iframe);
+      } else if (extension.match(/(jpg|jpeg|png|gif)$/)) {
+        // Crear un elemento <img> para mostrar la imagen
+        const img = document.createElement('img');
+        img.src = `${contenido}`;
+        fileContainer.appendChild(img);
+      } else if (extension === 'txt') {
+        // Crear un elemento <textarea> para mostrar el contenido del archivo de texto
+        const textarea = document.createElement('textarea');
+        let nueva = contenido.split("base64,")[1];
+        textarea.value = atob(nueva);
+        textarea.style.width = '100%'; // Redimensionar el ancho del textarea
+        textarea.style.height = '300px'; // Redimensionar el alto del textarea
+        fileContainer.appendChild(textarea);
+      }
+  
+      // Agregar el contenedor del archivo al contenedor principal
+      container.appendChild(fileContainer);
+    });
+  }
+
+
+
+
+//funcion  que  
+function FuncionesOnload() {
     TableHashinTable();
     TablaPermisos();
 }
+
+
+function fechaActual() {
+    let cadena = ''
+    const fechaActual = new Date();
+    cadena += fechaActual.getDate() < 10 ? ("0" + fechaActual.getDate() + "-") : (fechaActual.getDate() + "-")
+    cadena += fechaActual.getMonth() < 10 ? ("0" + (fechaActual.getMonth() + 1) + "-") : (fechaActual.getMonth() + "-")
+    cadena += fechaActual.getFullYear() + "::"
+    cadena += fechaActual.getHours() < 10 ? ("0" + fechaActual.getHours() + ":") : (fechaActual.getHours() + ":")
+    cadena += fechaActual.getMinutes() < 10 ? ("0" + fechaActual.getMinutes() + ":") : (fechaActual.getMinutes() + ":")
+    cadena += fechaActual.getSeconds() < 10 ? ("0" + fechaActual.getSeconds()) : (fechaActual.getSeconds())
+    return cadena
+
+}
+
+
+
+

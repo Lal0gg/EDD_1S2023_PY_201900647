@@ -52,7 +52,6 @@
         </a>
         <a href="" class="simple-text logo-normal">
           GoDrive
-
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
@@ -61,6 +60,12 @@
             <a href="./user.html">
               <i class="now-ui-icons users_single-02"></i>
               <p>USUARIO</p>
+            </a>
+          </li>
+          <li>
+            <a href="./mensajes.html">
+              <i class="now-ui-icons ui-1_email-85"></i>
+              <p>MENSAJERIA</p>
             </a>
           </li>
         </ul>
@@ -163,7 +168,6 @@
                     <button class="ov-btn-slide-close" onclick="asignarPermisos()">
                       Dar Permiso
                     </button>
-
 
                   </div>
                 </div>
@@ -283,8 +287,6 @@
                 </div>
               </div>
             </div>
-
-
             <div class="row">
               <div class="col-md-12">
                 <div class="card ">
@@ -294,10 +296,22 @@
                   <div class="col-lg-2">
                     <center>
                       <!-- color boton (254, 216, 236) -->
-                      <button class="ov-btn-slide-close" onclick="ReporteListaCircular()">
-                        Reporte Bitácora
+                      <button class="ov-btn-slide-close" onclick="ArchivosCompartidos()">
+                        Compartidos
                       </button>
                     </center>
+                  </div>
+                  <div class="table-responsive">
+                    <br>
+                    <table class="table" id="tablaPermisos2">
+                        <thead class="text-primary">
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                  </div>
+                  <div id="uwu">
+
                   </div>
                   <div class="card-body ">
                     <!-- <a id="BotonGraficar" class="boton4" onclick=refrescarArbol()>Grficar avlTree</a> -->
@@ -334,7 +348,6 @@
             inputFiles.addEventListener("change", onFilesChange, false);
             let nombreArchivo = ""
             let base64String = ""
-
             function onFilesChange(event) {
               var files = event.target.files;
               for (var i = 0; i < files.length; i++) {
@@ -347,19 +360,11 @@
                 }
               }
             }
-
-
-
             function onFileReaderLoad(event) {
               base64String = event.target.result
               console.log("Nombre: ", nombreArchivo)
               console.log("Contenido: ", base64String)
             }
-
-
-
-
-
           </script>
           <script src="../../Login/js/mainproject.js"></script>
           <!--   Core JS Files   -->
